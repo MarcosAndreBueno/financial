@@ -1,18 +1,25 @@
 package com.financial.financeapp.entities;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.time.Instant;
 
+@Entity
+@Table(name = "tb_outcome")
 public class Outcome implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Double value;
+    private Double amount;
     private Instant date;
 
-    public Outcome(Long id, Double value, Instant date) {
+    public Outcome(Long id, Double amount, Instant date) {
+        super();
         this.id = id;
-        this.value = value;
+        this.amount = amount;
         this.date = date;
     }
 
@@ -27,12 +34,12 @@ public class Outcome implements Serializable {
         this.id = id;
     }
 
-    public Double getValue() {
-        return value;
+    public Double getAmount() {
+        return amount;
     }
 
-    public void setValue(Double value) {
-        this.value = value;
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
     public Instant getDate() {
@@ -51,14 +58,14 @@ public class Outcome implements Serializable {
         Outcome outcome = (Outcome) o;
 
         if (!id.equals(outcome.id)) return false;
-        if (!value.equals(outcome.value)) return false;
+        if (!amount.equals(outcome.amount)) return false;
         return date.equals(outcome.date);
     }
 
     @Override
     public int hashCode() {
         int result = id.hashCode();
-        result = 31 * result + value.hashCode();
+        result = 31 * result + amount.hashCode();
         result = 31 * result + date.hashCode();
         return result;
     }
