@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "tb_income")
@@ -18,17 +16,21 @@ public class Income implements Serializable {
     private Double amount;
     private Instant date;
 
-    //    @JoinTable(name = "tb_income_type", joinColumns = @JoinColumn(name = "income_id"), inverseJoinColumns = @JoinColumn(type_id));
     @ManyToOne
     @JoinColumn(name = "type_id")
     private Type type;
 
-    public Income(Long id, Double amount, Instant date, Type type) {
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    public Income(Long id, Double amount, Instant date, Type type, Category category) {
         super();
         this.id = id;
         this.amount = amount;
         this.date = date;
         this.type = type;
+        this.category = category;
     }
 
     public Income() {
@@ -64,6 +66,14 @@ public class Income implements Serializable {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override

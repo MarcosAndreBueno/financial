@@ -1,0 +1,68 @@
+package com.financial.financeapp.entities;
+
+import jakarta.persistence.*;
+
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+@Entity
+@Table(name = "tb_category")
+public class Category implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String category;
+
+    @OneToMany(mappedBy = "category")
+    private Set<Income> incomes = new HashSet<>();
+
+    public Category(Long id, String category) {
+        this.id = id;
+        this.category = category;
+    }
+
+    public Category() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Set<Income> getIncomes() {
+        return incomes;
+    }
+
+    public void setIncomes(Set<Income> incomes) {
+        this.incomes = incomes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category1 = (Category) o;
+        return id.equals(category1.id) && category.equals(category1.category);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, category);
+    }
+}

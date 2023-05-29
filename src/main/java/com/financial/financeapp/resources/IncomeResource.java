@@ -14,7 +14,7 @@ public class IncomeResource {
 
     @GetMapping
     public ResponseEntity<Income> findAll() {
-        Income i = new Income(1L, 50.0, Instant.parse("2019-06-20T19:53:07Z"), null);
+        Income i = new Income(1L, 50.0, Instant.parse("2019-06-20T19:53:07Z"), null, null);
         return ResponseEntity.ok().body(i);
     }
 
