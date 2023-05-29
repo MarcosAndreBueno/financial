@@ -16,11 +16,16 @@ public class Outcome implements Serializable {
     private Double amount;
     private Instant date;
 
-    public Outcome(Long id, Double amount, Instant date) {
+    @ManyToOne
+    @JoinColumn(name = "type_id")
+    private Type type;
+
+    public Outcome(Long id, Double amount, Instant date, Type type) {
         super();
         this.id = id;
         this.amount = amount;
         this.date = date;
+        this.type = type;
     }
 
     public Outcome() {
@@ -48,6 +53,14 @@ public class Outcome implements Serializable {
 
     public void setDate(Instant date) {
         this.date = date;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     @Override

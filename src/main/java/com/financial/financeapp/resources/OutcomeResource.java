@@ -14,7 +14,7 @@ public class OutcomeResource {
 
     @GetMapping
     public ResponseEntity<Outcome> findAll() {
-        Outcome o = new Outcome(1L, 75.0, Instant.parse("2019-06-21T19:57:00Z"));
+        Outcome o = new Outcome(1L, 75.0, Instant.parse("2019-06-21T19:57:00Z"), null);
         return ResponseEntity.ok().body(o);
     }
 }

@@ -21,6 +21,9 @@ public class Type implements Serializable {
     @OneToMany(mappedBy = "type")
     private Set<Income> incomes = new HashSet<>();
 
+    @OneToMany(mappedBy = "type")
+    private Set<Outcome> outcomes = new HashSet<>();
+
     public Type(Long id, String type) {
         this.id = id;
         this.type = type;
@@ -51,6 +54,14 @@ public class Type implements Serializable {
 
     public void setIncomes(Set<Income> incomes) {
         this.incomes = incomes;
+    }
+
+    public Set<Outcome> getOutcomes() {
+        return outcomes;
+    }
+
+    public void setOutcomes(Set<Outcome> outcomes) {
+        this.outcomes = outcomes;
     }
 
     @Override
