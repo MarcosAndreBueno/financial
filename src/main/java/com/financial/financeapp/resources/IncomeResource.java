@@ -1,6 +1,6 @@
 package com.financial.financeapp.resources;
 
-import com.financial.financeapp.entities.Income;
+import com.financial.financeapp.entities.impl.Income;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

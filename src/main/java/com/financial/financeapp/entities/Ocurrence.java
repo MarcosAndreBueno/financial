@@ -1,5 +1,7 @@
 package com.financial.financeapp.entities;
 
+import com.financial.financeapp.entities.impl.Category;
+import com.financial.financeapp.entities.impl.Type;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;

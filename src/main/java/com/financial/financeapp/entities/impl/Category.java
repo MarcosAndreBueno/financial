@@ -1,4 +1,4 @@
-package com.financial.financeapp.entities;
+package com.financial.financeapp.entities.impl;
 
 import jakarta.persistence.*;
 
@@ -8,28 +8,28 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "tb_type")
-public class Type implements Serializable {
+@Table(name = "tb_category")
+public class Category implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String type;
+    private String category;
 
-    @OneToMany(mappedBy = "type")
+    @OneToMany(mappedBy = "category")
     private Set<Income> incomes = new HashSet<>();
 
-    @OneToMany(mappedBy = "type")
+    @OneToMany(mappedBy = "category")
     private Set<Outcome> outcomes = new HashSet<>();
 
-    public Type(Long id, String type) {
+    public Category(Long id, String category) {
         this.id = id;
-        this.type = type;
+        this.category = category;
     }
 
-    public Type() {
+    public Category() {
     }
 
     public Long getId() {
@@ -40,12 +40,12 @@ public class Type implements Serializable {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getCategory() {
+        return category;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public Set<Income> getIncomes() {
@@ -68,12 +68,12 @@ public class Type implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Type type1 = (Type) o;
-        return id.equals(type1.id) && type.equals(type1.type) && incomes.equals(type1.incomes);
+        Category category1 = (Category) o;
+        return id.equals(category1.id) && category.equals(category1.category);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type, incomes);
+        return Objects.hash(id, category);
     }
 }

@@ -1,9 +1,9 @@
 package com.financial.financeapp.database;
 
-import com.financial.financeapp.entities.Category;
-import com.financial.financeapp.entities.Income;
-import com.financial.financeapp.entities.Outcome;
-import com.financial.financeapp.entities.Type;
+import com.financial.financeapp.entities.impl.Category;
+import com.financial.financeapp.entities.impl.Income;
+import com.financial.financeapp.entities.impl.Outcome;
+import com.financial.financeapp.entities.impl.Type;
 import com.financial.financeapp.repositories.CategoryRepository;
 import com.financial.financeapp.repositories.IncomeRepository;
 import com.financial.financeapp.repositories.OutcomeRepository;

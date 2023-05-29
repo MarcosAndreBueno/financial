@@ -1,5 +1,6 @@
-package com.financial.financeapp.entities;
+package com.financial.financeapp.entities.impl;
 
+import com.financial.financeapp.entities.Ocurrence;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -7,15 +8,15 @@ import java.time.Instant;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@Table(name = "tb_income")
-public class Income extends Ocurrence implements Serializable {
+@Table(name = "tb_outcome")
+public class Outcome extends Ocurrence implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public Income(Long id, Double amount, Instant date, Type type, Category category) {
+    public Outcome(Long id, Double amount, Instant date, Type type, Category category) {
         super();
         this.id = id;
         this.amount = amount;
@@ -24,7 +25,7 @@ public class Income extends Ocurrence implements Serializable {
         this.category = category;
     }
 
-    public Income() {
+    public Outcome() {
     }
 
     public Long getId() {
@@ -72,11 +73,11 @@ public class Income extends Ocurrence implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Income income = (Income) o;
+        Outcome outcome = (Outcome) o;
 
-        if (!id.equals(income.id)) return false;
-        if (!amount.equals(income.amount)) return false;
-        return date.equals(income.date);
+        if (!id.equals(outcome.id)) return false;
+        if (!amount.equals(outcome.amount)) return false;
+        return date.equals(outcome.date);
     }
 
     @Override
