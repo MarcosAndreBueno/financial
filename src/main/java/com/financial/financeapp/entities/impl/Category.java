@@ -1,5 +1,6 @@
 package com.financial.financeapp.entities.impl;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -18,9 +19,11 @@ public class Category implements Serializable {
 
     private String category;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category")
     private Set<Income> incomes = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category")
     private Set<Outcome> outcomes = new HashSet<>();
 
