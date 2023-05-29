@@ -6,23 +6,14 @@ import java.io.Serializable;
 import java.time.Instant;
 
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "tb_income")
-public class Income implements Serializable {
+public class Income extends Ocurrence implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Double amount;
-    private Instant date;
-
-    @ManyToOne
-    @JoinColumn(name = "type_id")
-    private Type type;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
 
     public Income(Long id, Double amount, Instant date, Type type, Category category) {
         super();
