@@ -47,10 +47,11 @@ public class Test implements CommandLineRunner {
         t1.getIncomes().addAll(Arrays.asList(i1,i2));
         c1.getIncomes().addAll(Arrays.asList(i1,i2));
 
-        Outcome o1 = new Outcome(null, 75.0, Instant.parse("2019-06-21T19:57:00Z"), t1);
-        Outcome o2 = new Outcome(null, 100.0, Instant.parse("2019-06-24T15:50:20Z"), t1);
+        Outcome o1 = new Outcome(null, 75.0, Instant.parse("2019-06-21T19:57:00Z"), t1, c1);
+        Outcome o2 = new Outcome(null, 100.0, Instant.parse("2019-06-24T15:50:20Z"), t1, c1);
         outcomeRepository.saveAll(Arrays.asList(o1,o2));
 
         t1.getOutcomes().addAll(Arrays.asList(o1,o2));
+        c1.getOutcomes().addAll(Arrays.asList(o1,o2));
     }
 }

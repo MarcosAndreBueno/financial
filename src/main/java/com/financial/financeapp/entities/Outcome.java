@@ -20,12 +20,17 @@ public class Outcome implements Serializable {
     @JoinColumn(name = "type_id")
     private Type type;
 
-    public Outcome(Long id, Double amount, Instant date, Type type) {
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    public Outcome(Long id, Double amount, Instant date, Type type, Category category) {
         super();
         this.id = id;
         this.amount = amount;
         this.date = date;
         this.type = type;
+        this.category = category;
     }
 
     public Outcome() {
@@ -61,6 +66,14 @@ public class Outcome implements Serializable {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override

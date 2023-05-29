@@ -21,6 +21,9 @@ public class Category implements Serializable {
     @OneToMany(mappedBy = "category")
     private Set<Income> incomes = new HashSet<>();
 
+    @OneToMany(mappedBy = "category")
+    private Set<Outcome> outcomes = new HashSet<>();
+
     public Category(Long id, String category) {
         this.id = id;
         this.category = category;
@@ -51,6 +54,14 @@ public class Category implements Serializable {
 
     public void setIncomes(Set<Income> incomes) {
         this.incomes = incomes;
+    }
+
+    public Set<Outcome> getOutcomes() {
+        return outcomes;
+    }
+
+    public void setOutcomes(Set<Outcome> outcomes) {
+        this.outcomes = outcomes;
     }
 
     @Override
