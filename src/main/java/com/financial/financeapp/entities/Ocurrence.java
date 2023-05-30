@@ -2,14 +2,17 @@ package com.financial.financeapp.entities;
 
 import com.financial.financeapp.entities.impl.Category;
 import com.financial.financeapp.entities.impl.Type;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 
 import java.time.Instant;
 
 @MappedSuperclass
 public abstract class Ocurrence {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
+
     protected Double amount;
     protected Instant date;
 
@@ -20,4 +23,45 @@ public abstract class Ocurrence {
     @ManyToOne
     @JoinColumn(name = "category_id")
     protected Category category;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public Instant getDate() {
+        return date;
+    }
+
+    public void setDate(Instant date) {
+        this.date = date;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
 }
