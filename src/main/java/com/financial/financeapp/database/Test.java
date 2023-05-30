@@ -1,5 +1,7 @@
 package com.financial.financeapp.database;
 
+import com.financial.financeapp.entities.enums.CategoryStatus;
+import com.financial.financeapp.entities.enums.TypeStatus;
 import com.financial.financeapp.entities.impl.Category;
 import com.financial.financeapp.entities.impl.Income;
 import com.financial.financeapp.entities.impl.Outcome;
@@ -34,10 +36,10 @@ public class Test implements CommandLineRunner {
     
     @Override
     public void run(String... args) throws Exception {
-        Type t1 = new Type(null, "Home");
+        Type t1 = new Type(null, TypeStatus.HOUSING);
         typeRepository.save(t1);
 
-        Category c1 = new Category(null, "Market");
+        Category c1 = new Category(null, CategoryStatus.FOOD_SUPERMARKET);
         categoryRepository.save(c1);
 
         Income i1 = new Income(null, 50.0, Instant.parse("2019-06-20T19:53:07Z"), t1, c1);

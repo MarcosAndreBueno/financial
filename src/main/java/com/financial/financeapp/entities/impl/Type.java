@@ -1,6 +1,7 @@
 package com.financial.financeapp.entities.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.financial.financeapp.entities.enums.TypeStatus;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -17,7 +18,7 @@ public class Type implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String type;
+    private Integer type;
 
     @JsonIgnore
     @OneToMany(mappedBy = "type")
@@ -27,9 +28,15 @@ public class Type implements Serializable {
     @OneToMany(mappedBy = "type")
     private Set<Outcome> outcomes = new HashSet<>();
 
-    public Type(Long id, String type) {
+    public Type(Long id, TypeStatus typeStatus) {
         this.id = id;
-        this.type = type;
+        setTypeStatus(typeStatus);
+    }
+
+    private void setTypeStatus(TypeStatus typeStatus) {
+        if (typeStatus != null) {
+            this.type = typeStatus.getCode();
+        }
     }
 
     public Type() {
@@ -41,14 +48,6 @@ public class Type implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public Set<Income> getIncomes() {
