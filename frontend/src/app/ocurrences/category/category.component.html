@@ -5,8 +5,8 @@
         <th>ID</th>
         <th>Category</th>
     </tr>
-    <tr *ngFor="let category of categories">
-        <td> {{ category.id }} </td>
+    <tr *ngFor="let category of categories$ | async as list">
+        <td> {{ category._id }} </td>
         <td> {{ category.category }} </td>
     </tr>
     

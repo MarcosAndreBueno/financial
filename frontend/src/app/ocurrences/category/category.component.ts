@@ -1,5 +1,8 @@
+import { Category } from './../model/category';
 import { Component } from '@angular/core';
 import { CategoryService } from '../services/category.service';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-category',
@@ -8,10 +11,10 @@ import { CategoryService } from '../services/category.service';
 })
 export class CategoryComponent {
   
-  categories: any[] = [];
+  categories$: Observable<any>;
 
   //injetação categoryService
   constructor(private categoryService: CategoryService) { 
-    this.categories = this.categoryService.list();
+    this.categories$ = this.categoryService.list();
   }
 }
