@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class CategoryComponent {
   
-  categories$: Observable<any>;
+  categories$: Observable<Category[]>;
 
   //injetação categoryService
   constructor(private categoryService: CategoryService) { 

@@ -13,8 +13,8 @@ export class CategoryService {
   //injeção http para requisição ajax
   constructor(private httpClient: HttpClient) { }
 
-  //type observable
+  //type observable parametrizado
   list() {
-    return this.httpClient.get(this.API);
+    return this.httpClient.get<Category[]>(this.API);
   }
 }
