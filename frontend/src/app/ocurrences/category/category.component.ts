@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CategoryService } from '../services/category.service';
 
 @Component({
   selector: 'app-category',
@@ -9,7 +10,8 @@ export class CategoryComponent {
   
   categories: any[] = [];
 
-  constructor() { 
-    this.categories = [{ id: 1, category: 'Home' }];
+  //injetação categoryService
+  constructor(private categoryService: CategoryService) { 
+    this.categories = this.categoryService.list();
   }
 }
