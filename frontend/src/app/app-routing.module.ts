@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-    //se caminho vazio (localhost:4200), vefificar todo o caminho, redirecionar para category
+    //se caminho vazio (localhost:4200), vefificar todo o caminho, redirecionar para ocurrences
     { path: '', pathMatch: 'full', redirectTo: 'ocurrences' },
     //caminho para módulo filho
     {
