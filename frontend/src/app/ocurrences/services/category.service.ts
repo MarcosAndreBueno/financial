@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Category } from '../model/category';
+import { first, tap } from 'rxjs/operators';
 
 @Injectable({
   //instância disponível globalmente
@@ -15,6 +16,13 @@ export class CategoryService {
 
   //type observable parametrizado
   list() {
-    return this.httpClient.get<Category[]>(this.API);
+    return this.httpClient.get<Category[]>(this.API)
+    //manipular informação
+    .pipe(
+      //fechar conexão
+      first(), 
+      //debug
+      tap(courses => console.log(courses))
+    );
   }
 }
