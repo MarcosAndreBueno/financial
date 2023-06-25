@@ -2,7 +2,7 @@ import { Category } from './../model/category';
 import { Component } from '@angular/core';
 import { CategoryService } from '../services/category.service';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -17,13 +17,14 @@ export class CategoryComponent {
 
   constructor(
     private categoryService: CategoryService, //injeção categoryService
-    private router: Router //controler roteamento angular
+    private router: Router, //controler roteamento angular
+    private actualRoute: ActivatedRoute //rota atual
     ) { 
     this.categories$ = this.categoryService.list();
   }
 
   newCategory() {
-    //console.log('new occurrence');
-    this.router.navigate(['ocurrences/new-occurrence'])
+    //relativa à rota atual 
+    this.router.navigate(['new-occurrence'], {relativeTo: this.actualRoute})
   }
 }
