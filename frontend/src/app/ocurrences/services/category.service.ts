@@ -10,7 +10,7 @@ import { first, tap } from 'rxjs/operators';
 export class CategoryService {
 
   //debug: devtools -> network -> headers -> request url
-  private readonly API = 'category';
+  private readonly API = '/api/category';
 
   //injeção http para requisição ajax
   constructor(private httpClient: HttpClient) { }

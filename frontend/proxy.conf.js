@@ -1,7 +1,7 @@
 //alternativa à configuração do cors
 const PROXY_CONFIG = [
     {
-      context: [''],
+      context: ['/api'],
       target: 'http://localhost:8080/',
       secure: false,
       logLevel: 'debug'

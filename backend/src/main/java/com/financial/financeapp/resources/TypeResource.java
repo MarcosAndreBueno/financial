@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/type")
+@RequestMapping(value = "/api/type")
 public class TypeResource {
 
     @Autowired

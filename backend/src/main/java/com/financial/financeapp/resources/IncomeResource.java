@@ -14,7 +14,7 @@ import java.time.Instant;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/income")
+@RequestMapping(value = "/api/income")
 public class IncomeResource {
 
     @Autowired

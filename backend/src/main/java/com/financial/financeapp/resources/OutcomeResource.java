@@ -13,7 +13,7 @@ import java.time.Instant;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/outcome")
+@RequestMapping(value = "/api/outcome")
 public class OutcomeResource {
 
     @Autowired
