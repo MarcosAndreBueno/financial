@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { OcurrencesRoutingModule } from './ocurrences-routing.module';
 import { CategoryComponent } from './category/category.component';
+import { NewOccurenceComponent } from './new-occurrence/new-occurrence.component';
 
 
 @NgModule({
   declarations: [
-    CategoryComponent
+    CategoryComponent,
+    NewOccurenceComponent
   ],
   imports: [
     CommonModule,
