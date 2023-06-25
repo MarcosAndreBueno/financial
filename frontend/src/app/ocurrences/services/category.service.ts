@@ -9,7 +9,8 @@ import { first, tap } from 'rxjs/operators';
 })
 export class CategoryService {
 
-  private readonly API = '/assets/category.json';
+  //debug: devtools -> network -> headers -> request url
+  private readonly API = 'category';
 
   //injeção http para requisição ajax
   constructor(private httpClient: HttpClient) { }
