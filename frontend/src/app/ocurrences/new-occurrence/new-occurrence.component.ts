@@ -21,8 +21,8 @@ export class NewOccurenceComponent implements OnInit{
      //listen form input
     this.occurrencyForm = this.formBuilder.group({
     _id: [null],
-    value: [null],
-    data: [null],
+    amount: [null],
+    _date: [null],
     type: [null],
     category: [null],
     description: [null],
@@ -34,7 +34,7 @@ export class NewOccurenceComponent implements OnInit{
     .subscribe(
       {
         next: (value) => console.log(value),
-        error: (msg) => console.log(msg)
+        error: (msg) => console.log(msg),
       }
     )
   }

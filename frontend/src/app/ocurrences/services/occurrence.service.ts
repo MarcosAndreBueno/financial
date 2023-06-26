@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class OccurrenceService {
 
-  private readonly API = '/api/url'
+  private readonly API = '/api/income';
 
   constructor(
     private httpClient: HttpClient
@@ -16,7 +16,6 @@ export class OccurrenceService {
   }
 
   onSave(newOccForm: Occurrency) {
-    //console.log(newOccForm);
-    return this.httpClient.post(this.API, newOccForm); //return observable
+    return this.httpClient.post<Occurrency>(this.API, newOccForm); //return observable
   }
 }

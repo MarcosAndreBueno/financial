@@ -5,10 +5,7 @@ import com.financial.financeapp.repositories.IncomeRepository;
 import com.financial.financeapp.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 import java.util.List;
@@ -30,6 +27,11 @@ public class IncomeResource {
     public ResponseEntity<Income> findById(@PathVariable Long id) {
         Income i = incomeService.findById(id);
         return ResponseEntity.ok().body(i);
+    }
+
+    @PostMapping
+    public void newIncome(@RequestBody Income income) {
+        System.out.println(income.getAmount()); //debug
     }
 
 }

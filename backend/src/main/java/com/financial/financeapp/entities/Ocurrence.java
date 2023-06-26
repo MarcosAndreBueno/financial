@@ -1,5 +1,6 @@
 package com.financial.financeapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.financial.financeapp.entities.impl.Category;
 import com.financial.financeapp.entities.impl.Type;
 import jakarta.persistence.*;
@@ -11,9 +12,10 @@ public abstract class Ocurrence {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("_id")
     protected Long id;
-
     protected Double amount;
+    @JsonProperty("_date")
     protected Instant date;
 
     @ManyToOne
