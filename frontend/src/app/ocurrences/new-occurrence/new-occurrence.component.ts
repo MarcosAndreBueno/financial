@@ -1,29 +1,37 @@
-import { Component } from '@angular/core';
-//import { FormControl } from '@angular/forms';
-import { FormBuilder } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { OccurrenceService } from '../services/occurrence.service';
 
 @Component({
   selector: 'app-new-occurrence',
   templateUrl: './new-occurrence.component.html',
   styleUrls: ['./new-occurrence.component.css']
 })
-export class NewOccurenceComponent {
+export class NewOccurenceComponent implements OnInit{
 
-  constructor(private formBuilder: FormBuilder) {
+  occurrencyForm!: FormGroup;
 
+  constructor(
+    private formBuilder: FormBuilder,
+    private occService: OccurrenceService
+    ) {
   }
 
-  //listen form input
-  occurrencyForm = this.formBuilder.group({
+  ngOnInit(): void {
+     //listen form input
+    this.occurrencyForm = this.formBuilder.group({
     _id: [null],
     value: [null],
     data: [null],
     type: [null],
     category: [null],
     description: [null],
-  });
+  });   
+  }
 
   saveOcurrency() {
-    console.log('debug occurency: ', this.occurrencyForm.value);
+    this.occService.onSave(this.occurrencyForm.value)
+    .subscribe(value => console.log(value)
+    , error => console.log(error));
   }
 }
