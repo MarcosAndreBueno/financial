@@ -1,1 +1,30 @@
 <h2>New Occurency WORKS!</h2>
+
+<form [formGroup]="occurrencyForm" (ngSubmit)="saveOcurrency()">
+    <input type="number" name="value" formControlName="value" placeholder="0.0">
+    <br>
+
+    <input type="date" name="data" formControlName="data">
+    <br>
+
+    <select name="type" formControlName="type">
+        <option> Tipo 1 </option>
+        <option> Tipo 2 </option>
+        <option> Tipo 3 </option>
+    </select>
+    <br>
+
+    <select name="category" formControlName="category">
+        <option> Categoria 1 </option>
+        <option> Categoria 2 </option>
+        <option> Categoria 3 </option>
+    </select>
+    <br>
+
+    <textarea name="description"  formControlName="description" 
+    placeholder="descrição" rows="5" cols="30"></textarea>
+    <br>
+
+    <button type="submit" formControlName="submit">Save</button>
+    <br>
+</form>
