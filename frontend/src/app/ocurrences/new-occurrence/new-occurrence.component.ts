@@ -31,7 +31,11 @@ export class NewOccurenceComponent implements OnInit{
 
   saveOcurrency() {
     this.occService.onSave(this.occurrencyForm.value)
-    .subscribe(value => console.log(value)
-    , error => console.log(error));
+    .subscribe(
+      {
+        next: (value) => console.log(value),
+        error: (msg) => console.log(msg)
+      }
+    )
   }
 }
