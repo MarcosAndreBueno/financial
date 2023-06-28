@@ -30,12 +30,7 @@ public class IncomeResource {
 
     @PostMapping
     public void insert(@RequestBody IncomeHandle incomeHandle) {
-        System.out.println("entrou: ");
-        System.out.println(incomeHandle.getAmount());
-        System.out.println(incomeHandle.getCategory());
-        System.out.println(incomeHandle.getType());
-        System.out.println(incomeHandle.getDate());
-        System.out.println(incomeHandle.getDescription());
-        System.out.println("saiu: ");
+        IncomeHandle incomeHandleA = incomeHandle;
+        incomeService.insert(incomeHandleA);
     }
 }
