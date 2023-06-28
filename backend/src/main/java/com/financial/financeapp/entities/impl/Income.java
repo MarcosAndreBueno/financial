@@ -4,7 +4,7 @@ import com.financial.financeapp.entities.Ocurrence;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDate;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -12,13 +12,14 @@ import java.time.Instant;
 public class Income extends Ocurrence implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public Income(Long id, Double amount, Instant date, Type type, Category category) {
+    public Income(Long id, Double amount, LocalDate date, Type type, Category category, String description) {
         super();
         this.id = id;
         this.amount = amount;
         this.date = date;
         this.type = type;
         this.category = category;
+        this.description = description;
     }
 
     public Income() {

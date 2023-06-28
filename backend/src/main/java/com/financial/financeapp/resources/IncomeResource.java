@@ -1,13 +1,12 @@
 package com.financial.financeapp.resources;
 
+import com.financial.financeapp.entities.handler.IncomeHandle;
 import com.financial.financeapp.entities.impl.Income;
-import com.financial.financeapp.repositories.IncomeRepository;
 import com.financial.financeapp.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
 import java.util.List;
 
 @RestController
@@ -30,8 +29,13 @@ public class IncomeResource {
     }
 
     @PostMapping
-    public void newIncome(@RequestBody Income income) {
-        System.out.println(income.getAmount()); //debug
+    public void insert(@RequestBody IncomeHandle incomeHandle) {
+        System.out.println("entrou: ");
+        System.out.println(incomeHandle.getAmount());
+        System.out.println(incomeHandle.getCategory());
+        System.out.println(incomeHandle.getType());
+        System.out.println(incomeHandle.getDate());
+        System.out.println(incomeHandle.getDescription());
+        System.out.println("saiu: ");
     }
-
 }

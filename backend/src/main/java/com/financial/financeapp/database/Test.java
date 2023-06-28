@@ -15,7 +15,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Arrays;
 
 @Configuration
@@ -42,15 +42,15 @@ public class Test implements CommandLineRunner {
         Category c1 = new Category(null, CategoryStatus.FOOD_SUPERMARKET);
         categoryRepository.save(c1);
 
-        Income i1 = new Income(null, 50.0, Instant.parse("2019-06-20T19:53:07Z"), t1, c1);
-        Income i2 = new Income(null, 70.0, Instant.parse("2019-06-20T20:00:42Z"), t1, c1);
+        Income i1 = new Income(null, 50.0, LocalDate.parse("2019-06-20"), t1, c1, "");
+        Income i2 = new Income(null, 70.0, LocalDate.parse("2019-06-20"), t1, c1, "");
         incomeRepository.saveAll(Arrays.asList(i1,i2));
 
         t1.getIncomes().addAll(Arrays.asList(i1,i2));
         c1.getIncomes().addAll(Arrays.asList(i1,i2));
 
-        Outcome o1 = new Outcome(null, 75.0, Instant.parse("2019-06-21T19:57:00Z"), t1, c1);
-        Outcome o2 = new Outcome(null, 100.0, Instant.parse("2019-06-24T15:50:20Z"), t1, c1);
+        Outcome o1 = new Outcome(null, 75.0, LocalDate.parse("2019-06-21"), t1, c1);
+        Outcome o2 = new Outcome(null, 100.0, LocalDate.parse("2019-06-24"), t1, c1);
         outcomeRepository.saveAll(Arrays.asList(o1,o2));
 
         t1.getOutcomes().addAll(Arrays.asList(o1,o2));

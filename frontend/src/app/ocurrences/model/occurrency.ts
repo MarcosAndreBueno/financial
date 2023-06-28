@@ -1,7 +1,7 @@
 export interface Occurrency {
     _id: number,
-    value: string,
-    data: Date,
+    amount: string,
+    _date: Date,
     type: string,
     category: string,
     description: string,
