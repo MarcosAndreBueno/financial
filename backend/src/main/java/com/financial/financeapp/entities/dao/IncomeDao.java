@@ -1,10 +1,10 @@
-package com.financial.financeapp.entities.handler;
+package com.financial.financeapp.entities.dao;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
-public class IncomeHandle {
+public class IncomeDao {
 
     private Long id;
     private Double amount;
@@ -14,7 +14,7 @@ public class IncomeHandle {
     private String category;
     private String description;
 
-    public IncomeHandle(Long id, Double amount, String date, String type, String category, String description) {
+    public IncomeDao(Long id, Double amount, String date, String type, String category, String description) {
         this.id = id;
         this.amount = amount;
         this.date = date;
@@ -75,7 +75,7 @@ public class IncomeHandle {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        IncomeHandle that = (IncomeHandle) o;
+        IncomeDao that = (IncomeDao) o;
         return Objects.equals(id, that.id);
     }
 

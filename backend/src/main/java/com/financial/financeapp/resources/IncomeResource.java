@@ -1,6 +1,6 @@
 package com.financial.financeapp.resources;
 
-import com.financial.financeapp.entities.handler.IncomeHandle;
+import com.financial.financeapp.entities.dao.IncomeDao;
 import com.financial.financeapp.entities.impl.Income;
 import com.financial.financeapp.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +29,7 @@ public class IncomeResource {
     }
 
     @PostMapping
-    public void insert(@RequestBody IncomeHandle incomeHandle) {
-        IncomeHandle incomeHandleA = incomeHandle;
-        incomeService.insert(incomeHandleA);
+    public void insert(@RequestBody IncomeDao incomeHandle) {
+        incomeService.insert(incomeHandle);
     }
 }
