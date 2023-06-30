@@ -14,7 +14,6 @@ export class CategoryComponent {
   
   categories$: Observable<Category[]>;
 
-
   constructor(
     private categoryService: CategoryService, //injeção categoryService
     private router: Router, //controler roteamento angular

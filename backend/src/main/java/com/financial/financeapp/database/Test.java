@@ -41,6 +41,8 @@ public class Test implements CommandLineRunner {
 
         Category c1 = new Category(null, CategoryStatus.FOOD_SUPERMARKET);
         categoryRepository.save(c1);
+        Category c2 = new Category(null, CategoryStatus.FOOD_BAKERY);
+        categoryRepository.save(c2);
 
         Income i1 = new Income(null, 50.0, LocalDate.parse("2019-06-20"), t1, c1, "");
         Income i2 = new Income(null, 70.0, LocalDate.parse("2019-06-20"), t1, c1, "");

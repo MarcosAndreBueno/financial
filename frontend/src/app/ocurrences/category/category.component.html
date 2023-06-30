@@ -2,12 +2,10 @@
 
 <table>
     <tr>
-        <th>ID</th>
         <th>Category</th>
     </tr>
     <tr *ngFor="let category of categories$ | async as list">
-        <td> {{ category._id }} </td>
-        <td> {{ category.category }} </td>
+        <td> {{ category }} </td>
     </tr>
     <tr>
         <td><button (click)="newCategory()">+</button></td>

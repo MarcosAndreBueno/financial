@@ -50,6 +50,14 @@ public class Category implements Serializable {
         this.id = id;
     }
 
+    public Integer getCategory() {
+        return category;
+    }
+
+    public void setCategory(Integer category) {
+        this.category = category;
+    }
+
     public Set<Income> getIncomes() {
         return incomes;
     }
