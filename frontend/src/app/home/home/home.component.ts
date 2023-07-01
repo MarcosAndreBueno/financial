@@ -12,6 +12,6 @@ export class HomeComponent {
     private currentRoute: ActivatedRoute
   ) {}
   goToIncomes() {
-    this.router.navigate(['incomes'])
+    this.router.navigate(['occurrences/incomes'])
   }
 }
