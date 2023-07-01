@@ -9,13 +9,10 @@ import { IncomesComponent } from './incomes/incomes.component';
 
 @NgModule({
   declarations: [
-    IncomesComponent,
-    NewIncomeComponent
   ],
   imports: [
     CommonModule,
-    OccurrencesRoutingModule,
-    ReactiveFormsModule
+    OccurrencesRoutingModule
   ]
 })
 export class OccurrencesModule { }
