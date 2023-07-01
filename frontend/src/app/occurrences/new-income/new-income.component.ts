@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { OccurrenceService } from '../services/occurrence.service';
+import { IncomeService } from '../services/income.service';
 
 @Component({
-  selector: 'app-new-occurrence',
-  templateUrl: './new-occurrence.component.html',
-  styleUrls: ['./new-occurrence.component.css']
+  selector: 'app-new-income',
+  templateUrl: './new-income.component.html',
+  styleUrls: ['./new-income.component.css']
 })
-export class NewOccurenceComponent implements OnInit{
+export class NewIncomeComponent implements OnInit{
 
-  occurrencyForm!: FormGroup;
+  incomeForm!: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
-    private occService: OccurrenceService
+    private incomeService: IncomeService
     ) {
   }
 
   ngOnInit(): void {
      //listen form input
-    this.occurrencyForm = this.formBuilder.group({
+    this.incomeForm = this.formBuilder.group({
     _id: [null],
     amount: [null],
     _date: [null],
@@ -30,7 +30,7 @@ export class NewOccurenceComponent implements OnInit{
   }
 
   saveOcurrency() {
-    this.occService.onSave(this.occurrencyForm.value)
+    this.incomeService.onSave(this.incomeForm.value)
     .subscribe(
       {
         next: (value) => console.log(value),

@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewCategoryComponent } from './new-occurrence.component';
+import { NewIncomeComponent } from './new-income.component';
 
 describe('NewCategoryComponent', () => {
-  let component: NewCategoryComponent;
-  let fixture: ComponentFixture<NewCategoryComponent>;
+  let component: NewIncomeComponent;
+  let fixture: ComponentFixture<NewIncomeComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [NewCategoryComponent]
+      declarations: [NewIncomeComponent]
     });
-    fixture = TestBed.createComponent(NewCategoryComponent);
+    fixture = TestBed.createComponent(NewIncomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

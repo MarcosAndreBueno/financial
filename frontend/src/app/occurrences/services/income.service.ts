@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class OccurrenceService {
+export class IncomeService {
 
   private readonly API = '/api/income';
 
