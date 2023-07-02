@@ -32,4 +32,8 @@ export class IncomesComponent {
     //relativa à rota atual
     this.router.navigate(['new-income'], {relativeTo: this.currentRoute})
   }
+
+  updateIncome(income: Occurrence) {
+    this.router.navigate(['update', income.id], {relativeTo: this.currentRoute})
+  }
 }

@@ -1,13 +1,13 @@
 export interface Occurrence {
-    _id: number,
+    id: number,
     amount: string,
     date: string,
     type: {
-        _id: number,
+        id: number,
         type: string
     },
     category: {
-        _id: number,
+        id: number,
         category: string
     },
     description: string,

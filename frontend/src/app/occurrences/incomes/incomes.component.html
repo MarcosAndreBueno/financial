@@ -2,7 +2,7 @@
 
 <table>
     <tr>
-        <th>Income</th>
+        <th>Incomes</th>
     </tr>
     <tr *ngFor="let income of incomes$ | async as list">
         <td>Amount: {{ income.amount }}</td>
@@ -10,6 +10,7 @@
         <td>Type Name: {{ income.type.type }}</td>
         <td>Category Name: {{ income.category.category }}</td>
         <td>Description: {{ income.description }} </td>
+        <td><button (click)="updateIncome(income)">Click me</button></td>
     </tr>
     <tr>
         <td><button (click)="newIncome()">+</button></td>
