@@ -24,8 +24,10 @@ public class IncomeResource {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Income> findById(@PathVariable Long id) {
-        Income i = incomeService.findById(id);
-        return ResponseEntity.ok().body(i);
+        //Optional<Income> para Optional<ResponseEntity>
+        return incomeService.findById(id)
+                .map(item -> ResponseEntity.ok().body(item))
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Occurrency } from '../model/occurrency';
+import { Occurrence } from '../model/occurrence';
 import { HttpClient } from '@angular/common/http';
 
 
@@ -15,7 +15,11 @@ export class IncomeService {
   ) {
   }
 
-  onSave(newOccForm: Occurrency) {
-    return this.httpClient.post<Occurrency>(this.API, newOccForm); //return observable
+  onSave(newOccForm: Occurrence) {
+    return this.httpClient.post<Occurrence>(this.API, newOccForm); //return observable
+  }
+
+  list() {
+    return this.httpClient.get<Occurrence[]>(this.API)
   }
 }

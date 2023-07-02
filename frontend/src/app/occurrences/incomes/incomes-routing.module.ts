@@ -6,7 +6,9 @@ import { NewIncomeComponent } from '../new-income/new-income.component';
 const routes: Routes = [
   {
     path: '', component: IncomesComponent, children: [
-      { path: 'new-income', component: NewIncomeComponent }]
+      { path: 'new-income', component: NewIncomeComponent },
+      { path: 'update/:id', component: NewIncomeComponent }
+    ]
   }
 ];
 

@@ -26,9 +26,8 @@ public class IncomeService {
         return incomeRepository.findAll();
     }
 
-    public Income findById(Long id) {
-        Optional<Income> income = incomeRepository.findById(id);
-        return income.get();
+    public Optional<Income> findById(Long id) {
+        return incomeRepository.findById(id);
     }
 
     //por enquanto, injetar dependências em service

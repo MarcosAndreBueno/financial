@@ -1,13 +1,15 @@
 <p>incomes works!</p>
 
-<p>category works!</p>
-
 <table>
     <tr>
-        <th>Category</th>
+        <th>Income</th>
     </tr>
-    <tr *ngFor="let category of categories$ | async as list">
-        <td> {{ category }} </td>
+    <tr *ngFor="let income of incomes$ | async as list">
+        <td>Amount: {{ income.amount }}</td>
+        <td>Date: {{ income.date }}</td>
+        <td>Type Name: {{ income.type.type }}</td>
+        <td>Category Name: {{ income.category.category }}</td>
+        <td>Description: {{ income.description }} </td>
     </tr>
     <tr>
         <td><button (click)="newIncome()">+</button></td>

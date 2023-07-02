@@ -1,3 +1,5 @@
+import { Occurrence } from './../model/occurrence';
+import { IncomeService } from './../services/income.service';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Category } from '../model/category';
@@ -11,13 +13,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class IncomesComponent {
   categories$: Observable<Category[]>;
-
+  incomes$: Observable<Occurrence[]>;
+  
   constructor(
     private categoryService: CategoryService, //injeção categoryService
+    private incomeService: IncomeService,
     private router: Router, //controler roteamento angular
     private currentRoute: ActivatedRoute //rota atual
     ) { 
     this.categories$ = this.categoryService.list();
+    this.incomes$ = this.incomeService.list();
+    console.log(this.incomes$.forEach(element => {
+      console.log(element);
+    }));
   }
 
   newIncome() {
