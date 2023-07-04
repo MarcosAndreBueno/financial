@@ -2,25 +2,57 @@
 
 <form [formGroup]="incomeForm" (ngSubmit)="saveOcurrency()">
     <input type="number" name="amount" formControlName="amount" placeholder="0.0">
+    {{ incomeForm.get('amount') }}
     <br>
 
-    <input type="date" name="_date" formControlName="_date">
+    <input type="date" name="date" formControlName="_date">
+    {{ incomeForm.get('date') }}
     <br>
 
     <select name="type" formControlName="type">
-        <option> INCOME_L </option>
+        <option>
+            Type
+        </option>
     </select>
     <br>
 
-    <select name="category" formControlName="category">
-        <option> SALARY </option>
-    </select>
-    <br>
+    <!-- <div formGroupName="category">
+        <input formControlName="category">
+    </div> -->
 
-    <textarea name="description"  formControlName="description" 
-    placeholder="descrição" rows="5" cols="30"></textarea>
+    <label for="category update">category acessado em update</label>
+    <div formGroupName="category" >
+        <select>
+            <option formControlName="category">
+                {{ incomeForm.controls['category'].value.category }}
+            </option>
+        </select>
+    </div>
+
+    <label for="lista categories">lista categories</label>
+    <div>
+        <select>
+            <option *ngFor="let category of categories" 
+            [value]="category.category">
+            {{ category.category }}
+            </option>
+        </select>
+    </div>
+
+    <label for="lista categories inicializado">lista categories com valor inicializado pelo incomeForm</label>
+    <div formGroupName="category">
+        <select formControlName="category">
+          <option *ngFor="let category of categories" [value]="category.category" [selected]="category.category === incomeForm.controls['category'].value.category">
+            {{ category.category }}
+          </option>
+        </select>
+      </div>
+
+    <textarea name="description" formControlName="description" placeholder="descrição" rows="5" cols="30"></textarea>
     <br>
 
     <button type="submit" formControlName="submit">Save</button>
+
+    <button (click)="testes()">testes</button>
     <br>
 </form>
