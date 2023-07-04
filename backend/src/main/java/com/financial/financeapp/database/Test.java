@@ -36,12 +36,12 @@ public class Test implements CommandLineRunner {
     
     @Override
     public void run(String... args) throws Exception {
-        Type t1 = new Type(null, TypeStatus.HOUSING);
+        Type t1 = new Type(null, TypeStatus.INCOME_L);
         typeRepository.save(t1);
 
-        Category c1 = new Category(null, CategoryStatus.FOOD_SUPERMARKET);
+        Category c1 = new Category(null, CategoryStatus.SALARY);
         categoryRepository.save(c1);
-        Category c2 = new Category(null, CategoryStatus.FOOD_BAKERY);
+        Category c2 = new Category(null, CategoryStatus.SIDE_GIGS);
         categoryRepository.save(c2);
 
         Income i1 = new Income(null, 50.0, LocalDate.parse("2019-06-20"), t1, c1, "");

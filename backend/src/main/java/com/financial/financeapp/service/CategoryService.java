@@ -1,5 +1,6 @@
 package com.financial.financeapp.service;
 
+import com.financial.financeapp.entities.dto.CategoryDTO;
 import com.financial.financeapp.entities.enums.CategoryStatus;
 import com.financial.financeapp.entities.impl.Category;
 import com.financial.financeapp.repositories.CategoryRepository;
@@ -16,18 +17,14 @@ public class CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
 
-    public List<String> findAll() {
+    public List<CategoryDTO> findAll() {
         List<Category> categories = categoryRepository.findAll();
-        //converter enums para string
-        List<String> categoryCodes =
-                categories.stream()
-                .map(category -> CategoryStatus.valueOf(category.getCategory()).toString())
-                .collect(Collectors.toList());
-        return categoryCodes;
+        return new CategoryDTO().prepareCategoriesData(categories);
     }
 
-    public Category findById(Long id) {
-        Optional<Category> category = categoryRepository.findById(id);
+    public CategoryDTO findById(Long id) {
+        Optional<Category> cat = categoryRepository.findById(id);
+        Optional<CategoryDTO> category = new CategoryDTO().prepareCategoriesData(cat);
         return category.get();
     }
 }

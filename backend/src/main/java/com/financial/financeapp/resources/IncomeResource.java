@@ -1,6 +1,6 @@
 package com.financial.financeapp.resources;
 
-import com.financial.financeapp.entities.dao.IncomeDao;
+import com.financial.financeapp.entities.dto.IncomeDTO;
 import com.financial.financeapp.entities.impl.Income;
 import com.financial.financeapp.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +17,13 @@ public class IncomeResource {
     IncomeService incomeService;
 
     @GetMapping
-    public ResponseEntity<List<Income>> findAll() {
-        List<Income> i = incomeService.findAll();
+    public ResponseEntity<List<IncomeDTO>> findAll() {
+        List<IncomeDTO> i = incomeService.findAll();
         return ResponseEntity.ok().body(i);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Income> findById(@PathVariable Long id) {
+    public ResponseEntity<IncomeDTO> findById(@PathVariable Long id) {
         //Optional<Income> para Optional<ResponseEntity>
         return incomeService.findById(id)
                 .map(item -> ResponseEntity.ok().body(item))
@@ -31,7 +31,7 @@ public class IncomeResource {
     }
 
     @PostMapping
-    public void insert(@RequestBody IncomeDao incomeHandle) {
+    public void insert(@RequestBody IncomeDTO incomeHandle) {
         incomeService.insert(incomeHandle);
     }
 }

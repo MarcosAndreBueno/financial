@@ -2,11 +2,9 @@
 
 <form [formGroup]="incomeForm" (ngSubmit)="saveOcurrency()">
     <input type="number" name="amount" formControlName="amount" placeholder="0.0">
-    {{ incomeForm.get('amount') }}
     <br>
 
-    <input type="date" name="date" formControlName="_date">
-    {{ incomeForm.get('date') }}
+    <input type="date" name="date" formControlName="date">
     <br>
 
     <select name="type" formControlName="type">
@@ -16,30 +14,6 @@
     </select>
     <br>
 
-    <!-- <div formGroupName="category">
-        <input formControlName="category">
-    </div> -->
-
-    <label for="category update">category acessado em update</label>
-    <div formGroupName="category" >
-        <select>
-            <option formControlName="category">
-                {{ incomeForm.controls['category'].value.category }}
-            </option>
-        </select>
-    </div>
-
-    <label for="lista categories">lista categories</label>
-    <div>
-        <select>
-            <option *ngFor="let category of categories" 
-            [value]="category.category">
-            {{ category.category }}
-            </option>
-        </select>
-    </div>
-
-    <label for="lista categories inicializado">lista categories com valor inicializado pelo incomeForm</label>
     <div formGroupName="category">
         <select formControlName="category">
           <option *ngFor="let category of categories" [value]="category.category" [selected]="category.category === incomeForm.controls['category'].value.category">

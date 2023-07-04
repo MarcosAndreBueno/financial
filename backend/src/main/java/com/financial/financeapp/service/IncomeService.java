@@ -2,7 +2,7 @@ package com.financial.financeapp.service;
 
 import com.financial.financeapp.entities.enums.CategoryStatus;
 import com.financial.financeapp.entities.enums.TypeStatus;
-import com.financial.financeapp.entities.dao.IncomeDao;
+import com.financial.financeapp.entities.dto.IncomeDTO;
 import com.financial.financeapp.entities.impl.Category;
 import com.financial.financeapp.entities.impl.Income;
 import com.financial.financeapp.entities.impl.Type;
@@ -22,12 +22,14 @@ public class IncomeService {
     @Autowired
     IncomeRepository incomeRepository;
 
-    public List<Income> findAll() {
-        return incomeRepository.findAll();
+    public List<IncomeDTO> findAll() {
+        List<Income> incomes = incomeRepository.findAll();
+        return new IncomeDTO().prepareData(incomes);
     }
 
-    public Optional<Income> findById(Long id) {
-        return incomeRepository.findById(id);
+    public Optional<IncomeDTO> findById(Long id) {
+        Optional<Income> income = incomeRepository.findById(id);
+        return new IncomeDTO().prepareData(income);
     }
 
     //por enquanto, injetar dependências em service
@@ -35,7 +37,7 @@ public class IncomeService {
     TypeRepository typeRepository;
     @Autowired
     CategoryRepository categoryRepository;
-    public void insert(IncomeDao incomeHandle) {
+    public void insert(IncomeDTO incomeHandle) {
         TypeStatus typeStatus = TypeStatus.valueOf(incomeHandle.getType());
         Long tID = Long.valueOf(typeStatus.getCode());
         Type type = typeRepository.getReferenceById(tID);

@@ -1,5 +1,6 @@
 package com.financial.financeapp.resources;
 
+import com.financial.financeapp.entities.dto.CategoryDTO;
 import com.financial.financeapp.entities.impl.Category;
 import com.financial.financeapp.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +20,14 @@ public class CategoryResource {
     CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<String>> findAll() {
-        List<String> categories = categoryService.findAll();
+    public ResponseEntity<List<CategoryDTO>> findAll() {
+        List<CategoryDTO> categories = categoryService.findAll();
         return ResponseEntity.ok().body(categories);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Category> findById(@PathVariable Long id) {
-        Category c = categoryService.findById(id);
+    public ResponseEntity<CategoryDTO> findById(@PathVariable Long id) {
+        CategoryDTO c = categoryService.findById(id);
         return ResponseEntity.ok().body(c);
     }
 }

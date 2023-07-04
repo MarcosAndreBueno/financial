@@ -14,9 +14,9 @@ export class NewIncomeComponent implements OnInit {
 
   incomeForm!: FormGroup;
   categories: Category[] = [
-    { category: '1' },
-    { category: '10' },
-    { category: '20' }
+    { category: 'EXAMPLE' },
+    { category: 'SALARY' },
+    { category: 'ANOTHER_EXAMPLE' }
   ];
 
   constructor(
@@ -31,7 +31,7 @@ export class NewIncomeComponent implements OnInit {
     this.incomeForm = this.formBuilder.group({
       _id: [null],
       amount: [null],
-      _date: [null],
+      date: [null],
       type: this.formBuilder.group({
         _id: [null],
         type: [null]
@@ -43,18 +43,35 @@ export class NewIncomeComponent implements OnInit {
       description: [null],
     });
 
-    //get informações carregadas pelo incomeResolver
+    //get informações carregadas pelo incomeResolver (/update/1)
     const income: Occurrence = this.currentRoute.snapshot.data['income']
     console.log(income)
     //popular form
     this.incomeForm.patchValue({
       _id: income.id,
       amount: income.amount,
-      _date: income.date,
+      date: income.date,
       type: income.type,
-      category: income.category,
+      category: {
+        category: income.category,
+      },
       description: income.description
     })
+
+    console.log("========")
+    console.log("========")
+    console.log("========")
+    console.log("========")
+    console.log("========")
+
+    console.log('informação vindo de income: ', this.currentRoute.snapshot.data['income'])
+    console.log('formBuilder criado com info: ', this.incomeForm)
+
+    console.log("========")
+    console.log("========")
+    console.log("========")
+    console.log("========")
+    console.log("========")
   }
 
   saveOcurrency() {
@@ -73,12 +90,5 @@ export class NewIncomeComponent implements OnInit {
     console.log('typeof categories: ', typeof this.incomeForm.get('category'))
     console.log('teste category em incomeForm: ', this.incomeForm.controls['category'].value)
     console.log('teste categories: ', this.categories)
-    /* category = this.formBuilder.group({
-      'categoryForm': this.formBuilder.array([
-        this.formBuilder.group({
-
-        })
-      ])
-    }) */
   }
 }
