@@ -1,5 +1,6 @@
 package com.financial.financeapp.service;
 
+import com.financial.financeapp.entities.dto.CategoryDTO;
 import com.financial.financeapp.entities.enums.CategoryStatus;
 import com.financial.financeapp.entities.enums.TypeStatus;
 import com.financial.financeapp.entities.dto.IncomeDTO;
@@ -24,6 +25,12 @@ public class IncomeService {
     @Autowired
     IncomeRepository incomeRepository;
 
+    @Autowired
+    CategoryService categoryService;
+
+    @Autowired
+    TypeService typeService;
+
     public List<IncomeDTO> findAll() {
         List<Income> incomes = incomeRepository.findAll();
         return new IncomeDTO().prepareData(incomes);
@@ -34,19 +41,10 @@ public class IncomeService {
         return new IncomeDTO().prepareData(income);
     }
 
-    //por enquanto, injetar dependências em service
-    @Autowired
-    TypeRepository typeRepository;
-    @Autowired
-    CategoryRepository categoryRepository;
     public void insert(IncomeDTO incomeDTO) {
-        TypeStatus typeStatus = TypeStatus.valueOf(incomeDTO.getType());
-        Long tID = Long.valueOf(typeStatus.getCode());
-        Type type = typeRepository.getReferenceById(tID);
-
-        CategoryStatus categoryStatus = CategoryStatus.valueOf(incomeDTO.getCategory());
-        Long cID = Long.valueOf(categoryStatus.getCode());
-        Category category = categoryRepository.getReferenceById(cID);
+        //lazy proxy initialization
+        Type type = typeService.getProxyInstanceById(incomeDTO);
+        Category category = categoryService.getProxyInstanceById(incomeDTO);
 
         Income income = new Income(
                 null,
@@ -62,14 +60,9 @@ public class IncomeService {
     public ResponseEntity<Income> update(Long id, IncomeDTO incomeDTO) {
         Optional<Income> incomeUpdate = incomeRepository.findById(id);
 
-        //usar método find para evitar jackson lazyloading error
-        TypeStatus typeStatus = TypeStatus.valueOf(incomeDTO.getType());
-        Long tID = Long.valueOf(typeStatus.getCode());
-        Type type = typeRepository.findById(tID).get();
-
-        CategoryStatus categoryStatus = CategoryStatus.valueOf(incomeDTO.getCategory());
-        Long cID = Long.valueOf(categoryStatus.getCode());
-        Category category = categoryRepository.findById(cID).get();
+        //usar método find para evitar LazyInitializationException
+        Type type = typeService.getEntityInstanceById(incomeDTO);
+        Category category = categoryService.getEntityInstanceById(incomeDTO);
 
         return incomeUpdate
                 .map(item -> {

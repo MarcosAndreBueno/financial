@@ -58,8 +58,5 @@ public class Test implements CommandLineRunner {
 
         t1.getOutcomes().addAll(Arrays.asList(o1,o2));
         c1.getOutcomes().addAll(Arrays.asList(o1,o2));
-
-        Hibernate.initialize(i1);
-        Hibernate.initialize(i2);
     }
 }
