@@ -31,7 +31,12 @@ public class IncomeResource {
     }
 
     @PostMapping
-    public void insert(@RequestBody IncomeDTO incomeHandle) {
-        incomeService.insert(incomeHandle);
+    public void insert(@RequestBody IncomeDTO incomeDTO) {
+        incomeService.insert(incomeDTO);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Income> update(@PathVariable Long id, @RequestBody IncomeDTO incomeDTO) {
+        return incomeService.update(id, incomeDTO);
     }
 }

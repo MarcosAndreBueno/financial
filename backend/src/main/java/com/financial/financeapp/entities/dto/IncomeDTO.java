@@ -1,8 +1,6 @@
 package com.financial.financeapp.entities.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.financial.financeapp.entities.enums.CategoryStatus;
-import com.financial.financeapp.entities.impl.Category;
 import com.financial.financeapp.entities.impl.Income;
 
 import java.util.List;
@@ -55,7 +53,6 @@ public class IncomeDTO {
                 CategoryStatus.valueOf(income.get().getCategory().getCategory()).toString(),
                 income.get().getDescription()
         ));
-
     }
 
     public Long getId() {

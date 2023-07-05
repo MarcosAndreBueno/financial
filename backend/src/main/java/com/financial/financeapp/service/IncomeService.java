@@ -9,7 +9,9 @@ import com.financial.financeapp.entities.impl.Type;
 import com.financial.financeapp.repositories.CategoryRepository;
 import com.financial.financeapp.repositories.IncomeRepository;
 import com.financial.financeapp.repositories.TypeRepository;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -37,23 +39,48 @@ public class IncomeService {
     TypeRepository typeRepository;
     @Autowired
     CategoryRepository categoryRepository;
-    public void insert(IncomeDTO incomeHandle) {
-        TypeStatus typeStatus = TypeStatus.valueOf(incomeHandle.getType());
+    public void insert(IncomeDTO incomeDTO) {
+        TypeStatus typeStatus = TypeStatus.valueOf(incomeDTO.getType());
         Long tID = Long.valueOf(typeStatus.getCode());
         Type type = typeRepository.getReferenceById(tID);
 
-        CategoryStatus categoryStatus = CategoryStatus.valueOf(incomeHandle.getCategory());
+        CategoryStatus categoryStatus = CategoryStatus.valueOf(incomeDTO.getCategory());
         Long cID = Long.valueOf(categoryStatus.getCode());
         Category category = categoryRepository.getReferenceById(cID);
 
         Income income = new Income(
                 null,
-                incomeHandle.getAmount(),
-                LocalDate.parse(incomeHandle.getDate()),
+                incomeDTO.getAmount(),
+                LocalDate.parse(incomeDTO.getDate()),
                 type,
                 category,
-                incomeHandle.getDescription()
+                incomeDTO.getDescription()
         );
         incomeRepository.save(income);
+    }
+
+    public ResponseEntity<Income> update(Long id, IncomeDTO incomeDTO) {
+        Optional<Income> incomeUpdate = incomeRepository.findById(id);
+
+        //usar método find para evitar jackson lazyloading error
+        TypeStatus typeStatus = TypeStatus.valueOf(incomeDTO.getType());
+        Long tID = Long.valueOf(typeStatus.getCode());
+        Type type = typeRepository.findById(tID).get();
+
+        CategoryStatus categoryStatus = CategoryStatus.valueOf(incomeDTO.getCategory());
+        Long cID = Long.valueOf(categoryStatus.getCode());
+        Category category = categoryRepository.findById(cID).get();
+
+        return incomeUpdate
+                .map(item -> {
+                    item.setAmount(incomeDTO.getAmount());
+                    item.setDate(LocalDate.parse(incomeDTO.getDate()));
+                    item.setType(type);
+                    item.setCategory(category);
+                    item.setDescription(incomeDTO.getDescription());
+                    Income update = incomeRepository.save(item);
+                    return ResponseEntity.ok().body(update);
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 }

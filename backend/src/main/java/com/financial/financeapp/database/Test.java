@@ -10,6 +10,7 @@ import com.financial.financeapp.repositories.CategoryRepository;
 import com.financial.financeapp.repositories.IncomeRepository;
 import com.financial.financeapp.repositories.OutcomeRepository;
 import com.financial.financeapp.repositories.TypeRepository;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -57,5 +58,8 @@ public class Test implements CommandLineRunner {
 
         t1.getOutcomes().addAll(Arrays.asList(o1,o2));
         c1.getOutcomes().addAll(Arrays.asList(o1,o2));
+
+        Hibernate.initialize(i1);
+        Hibernate.initialize(i2);
     }
 }
