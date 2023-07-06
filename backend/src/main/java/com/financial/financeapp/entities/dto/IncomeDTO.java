@@ -14,10 +14,10 @@ public class IncomeDTO {
     private Double amount;
     private String date;
     private String type;
-    private String category;
+    private CategoryDTO category;
     private String description;
 
-    public IncomeDTO(Long id, Double amount, String date, String type, String category, String description) {
+    public IncomeDTO(Long id, Double amount, String date, String type, CategoryDTO category, String description) {
         this.id = id;
         this.amount = amount;
         this.date = date;
@@ -37,7 +37,10 @@ public class IncomeDTO {
                         income.getAmount(),
                         income.getDate().toString(),
                         income.getType().toString(),
-                        CategoryStatus.valueOf(income.getCategory().getCategory()).toString(),
+                        new CategoryDTO(
+                                income.getCategory().getId(),
+                                CategoryStatus.valueOf(income.getCategory().getCategory()).toString()
+                        ),
                         income.getDescription()
                 ))
                 .collect(Collectors.toList());
@@ -50,7 +53,10 @@ public class IncomeDTO {
                 income.get().getAmount(),
                 income.get().getDate().toString(),
                 income.get().getType().toString(),
-                CategoryStatus.valueOf(income.get().getCategory().getCategory()).toString(),
+                new CategoryDTO(
+                        income.get().getCategory().getId(),
+                        CategoryStatus.valueOf(income.get().getCategory().getCategory()).toString()
+                ),
                 income.get().getDescription()
         ));
     }
@@ -87,11 +93,11 @@ public class IncomeDTO {
         this.type = type;
     }
 
-    public String getCategory() {
+    public CategoryDTO getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(CategoryDTO category) {
         this.category = category;
     }
 

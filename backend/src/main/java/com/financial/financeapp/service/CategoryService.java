@@ -31,14 +31,14 @@ public class CategoryService {
 
     //lazyloading
     public Category getProxyInstanceById(IncomeDTO incomeDTO) {
-        CategoryStatus categoryStatus = CategoryStatus.valueOf(incomeDTO.getCategory());
+        CategoryStatus categoryStatus = CategoryStatus.valueOf(incomeDTO.getCategory().getCategory());
         Long cID = Long.valueOf(categoryStatus.getCode());
         return categoryRepository.getReferenceById(cID);
     }
 
     //entitidade totalmente carregada
     public Category getEntityInstanceById(IncomeDTO incomeDTO) {
-        CategoryStatus categoryStatus = CategoryStatus.valueOf(incomeDTO.getCategory());
+        CategoryStatus categoryStatus = CategoryStatus.valueOf(incomeDTO.getCategory().getCategory());
         Long cID = Long.valueOf(categoryStatus.getCode());
         return categoryRepository.findById(cID).get();
     }

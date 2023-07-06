@@ -1,32 +1,38 @@
 <h2>New Income WORKS!</h2>
 
-<form [formGroup]="incomeForm" (ngSubmit)="saveOcurrency()">
-    <input type="number" name="amount" formControlName="amount" placeholder="0.0">
-    <br>
+<form [formGroup]="incomeForm" (ngSubmit)="submitButton(incomeForm)">
+  <input type="number" name="amount" formControlName="amount" placeholder="0.0">
+  <br>
 
-    <input type="date" name="date" formControlName="date">
-    <br>
+  <input type="date" name="date" formControlName="date">
+  <br>
 
-    <select name="type" formControlName="type">
+  <div [formGroup]="incomeForm">
+    <div formGroupName="type">
+      <select formControlName="type">
         <option>
-            Type
+          INCOME_L
         </option>
-    </select>
-    <br>
+      </select>
+    </div>
+  </div>
 
+  <div [formGroup]="incomeForm">
     <div formGroupName="category">
-        <select formControlName="category">
-          <option *ngFor="let category of categories" [value]="category.category" [selected]="category.category === incomeForm.controls['category'].value.category">
-            {{ category.category }}
-          </option>
-        </select>
-      </div>
+      <select formControlName="category">
+        <option *ngFor="let category of categories$ | async as list" [ngValue]="category.category"
+          [selected]="category.category === incomeForm.controls['category'].value.category">
+          {{ category.category }}
+        </option>
+      </select>
+    </div>
+  </div>
 
-    <textarea name="description" formControlName="description" placeholder="descrição" rows="5" cols="30"></textarea>
-    <br>
+  <textarea name="description" formControlName="description" placeholder="descrição" rows="5" cols="30"></textarea>
+  <br>
 
-    <button type="submit" formControlName="submit">Save</button>
-
-    <button (click)="testes()">testes</button>
-    <br>
+  <button type="submit" name="submit">
+    Save
+  </button>
+  <br>
 </form>

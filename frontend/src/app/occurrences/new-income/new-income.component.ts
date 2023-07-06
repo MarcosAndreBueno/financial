@@ -1,9 +1,11 @@
+import { CategoryService } from './../services/category.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IncomeService } from '../services/income.service';
 import { ActivatedRoute } from '@angular/router';
 import { Occurrence } from '../model/occurrence';
 import { Category } from '../model/category';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-new-income',
@@ -13,31 +15,25 @@ import { Category } from '../model/category';
 export class NewIncomeComponent implements OnInit {
 
   incomeForm!: FormGroup;
-  categories: Category[] = [
-    { category: 'EXAMPLE' },
-    { category: 'SALARY' },
-    { category: 'ANOTHER_EXAMPLE' }
-  ];
+  categories$: Observable<Category[]>;
 
   constructor(
     private formBuilder: FormBuilder,
     private incomeService: IncomeService,
-    private currentRoute: ActivatedRoute
+    private currentRoute: ActivatedRoute,
+    private categoryService: CategoryService
   ) {
+    this.categories$ = categoryService.list()
   }
 
   ngOnInit(): void {
     //listen form input
     this.incomeForm = this.formBuilder.group({
-      _id: [null],
+      id: [null],
       amount: [null],
       date: [null],
-      type: this.formBuilder.group({
-        _id: [null],
-        type: [null]
-      }),
+      type: [null],
       category: this.formBuilder.group({
-        _id: [null],
         category: [null]
       }),
       description: [null],
@@ -51,30 +47,22 @@ export class NewIncomeComponent implements OnInit {
       _id: income.id,
       amount: income.amount,
       date: income.date,
-      type: income.type,
+      type: 'INCOME_L',
       category: {
-        category: income.category,
+        category: income.category.category,
       },
       description: income.description
     })
-
-    console.log("========")
-    console.log("========")
-    console.log("========")
-    console.log("========")
-    console.log("========")
-
-    console.log('informação vindo de income: ', this.currentRoute.snapshot.data['income'])
-    console.log('formBuilder criado com info: ', this.incomeForm)
-
-    console.log("========")
-    console.log("========")
-    console.log("========")
-    console.log("========")
-    console.log("========")
   }
 
-  saveOcurrency() {
+  submitButton(editedForm: FormGroup) {
+    if (this.currentRoute.snapshot.data['income'].id)
+      this.editOccurrence(editedForm)
+    else
+      this.saveOccurrence()
+  }
+
+  saveOccurrence() {
     this.incomeService.onSave(this.incomeForm.value)
       .subscribe(
         {
@@ -84,11 +72,13 @@ export class NewIncomeComponent implements OnInit {
       )
   }
 
-  testes() {
-    console.log('teste incomeForm: ', this.incomeForm)
-    console.log('teste categories: ', this.incomeForm.get('category'))
-    console.log('typeof categories: ', typeof this.incomeForm.get('category'))
-    console.log('teste category em incomeForm: ', this.incomeForm.controls['category'].value)
-    console.log('teste categories: ', this.categories)
+  editOccurrence(editedForm: FormGroup) {
+    this.incomeService.onEdit(editedForm.value, this.currentRoute.snapshot.data['income'].id)
+      .subscribe(
+        {
+          next: (value) => console.log(value),
+          error: (msg) => console.log(msg),
+        }
+      )
   }
 }

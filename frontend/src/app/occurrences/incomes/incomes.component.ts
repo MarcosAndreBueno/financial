@@ -2,7 +2,6 @@ import { Occurrence } from './../model/occurrence';
 import { IncomeService } from './../services/income.service';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Category } from '../model/category';
 import { CategoryService } from '../services/category.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -12,7 +11,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./incomes.component.css']
 })
 export class IncomesComponent {
-  categories$: Observable<Category[]>;
   incomes$: Observable<Occurrence[]>;
   
   constructor(
@@ -21,11 +19,7 @@ export class IncomesComponent {
     private router: Router, //controler roteamento angular
     private currentRoute: ActivatedRoute //rota atual
     ) { 
-    this.categories$ = this.categoryService.list();
     this.incomes$ = this.incomeService.list();
-    console.log(this.incomes$.forEach(element => {
-      console.log(element);
-    }));
   }
 
   newIncome() {

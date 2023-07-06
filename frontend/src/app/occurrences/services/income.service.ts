@@ -7,7 +7,6 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class IncomeService {
-
   private readonly API = '/api/income';
 
   constructor(
@@ -26,5 +25,9 @@ export class IncomeService {
   loadById(id: string) {
     //concatenação echma script
     return this.httpClient.get<Occurrence>(`${this.API}/${id}`); 
+  }
+
+  onEdit(editOccForm: Partial<Occurrence>, id: number) {
+    return this.httpClient.put<Occurrence>(`${this.API}/${id}`, editOccForm);
   }
 }
