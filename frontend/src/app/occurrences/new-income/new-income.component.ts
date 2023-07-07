@@ -2,10 +2,11 @@ import { CategoryService } from './../services/category.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IncomeService } from '../services/income.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Occurrence } from '../model/occurrence';
 import { Category } from '../model/category';
 import { Observable } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-new-income',
@@ -21,6 +22,7 @@ export class NewIncomeComponent implements OnInit {
     private formBuilder: FormBuilder,
     private incomeService: IncomeService,
     private currentRoute: ActivatedRoute,
+    private location: Location,
     private categoryService: CategoryService
   ) {
     this.categories$ = categoryService.list()
@@ -55,30 +57,34 @@ export class NewIncomeComponent implements OnInit {
     })
   }
 
-  submitButton(editedForm: FormGroup) {
+  submitButton() {
     if (this.currentRoute.snapshot.data['income'].id)
-      this.editOccurrence(editedForm)
+      this.editOccurrence()
     else
       this.saveOccurrence()
   }
 
   saveOccurrence() {
+    console.log('saveOccurrence')
     this.incomeService.onSave(this.incomeForm.value)
       .subscribe(
-        {
-          next: (value) => console.log(value),
-          error: (msg) => console.log(msg),
+        () => {
+          this.return()
         }
-      )
+      );
   }
 
-  editOccurrence(editedForm: FormGroup) {
-    this.incomeService.onEdit(editedForm.value, this.currentRoute.snapshot.data['income'].id)
+  editOccurrence() {
+    this.incomeService.onEdit(this.incomeForm.value, this.currentRoute.snapshot.data['income'].id)
       .subscribe(
-        {
-          next: (value) => console.log(value),
-          error: (msg) => console.log(msg),
+        () => {
+          this.incomeForm.patchValue(this.incomeForm.value);
+          this.return()
         }
-      )
+      );
+  }
+
+  return() {
+    this.location.back();
   }
 }

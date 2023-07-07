@@ -1,6 +1,6 @@
 <h2>New Income WORKS!</h2>
 
-<form [formGroup]="incomeForm" (ngSubmit)="submitButton(incomeForm)">
+<form [formGroup]="incomeForm" (ngSubmit)="submitButton()">
   <input type="number" name="amount" formControlName="amount" placeholder="0.0">
   <br>
 
@@ -35,4 +35,6 @@
     Save
   </button>
   <br>
+
+  <button type="button" (click)="return()">Cancel</button>
 </form>

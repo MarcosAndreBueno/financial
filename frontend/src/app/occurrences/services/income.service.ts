@@ -15,6 +15,7 @@ export class IncomeService {
   }
 
   onSave(newOccForm: Occurrence) {
+    console.log('on save')
     return this.httpClient.post<Occurrence>(this.API, newOccForm); //return observable
   }
 

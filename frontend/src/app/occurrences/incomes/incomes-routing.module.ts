@@ -5,12 +5,9 @@ import { IncomesComponent } from './incomes.component';
 import { NewIncomeComponent } from '../new-income/new-income.component';
 
 const routes: Routes = [
-  {
-    path: '', component: IncomesComponent, children: [
-      { path: 'new-income', component: NewIncomeComponent, resolve: { income: IncomeResolver } },
-      { path: 'update/:id', component: NewIncomeComponent, resolve: { income: IncomeResolver } }
-    ]
-  }
+  { path: '', component: IncomesComponent },
+  { path: 'new-income', component: NewIncomeComponent, resolve: { income: IncomeResolver } },
+  { path: 'update/:id', component: NewIncomeComponent, resolve: { income: IncomeResolver } }
 ];
 
 @NgModule({
