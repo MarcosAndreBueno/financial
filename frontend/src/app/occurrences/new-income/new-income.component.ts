@@ -1,3 +1,5 @@
+import { Type } from './../model/type';
+import { TypeService } from './../services/type.service';
 import { CategoryService } from './../services/category.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -17,15 +19,18 @@ export class NewIncomeComponent implements OnInit {
 
   incomeForm!: FormGroup;
   categories$: Observable<Category[]>;
+  types$: Observable<Type[]>;
 
   constructor(
     private formBuilder: FormBuilder,
     private incomeService: IncomeService,
     private currentRoute: ActivatedRoute,
     private location: Location,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private typeService: TypeService
   ) {
     this.categories$ = categoryService.list()
+    this.types$ = typeService.list()
   }
 
   ngOnInit(): void {
@@ -34,7 +39,9 @@ export class NewIncomeComponent implements OnInit {
       id: [null],
       amount: [null],
       date: [null],
-      type: [null],
+      type: this.formBuilder.group({
+        type: [null]
+      }),
       category: this.formBuilder.group({
         category: [null]
       }),
@@ -43,13 +50,14 @@ export class NewIncomeComponent implements OnInit {
 
     //get informações carregadas pelo incomeResolver (/update/1)
     const income: Occurrence = this.currentRoute.snapshot.data['income']
-    console.log(income)
     //popular form
     this.incomeForm.patchValue({
       _id: income.id,
       amount: income.amount,
       date: income.date,
-      type: 'INCOME_L',
+      type: {
+        type: income.type.type
+      },
       category: {
         category: income.category.category,
       },
@@ -65,7 +73,6 @@ export class NewIncomeComponent implements OnInit {
   }
 
   saveOccurrence() {
-    console.log('saveOccurrence')
     this.incomeService.onSave(this.incomeForm.value)
       .subscribe(
         () => {

@@ -49,5 +49,4 @@ public class IncomeResource {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
-
 }

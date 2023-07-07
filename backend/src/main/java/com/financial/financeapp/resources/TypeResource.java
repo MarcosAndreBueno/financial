@@ -1,5 +1,6 @@
 package com.financial.financeapp.resources;
 
+import com.financial.financeapp.entities.dto.TypeDTO;
 import com.financial.financeapp.entities.impl.Type;
 import com.financial.financeapp.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +21,14 @@ public class TypeResource {
     TypeService typeService;
 
     @GetMapping
-    public ResponseEntity<List<Type>> findAll() {
-        List<Type> t = typeService.findAll();
-        return ResponseEntity.ok().body(t);
+    public ResponseEntity<List<TypeDTO>> findAll() {
+        List<TypeDTO> type = typeService.findAll();
+        return ResponseEntity.ok().body(type);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Type> findById(@PathVariable Long id) {
-        Type t = typeService.findById(id);
-        return ResponseEntity.ok().body(t);
+    public ResponseEntity<TypeDTO> findById(@PathVariable Long id) {
+        TypeDTO type = typeService.findById(id);
+        return ResponseEntity.ok().body(type);
     }
 }

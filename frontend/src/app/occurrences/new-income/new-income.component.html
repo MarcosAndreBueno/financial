@@ -10,8 +10,9 @@
   <div [formGroup]="incomeForm">
     <div formGroupName="type">
       <select formControlName="type">
-        <option>
-          INCOME_L
+        <option *ngFor="let type of types$ | async as list" [ngValue]="type.type"
+          [selected]="type.type === incomeForm.controls['type'].value.type">
+          {{ type.type }}
         </option>
       </select>
     </div>

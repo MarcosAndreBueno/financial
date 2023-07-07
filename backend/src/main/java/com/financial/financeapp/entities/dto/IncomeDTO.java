@@ -1,6 +1,7 @@
 package com.financial.financeapp.entities.dto;
 
 import com.financial.financeapp.entities.enums.CategoryStatus;
+import com.financial.financeapp.entities.enums.TypeStatus;
 import com.financial.financeapp.entities.impl.Income;
 
 import java.util.List;
@@ -13,11 +14,11 @@ public class IncomeDTO {
     private Long id;
     private Double amount;
     private String date;
-    private String type;
+    private TypeDTO type;
     private CategoryDTO category;
     private String description;
 
-    public IncomeDTO(Long id, Double amount, String date, String type, CategoryDTO category, String description) {
+    public IncomeDTO(Long id, Double amount, String date, TypeDTO type, CategoryDTO category, String description) {
         this.id = id;
         this.amount = amount;
         this.date = date;
@@ -36,7 +37,10 @@ public class IncomeDTO {
                         income.getId(),
                         income.getAmount(),
                         income.getDate().toString(),
-                        income.getType().toString(),
+                        new TypeDTO(
+                                income.getType().getId(),
+                                TypeStatus.valueOf(income.getType().getType()).toString()
+                        ),
                         new CategoryDTO(
                                 income.getCategory().getId(),
                                 CategoryStatus.valueOf(income.getCategory().getCategory()).toString()
@@ -52,7 +56,10 @@ public class IncomeDTO {
                 income.get().getId(),
                 income.get().getAmount(),
                 income.get().getDate().toString(),
-                income.get().getType().toString(),
+                new TypeDTO(
+                        income.get().getType().getId(),
+                        TypeStatus.valueOf(income.get().getType().getType()).toString()
+                ),
                 new CategoryDTO(
                         income.get().getCategory().getId(),
                         CategoryStatus.valueOf(income.get().getCategory().getCategory()).toString()
@@ -85,11 +92,11 @@ public class IncomeDTO {
         this.date = date;
     }
 
-    public String getType() {
+    public TypeDTO getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(TypeDTO type) {
         this.type = type;
     }
 
