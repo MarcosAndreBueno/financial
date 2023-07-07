@@ -39,4 +39,15 @@ public class IncomeResource {
     public ResponseEntity<Income> update(@PathVariable Long id, @RequestBody IncomeDTO incomeDTO) {
         return incomeService.update(id, incomeDTO);
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        return incomeService.findById(id)
+                .map( item -> {
+                    incomeService.deleteById(id);
+                    return ResponseEntity.noContent().<Void>build();
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
 }

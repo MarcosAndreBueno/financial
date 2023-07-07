@@ -76,4 +76,8 @@ public class IncomeService {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    public void deleteById(Long id) {
+        incomeRepository.deleteById(id);
+    }
 }
