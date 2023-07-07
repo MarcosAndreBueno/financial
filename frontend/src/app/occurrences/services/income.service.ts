@@ -31,4 +31,8 @@ export class IncomeService {
   onEdit(editOccForm: Partial<Occurrence>, id: number) {
     return this.httpClient.put<Occurrence>(`${this.API}/${id}`, editOccForm);
   }
+
+  deleteById(id: string) {
+    return this.httpClient.delete(`${this.API}/${id}`);
+  }
 }

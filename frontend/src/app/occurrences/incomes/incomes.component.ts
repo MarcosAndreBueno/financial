@@ -12,22 +12,37 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class IncomesComponent {
   incomes$: Observable<Occurrence[]>;
-  
+
   constructor(
     private categoryService: CategoryService, //injeção categoryService
     private incomeService: IncomeService,
     private router: Router, //controler roteamento angular
     private currentRoute: ActivatedRoute //rota atual
-    ) { 
+  ) {
     this.incomes$ = this.incomeService.list();
   }
 
   newIncome() {
     //relativa à rota atual
-    this.router.navigate(['new-income'], {relativeTo: this.currentRoute})
+    this.router.navigate(['new-income'], { relativeTo: this.currentRoute })
   }
 
   updateIncome(income: Occurrence) {
-    this.router.navigate(['update', income.id], {relativeTo: this.currentRoute})
+    this.router.navigate(['update', income.id], { relativeTo: this.currentRoute })
+  }
+
+  deleteIncome(income: Occurrence) {
+    this.incomeService.deleteById(income.id).subscribe(
+      () => {
+        console.log("Exclusão bem sucedida!");
+        this.refresh()
+      },
+      (error) => {
+        console.log("Erro ao excluir: ", error);
+      })
+  }
+
+  refresh() {
+    this.incomes$ = this.incomeService.list();
   }
 }
