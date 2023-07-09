@@ -1,22 +1,38 @@
-<p>incomes works!</p>
+<div class="container">
+    <h4 class="text-center text-bg-primary mt-3">INCOMES</h4>
+    <table class="table table-striped table-dark">
+        <thead>
+            <tr>
+                <th class="col-2">Amount</th>
+                <th class="col-2">Date</th>
+                <th class="col-2">Type</th>
+                <th class="col-2">Category</th>
+                <th class="col-2">Description</th>
+                <th class="col-2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let income of incomes$ | async as list">
+                <td>{{ income.amount }}</td>
+                <td>{{ income.date }}</td>
+                <td>{{ income.type.type }}</td>
+                <td>{{ income.category.category }}</td>
+                <td>{{ income.description }} </td>
+                <td>
+                    <button class="btn btn-primary" (click)="updateIncome(income)">Atualizar</button>
+                    <button class="btn btn-danger" (click)="deleteIncome(income)">Deletar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-<table>
-    <tr>
-        <th>Incomes</th>
-    </tr>
-    <tr *ngFor="let income of incomes$ | async as list">
-        <td>Amount: {{ income.amount }}</td>
-        <td>Date: {{ income.date }}</td>
-        <td>Type Name: {{ income.type.type }}</td>
-        <td>Category Name: {{ income.category.category }}</td>
-        <td>Description: {{ income.description }} </td>
-        <td><button (click)="updateIncome(income)">Atualizar</button></td>
-        <td><button (click)="deleteIncome(income)">Deletar</button></td>
-    </tr>
-    <tr>
-        <td><button (click)="newIncome()">Criar novo</button></td>
-    </tr>
-</table>
+    <span class="text-start position-relative">
+        <button class="btn btn-success" (click)="newIncome()">Criar novo</button>
+    </span>
+    <span class="text-end col-3">
+        <button type="button" class="btn btn-outline-primary float-end" (click)="return()">Return</button>
+    </span>
+</div>
 
 <!--if click newIncome()-->
 <router-outlet></router-outlet>

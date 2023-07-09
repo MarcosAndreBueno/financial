@@ -45,4 +45,8 @@ export class IncomesComponent {
   refresh() {
     this.incomes$ = this.incomeService.list();
   }
+
+  return() {
+    this.router.navigate(['home'])
+  }
 }

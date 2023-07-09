@@ -1,41 +1,79 @@
-<h2>New Income WORKS!</h2>
+<div class="container mt-3 text-bg-dark">
+  <h2 class="text-bg-primary text-center">NEW INCOME</h2>
 
-<form [formGroup]="incomeForm" (ngSubmit)="submitButton()">
-  <input type="number" name="amount" formControlName="amount" placeholder="0.0">
-  <br>
-
-  <input type="date" name="date" formControlName="date">
-  <br>
-
-  <div [formGroup]="incomeForm">
-    <div formGroupName="type">
-      <select formControlName="type">
-        <option *ngFor="let type of types$ | async as list" [ngValue]="type.type"
-          [selected]="type.type === incomeForm.controls['type'].value.type">
-          {{ type.type }}
-        </option>
-      </select>
+  <form [formGroup]="incomeForm" (ngSubmit)="submitButton()">
+    <div>
+      <label for="amount" class="form-label">Amount:</label>
+      <input type="number" class="form-control" name="amount" formControlName="amount" placeholder="0.0">
     </div>
-  </div>
 
-  <div [formGroup]="incomeForm">
-    <div formGroupName="category">
-      <select formControlName="category">
-        <option *ngFor="let category of categories$ | async as list" [ngValue]="category.category"
-          [selected]="category.category === incomeForm.controls['category'].value.category">
-          {{ category.category }}
-        </option>
-      </select>
+    <div>
+      <label for="date" class="form-label">Date:</label>
+      <input type="date" class="form-control" name="date" formControlName="date">
     </div>
-  </div>
 
-  <textarea name="description" formControlName="description" placeholder="descrição" rows="5" cols="30"></textarea>
-  <br>
+    <div [formGroup]="incomeForm">
+      <div formGroupName="type">
+        <label for="Type" class="form-label">Type:</label>
+        <select formControlName="type" class="form-select">
+          <option *ngFor="let type of types$ | async as list" [ngValue]="type.type"
+            [selected]="type.type === incomeForm.controls['type'].value.type">
+            {{ type.type }}
+          </option>
+        </select>
+      </div>
+    </div>
 
-  <button type="submit" name="submit">
-    Save
-  </button>
-  <br>
+    <div [formGroup]="incomeForm">
+      <div formGroupName="category">
+        <label for="Category" class="form-label">Category:</label>
+        <select formControlName="category" class="form-select">
+          <option *ngFor="let category of categories$ | async as list" [ngValue]="category.category"
+            [selected]="category.category === incomeForm.controls['category'].value.category">
+            {{ category.category }}
+          </option>
+        </select>
+      </div>
+    </div>
 
-  <button type="button" (click)="return()">Cancel</button>
-</form>
+    <div>
+      <label for="description" class="form-label">Description: </label>
+      <textarea name="description" class="form-control" maxlength="200" formControlName="description" rows="5">
+        </textarea>
+    </div>
+
+    <div class="text-end mt-3">
+      <button type="submit" class="btn btn-outline-success" name="submit">
+        Save
+      </button>
+    </div>
+
+    <div class="text-end mt-3">
+      <button type="button" class="btn btn-danger" (click)="return()">Cancel</button>
+    </div>
+  </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
