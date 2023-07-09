@@ -19,15 +19,21 @@
                 <td>{{ income.category.category }}</td>
                 <td>{{ income.description }} </td>
                 <td>
-                    <button class="btn btn-primary" (click)="updateIncome(income)">Atualizar</button>
-                    <button class="btn btn-danger" (click)="deleteIncome(income)">Deletar</button>
+                    <button class="btn btn-primary" (click)="updateIncome(income)">
+                        <i class="bi bi-arrow-repeat"></i>
+                    </button>
+                    <button class="btn btn-danger " (click)="deleteIncome(income)">
+                        <i class="bi bi-trash"></i>
+                    </button>
                 </td>
             </tr>
         </tbody>
     </table>
 
     <span class="text-start position-relative">
-        <button class="btn btn-success" (click)="newIncome()">Criar novo</button>
+        <button class="btn btn-success" (click)="newIncome()">
+            <i class="bi bi-plus-circle"></i>
+        </button>
     </span>
     <span class="text-end col-3">
         <button type="button" class="btn btn-outline-primary float-end" (click)="return()">Return</button>
