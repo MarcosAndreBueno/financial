@@ -18,8 +18,8 @@ export class IncomeService {
     return this.httpClient.post<Occurrence>(this.API, newOccForm); //return observable
   }
 
-  list() {
-    return this.httpClient.get<Occurrence[]>(this.API)
+  list(month: number, year: number) {
+    return this.httpClient.get<Occurrence[]>(`${this.API}/${month}/${year}`)
   }
   
   loadById(id: string) {

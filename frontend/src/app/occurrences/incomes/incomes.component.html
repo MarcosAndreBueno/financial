@@ -1,5 +1,27 @@
 <div class="container">
     <h4 class="text-center text-bg-primary mt-3">INCOMES</h4>
+    <hr />
+    <hr />
+
+    <div class="row align-items-center justify-content-center container inline-flex">
+        <div class="col-1">
+            <button type="button" class="datepicker-button" (click)="decreaseMonth()">
+                <i class="bi bi-dash-circle btn btn-primary"></i>
+            </button>
+        </div>
+
+        <div class="col-3">
+            <input type="text" [(ngModel)]="selectedDate" class="form-control date-picker" name="date" bsDatepicker
+                [bsConfig]="bsConfig" (onShown)="onOpenCalendar($event)" (ngModelChange)="refresh()">
+        </div>
+
+        <div class="col-1">
+            <button type="button" class="datepicker-button" (click)="increaseMonth()">
+                <i class="bi bi-plus-circle-fill btn btn-primary"></i>
+            </button>
+        </div>
+    </div>
+
     <table class="table table-striped table-dark">
         <thead>
             <tr>
@@ -39,6 +61,3 @@
         <button type="button" class="btn btn-outline-primary float-end" (click)="return()">Return</button>
     </span>
 </div>
-
-<!--if click newIncome()-->
-<router-outlet></router-outlet>

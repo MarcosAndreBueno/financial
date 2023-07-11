@@ -47,7 +47,10 @@ public class Test implements CommandLineRunner {
 
         Income i1 = new Income(null, 50.0, LocalDate.parse("2019-06-20"), t1, c1, "");
         Income i2 = new Income(null, 70.0, LocalDate.parse("2019-06-20"), t1, c1, "");
-        incomeRepository.saveAll(Arrays.asList(i1,i2));
+        Income i3 = new Income(null, 90.0, LocalDate.parse("2020-02-21"), t1, c1, "");
+        Income i4 = new Income(null, 100.0, LocalDate.parse("2020-02-24"), t1, c2, "");
+        Income i5 = new Income(null, 10.0, LocalDate.parse("2020-03-17"), t1, c2, "");
+        incomeRepository.saveAll(Arrays.asList(i1,i2,i3,i4,i5));
 
         t1.getIncomes().addAll(Arrays.asList(i1,i2));
         c1.getIncomes().addAll(Arrays.asList(i1,i2));

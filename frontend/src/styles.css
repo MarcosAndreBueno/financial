@@ -6,3 +6,13 @@
 .container {
     max-width: 800px !important;
 }
+
+.date-picker {
+    text-align: center;
+    max-width: 200px;
+}
+
+.datepicker-button {
+    border: 0;
+    background: transparent;
+}

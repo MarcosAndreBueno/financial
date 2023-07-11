@@ -16,9 +16,9 @@ public class IncomeResource {
     @Autowired
     IncomeService incomeService;
 
-    @GetMapping
-    public ResponseEntity<List<IncomeDTO>> findAll() {
-        List<IncomeDTO> i = incomeService.findAll();
+    @GetMapping(value = "/{month}/{year}")
+    public ResponseEntity<List<IncomeDTO>> findAll(@PathVariable int month, @PathVariable int year) {
+        List<IncomeDTO> i = incomeService.findAll(month, year);
         return ResponseEntity.ok().body(i);
     }
 

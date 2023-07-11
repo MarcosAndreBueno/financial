@@ -77,4 +77,16 @@ public abstract class Ocurrence {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "Ocurrence{" +
+                "id=" + id +
+                ", amount=" + amount +
+                ", date=" + date +
+                ", type=" + type +
+                ", category=" + category +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeModule } from './home/home.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,9 @@ import { HomeModule } from './home/home.module';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    HomeModule
+    HomeModule,
+    BsDatepickerModule.forRoot(),
+    BrowserAnimationsModule
     ],
   providers: [],
   bootstrap: [AppComponent]
