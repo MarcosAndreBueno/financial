@@ -14,4 +14,8 @@ export class HomeComponent {
   goToIncomes() {
     this.router.navigate(['occurrences/incomes'])
   }
+
+  goToOutcomes() {
+    this.router.navigate(['occurrences/outcomes'])
+  }
 }

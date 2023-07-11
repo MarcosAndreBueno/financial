@@ -4,14 +4,14 @@ import { CommonModule } from '@angular/common';
 
 import { IncomesRoutingModule } from './incomes-routing.module';
 import { IncomesComponent } from './incomes.component';
-import { NewIncomeComponent } from '../new-income/new-income.component';
+import { NewOccurrenceComponent } from '../new-occurrence/new-occurrence.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [    
     IncomesComponent,
-    NewIncomeComponent],
+    NewOccurrenceComponent],
   imports: [
     CommonModule,
     IncomesRoutingModule,

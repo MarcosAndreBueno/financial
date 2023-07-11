@@ -2,11 +2,25 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 
+import { OccurrenceService } from '../occurrences/services/occurrence.service';
+import { IncomeService } from '../occurrences/services/impl/income.service';
+import { OutcomeService } from '../occurrences/services/impl/outcome.service';
+
 const routes: Routes = [
   { path: '', component: HomeComponent },
   {
     path: 'occurrences/incomes',
-    loadChildren: () => import('../occurrences/incomes/incomes.module').then(m => m.IncomesModule)
+    loadChildren: () => import('../occurrences/occurrences.module').then(m => m.OccurrencesModule),
+    providers: [
+      { provide: OccurrenceService, useClass: IncomeService }
+    ]
+  },
+  {
+    path: 'occurrences/outcomes',
+    loadChildren: () => import('../occurrences/occurrences.module').then(m => m.OccurrencesModule),
+    providers: [
+      { provide: OccurrenceService, useClass: OutcomeService }
+    ]
   }
 ];
 

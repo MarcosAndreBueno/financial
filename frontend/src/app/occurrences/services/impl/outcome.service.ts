@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Occurrence } from '../model/occurrence';
 import { HttpClient } from '@angular/common/http';
+import { Occurrence } from '../../model/occurrence';
+import { OccurrenceService } from '../occurrence.service';
 
-
-@Injectable({
-  providedIn: 'root'
-})
-export class IncomeService {
-  private readonly API = '/api/income';
+@Injectable()
+export class OutcomeService implements OccurrenceService{
+  private readonly API = '/api/outcome';
 
   constructor(
     private httpClient: HttpClient
@@ -33,6 +31,6 @@ export class IncomeService {
   }
 
   deleteById(id: string) {
-    return this.httpClient.delete(`${this.API}/${id}`);
+    return this.httpClient.delete<Occurrence>(`${this.API}/${id}`);
   }
 }

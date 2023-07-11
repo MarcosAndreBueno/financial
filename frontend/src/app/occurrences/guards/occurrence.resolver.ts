@@ -3,19 +3,20 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { Observable, of } from 'rxjs';
 
 import { Occurrence } from '../model/occurrence';
-import { IncomeService } from '../services/income.service';
+import { OccurrenceFactory } from '../services/occurrence.provider';
 
 @Injectable({
   providedIn: 'root'
 })
-export class IncomeResolver implements Resolve<Occurrence> {
+export class OccurrenceResolver implements Resolve<Occurrence> {
 
-  constructor(private incomeService: IncomeService) { }
+  constructor(private factory: OccurrenceFactory) { }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Occurrence> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Occurrence> {    
     //update income
     if (route.params && route.params['id']) {
-      return this.incomeService.loadById(route.params['id']);
+      const occurrenceService = this.factory.getInstanceOf(route.pathFromRoot[1].routeConfig?.path);
+      return occurrenceService.loadById(route.params['id']);
     }
     //new income
     return of({

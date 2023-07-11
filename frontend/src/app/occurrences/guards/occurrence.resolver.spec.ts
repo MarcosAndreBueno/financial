@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { ResolveFn } from '@angular/router';
 
-import { incomeResolver } from './income.resolver';
+import { occurrenceResolver } from './occurrence.resolver';
 
-describe('incomeResolver', () => {
+describe('occurrenceResolver', () => {
   const executeResolver: ResolveFn<boolean> = (...resolverParameters) => 
-      TestBed.runInInjectionContext(() => incomeResolver(...resolverParameters));
+      TestBed.runInInjectionContext(() => occurrenceResolver(...resolverParameters));
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

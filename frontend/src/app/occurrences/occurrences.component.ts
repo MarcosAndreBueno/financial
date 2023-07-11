@@ -1,30 +1,29 @@
-import { Occurrence } from './../model/occurrence';
-import { IncomeService } from './../services/income.service';
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { CategoryService } from '../services/category.service';
+import { OccurrenceService } from './services/occurrence.service';
+import { CategoryService } from './services/category.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
-import { OccurrenceService } from '../services/occurrence.service';
+import { Observable } from 'rxjs';
+import { Occurrence } from './model/occurrence';
 
 @Component({
-  selector: 'app-incomes',
-  templateUrl: './incomes.component.html',
-  styleUrls: ['./incomes.component.css']
+  selector: 'app-occurrences',
+  templateUrl: './occurrences.component.html',
+  styleUrls: ['./occurrences.component.css']
 })
-export class IncomesComponent {
-  incomes$: Observable<Occurrence[]>;
+export class OccurrencesComponent {
+  occurrences$: Observable<Occurrence[]>;
 
   bsConfig?: Partial<BsDatepickerConfig>;
   selectedDate = new Date();
 
   constructor(
     private categoryService: CategoryService,
-    private incomeService: OccurrenceService,
+    private occurrenceService: OccurrenceService,
     private router: Router,
     private currentRoute: ActivatedRoute,
   ) {
-    this.incomes$ = this.incomeService.list(
+    this.occurrences$ = this.occurrenceService.list(
       this.selectedDate.getMonth() + 1, this.selectedDate.getFullYear()
     );
 
@@ -34,17 +33,17 @@ export class IncomesComponent {
     });
   }
 
-  newIncome() {
+  onAdd() {
     //relativa à rota atual
-    this.router.navigate(['new-income'], { relativeTo: this.currentRoute })
+    this.router.navigate(['new-occurrence'], { relativeTo: this.currentRoute })
   }
 
-  updateIncome(income: Occurrence) {
-    this.router.navigate(['update', income.id], { relativeTo: this.currentRoute })
+  onUpdate(occurrence: Occurrence) {
+    this.router.navigate(['update', occurrence.id], { relativeTo: this.currentRoute })
   }
 
-  deleteIncome(income: Occurrence) {
-    this.incomeService.deleteById(income.id).subscribe(
+  onDelete(occurrence: Occurrence) {
+    this.occurrenceService.deleteById(occurrence.id).subscribe(
       () => {
         console.log("Exclusão bem sucedida!");
         this.refresh()
@@ -55,7 +54,7 @@ export class IncomesComponent {
   }
 
   refresh() {
-    this.incomes$ = this.incomeService.list(
+    this.occurrences$ = this.occurrenceService.list(
       this.selectedDate.getMonth() + 1, this.selectedDate.getFullYear()
     );
   }
