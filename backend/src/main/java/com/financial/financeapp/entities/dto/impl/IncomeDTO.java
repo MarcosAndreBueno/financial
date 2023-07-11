@@ -1,5 +1,8 @@
-package com.financial.financeapp.entities.dto;
+package com.financial.financeapp.entities.dto.impl;
 
+import com.financial.financeapp.entities.dto.CategoryDTO;
+import com.financial.financeapp.entities.dto.OccurrenceDTO;
+import com.financial.financeapp.entities.dto.TypeDTO;
 import com.financial.financeapp.entities.enums.CategoryStatus;
 import com.financial.financeapp.entities.enums.TypeStatus;
 import com.financial.financeapp.entities.impl.Income;
@@ -9,14 +12,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class IncomeDTO {
-
-    private Long id;
-    private Double amount;
-    private String date;
-    private TypeDTO type;
-    private CategoryDTO category;
-    private String description;
+public class IncomeDTO extends OccurrenceDTO {
 
     public IncomeDTO(Long id, Double amount, String date, TypeDTO type, CategoryDTO category, String description) {
         this.id = id;
@@ -68,54 +64,6 @@ public class IncomeDTO {
         ));
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double value) {
-        this.amount = value;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public TypeDTO getType() {
-        return type;
-    }
-
-    public void setType(TypeDTO type) {
-        this.type = type;
-    }
-
-    public CategoryDTO getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryDTO category) {
-        this.category = category;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -127,17 +75,5 @@ public class IncomeDTO {
     @Override
     public int hashCode() {
         return Objects.hash(id);
-    }
-
-    @Override
-    public String toString() {
-        return "IncomeDTO{" +
-                "id=" + id +
-                ", amount=" + amount +
-                ", date='" + date + '\'' +
-                ", type='" + type + '\'' +
-                ", category='" + category + '\'' +
-                ", description='" + description + '\'' +
-                '}';
     }
 }

@@ -1,6 +1,6 @@
 package com.financial.financeapp.resources;
 
-import com.financial.financeapp.entities.dto.IncomeDTO;
+import com.financial.financeapp.entities.dto.impl.IncomeDTO;
 import com.financial.financeapp.entities.impl.Income;
 import com.financial.financeapp.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +16,15 @@ public class IncomeResource {
     @Autowired
     IncomeService incomeService;
 
+    @GetMapping
+    public ResponseEntity<List<IncomeDTO>> findAll() {
+        List<IncomeDTO> i = incomeService.findAll();
+        return ResponseEntity.ok().body(i);
+    }
+
     @GetMapping(value = "/{month}/{year}")
-    public ResponseEntity<List<IncomeDTO>> findAll(@PathVariable int month, @PathVariable int year) {
-        List<IncomeDTO> i = incomeService.findAll(month, year);
+    public ResponseEntity<List<IncomeDTO>> findAllByMonthAndYear(@PathVariable int month, @PathVariable int year) {
+        List<IncomeDTO> i = incomeService.findAllByMonthAndYear(month, year);
         return ResponseEntity.ok().body(i);
     }
 

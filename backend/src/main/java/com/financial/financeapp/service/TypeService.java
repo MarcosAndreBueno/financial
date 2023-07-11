@@ -1,7 +1,7 @@
 package com.financial.financeapp.service;
 
+import com.financial.financeapp.entities.dto.OccurrenceDTO;
 import com.financial.financeapp.entities.dto.TypeDTO;
-import com.financial.financeapp.entities.dto.IncomeDTO;
 import com.financial.financeapp.entities.enums.TypeStatus;
 import com.financial.financeapp.entities.impl.Type;
 import com.financial.financeapp.repositories.TypeRepository;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class TypeService {
@@ -30,15 +29,15 @@ public class TypeService {
     }
 
     //lazyloading
-    public Type getProxyInstanceById(IncomeDTO incomeDTO) {
-        TypeStatus typeStatus = TypeStatus.valueOf(incomeDTO.getType().getType());
+    public Type getProxyInstanceById(OccurrenceDTO occurrenceDTO) {
+        TypeStatus typeStatus = TypeStatus.valueOf(occurrenceDTO.getType().getType());
         Long cID = Long.valueOf(typeStatus.getCode());
         return typeRepository.getReferenceById(cID);
     }
 
     //entitidade totalmente carregada
-    public Type getEntityInstanceById(IncomeDTO incomeDTO) {
-        TypeStatus typeStatus = TypeStatus.valueOf(incomeDTO.getType().getType());
+    public Type getEntityInstanceById(OccurrenceDTO occurrenceDTO) {
+        TypeStatus typeStatus = TypeStatus.valueOf(occurrenceDTO.getType().getType());
         Long cID = Long.valueOf(typeStatus.getCode());
         return typeRepository.findById(cID).get();
     }

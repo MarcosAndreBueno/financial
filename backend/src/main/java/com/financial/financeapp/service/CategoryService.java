@@ -1,7 +1,7 @@
 package com.financial.financeapp.service;
 
 import com.financial.financeapp.entities.dto.CategoryDTO;
-import com.financial.financeapp.entities.dto.IncomeDTO;
+import com.financial.financeapp.entities.dto.OccurrenceDTO;
 import com.financial.financeapp.entities.enums.CategoryStatus;
 import com.financial.financeapp.entities.impl.Category;
 import com.financial.financeapp.repositories.CategoryRepository;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -30,15 +29,15 @@ public class CategoryService {
     }
 
     //lazyloading
-    public Category getProxyInstanceById(IncomeDTO incomeDTO) {
-        CategoryStatus categoryStatus = CategoryStatus.valueOf(incomeDTO.getCategory().getCategory());
+    public Category getProxyInstanceById(OccurrenceDTO occurrenceDTO) {
+        CategoryStatus categoryStatus = CategoryStatus.valueOf(occurrenceDTO.getCategory().getCategory());
         Long cID = Long.valueOf(categoryStatus.getCode());
         return categoryRepository.getReferenceById(cID);
     }
 
     //entitidade totalmente carregada
-    public Category getEntityInstanceById(IncomeDTO incomeDTO) {
-        CategoryStatus categoryStatus = CategoryStatus.valueOf(incomeDTO.getCategory().getCategory());
+    public Category getEntityInstanceById(OccurrenceDTO occurrenceDTO) {
+        CategoryStatus categoryStatus = CategoryStatus.valueOf(occurrenceDTO.getCategory().getCategory());
         Long cID = Long.valueOf(categoryStatus.getCode());
         return categoryRepository.findById(cID).get();
     }

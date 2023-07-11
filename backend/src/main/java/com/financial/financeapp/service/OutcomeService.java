@@ -1,10 +1,17 @@
 package com.financial.financeapp.service;
 
+import com.financial.financeapp.entities.dto.impl.OutcomeDTO;
+import com.financial.financeapp.entities.impl.Category;
 import com.financial.financeapp.entities.impl.Outcome;
+import com.financial.financeapp.entities.impl.Type;
+
 import com.financial.financeapp.repositories.OutcomeRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,12 +21,64 @@ public class OutcomeService {
     @Autowired
     OutcomeRepository outcomeRepository;
 
-    public List<Outcome> findAll() {
-        return outcomeRepository.findAll();
+    @Autowired
+    CategoryService categoryService;
+
+    @Autowired
+    TypeService typeService;
+
+    public List<OutcomeDTO> findAll() {
+        List<Outcome> outcomes = outcomeRepository.findAll();
+        return new OutcomeDTO().prepareData(outcomes);
     }
 
-    public Outcome findById(Long id) {
+    public List<OutcomeDTO> findAllByMonthAndYear(int month, int year) {
+        List<Outcome> outcomes = outcomeRepository.findByMonthAndYear(month,year);
+        return new OutcomeDTO().prepareData(outcomes);
+    }
+
+    public Optional<OutcomeDTO> findById(Long id) {
         Optional<Outcome> outcome = outcomeRepository.findById(id);
-        return outcome.get();
+        return new OutcomeDTO().prepareData(outcome);
+    }
+
+    public void insert(OutcomeDTO outcomeDTO) {
+        //lazy proxy initialization
+        Type type = typeService.getProxyInstanceById(outcomeDTO);
+        Category category = categoryService.getProxyInstanceById(outcomeDTO);
+
+        Outcome outcome = new Outcome(
+                null,
+                outcomeDTO.getAmount(),
+                LocalDate.parse(outcomeDTO.getDate()),
+                type,
+                category,
+                outcomeDTO.getDescription()
+        );
+        outcomeRepository.save(outcome);
+    }
+
+    public ResponseEntity<Outcome> update(Long id, OutcomeDTO outcomeDTO) {
+        Optional<Outcome> outcomeUpdate = outcomeRepository.findById(id);
+
+        //usar método find para evitar LazyInitializationException
+        Type type = typeService.getEntityInstanceById(outcomeDTO);
+        Category category = categoryService.getEntityInstanceById(outcomeDTO);
+
+        return outcomeUpdate
+                .map(item -> {
+                    item.setAmount(outcomeDTO.getAmount());
+                    item.setDate(LocalDate.parse(outcomeDTO.getDate()));
+                    item.setType(type);
+                    item.setCategory(category);
+                    item.setDescription(outcomeDTO.getDescription());
+                    Outcome update = outcomeRepository.save(item);
+                    return ResponseEntity.ok().body(update);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    public void deleteById(Long id) {
+        outcomeRepository.deleteById(id);
     }
 }

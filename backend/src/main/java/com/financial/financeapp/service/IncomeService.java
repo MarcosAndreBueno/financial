@@ -1,6 +1,6 @@
 package com.financial.financeapp.service;
 
-import com.financial.financeapp.entities.dto.IncomeDTO;
+import com.financial.financeapp.entities.dto.impl.IncomeDTO;
 import com.financial.financeapp.entities.impl.Category;
 import com.financial.financeapp.entities.impl.Income;
 import com.financial.financeapp.entities.impl.Type;
@@ -27,7 +27,12 @@ public class IncomeService {
     @Autowired
     TypeService typeService;
 
-    public List<IncomeDTO> findAll(int month, int year) {
+    public List<IncomeDTO> findAll() {
+        List<Income> incomes = incomeRepository.findAll();
+        return new IncomeDTO().prepareData(incomes);
+    }
+
+    public List<IncomeDTO> findAllByMonthAndYear(int month, int year) {
         List<Income> incomes = incomeRepository.findByMonthAndYear(month,year);
         return new IncomeDTO().prepareData(incomes);
     }
