@@ -8,7 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
 @MappedSuperclass
-public abstract class Ocurrence {
+public abstract class Occurrence {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +27,9 @@ public abstract class Ocurrence {
     @JoinColumn(name = "category_id")
     protected Category category;
 
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    protected Account account;
 
     protected String description;
 
@@ -52,6 +55,14 @@ public abstract class Ocurrence {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public Type getType() {
@@ -80,12 +91,13 @@ public abstract class Ocurrence {
 
     @Override
     public String toString() {
-        return "Ocurrence{" +
+        return "Occurrence{" +
                 "id=" + id +
                 ", amount=" + amount +
                 ", date=" + date +
                 ", type=" + type +
                 ", category=" + category +
+                ", account=" + account +
                 ", description='" + description + '\'' +
                 '}';
     }

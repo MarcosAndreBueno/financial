@@ -1,6 +1,7 @@
 package com.financial.financeapp.entities.impl;
 
-import com.financial.financeapp.entities.Ocurrence;
+import com.financial.financeapp.entities.Account;
+import com.financial.financeapp.entities.Occurrence;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -9,14 +10,15 @@ import java.time.LocalDate;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "tb_outcome")
-public class Outcome extends Ocurrence implements Serializable {
+public class Outcome extends Occurrence implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public Outcome(Long id, Double amount, LocalDate date, Type type, Category category, String description) {
+    public Outcome(Long id, Double amount, LocalDate date, Account account, Type type, Category category, String description) {
         super();
         this.id = id;
         this.amount = amount;
         this.date = date;
+        this.account = account;
         this.type = type;
         this.category = category;
         this.description = description;

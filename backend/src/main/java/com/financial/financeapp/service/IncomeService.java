@@ -1,5 +1,6 @@
 package com.financial.financeapp.service;
 
+import com.financial.financeapp.entities.Account;
 import com.financial.financeapp.entities.dto.impl.IncomeDTO;
 import com.financial.financeapp.entities.impl.Category;
 import com.financial.financeapp.entities.impl.Income;
@@ -25,6 +26,9 @@ public class IncomeService {
     CategoryService categoryService;
 
     @Autowired
+    AccountService accountService;
+
+    @Autowired
     TypeService typeService;
 
     public List<IncomeDTO> findAll() {
@@ -46,11 +50,13 @@ public class IncomeService {
         //lazy proxy initialization
         Type type = typeService.getProxyInstanceById(incomeDTO);
         Category category = categoryService.getProxyInstanceById(incomeDTO);
+        Account account = accountService.getProxyInstanceById(incomeDTO);
 
         Income income = new Income(
                 null,
                 incomeDTO.getAmount(),
                 LocalDate.parse(incomeDTO.getDate()),
+                account,
                 type,
                 category,
                 incomeDTO.getDescription()
@@ -64,11 +70,13 @@ public class IncomeService {
         //usar método find para evitar LazyInitializationException
         Type type = typeService.getEntityInstanceById(incomeDTO);
         Category category = categoryService.getEntityInstanceById(incomeDTO);
+        Account account = accountService.getEntityInstanceById(incomeDTO);
 
         return incomeUpdate
                 .map(item -> {
                     item.setAmount(incomeDTO.getAmount());
                     item.setDate(LocalDate.parse(incomeDTO.getDate()));
+                    item.setAccount(account);
                     item.setType(type);
                     item.setCategory(category);
                     item.setDescription(incomeDTO.getDescription());

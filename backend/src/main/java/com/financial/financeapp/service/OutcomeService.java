@@ -1,5 +1,6 @@
 package com.financial.financeapp.service;
 
+import com.financial.financeapp.entities.Account;
 import com.financial.financeapp.entities.dto.impl.OutcomeDTO;
 import com.financial.financeapp.entities.impl.Category;
 import com.financial.financeapp.entities.impl.Outcome;
@@ -27,6 +28,9 @@ public class OutcomeService {
     @Autowired
     TypeService typeService;
 
+    @Autowired
+    AccountService accountService;
+
     public List<OutcomeDTO> findAll() {
         List<Outcome> outcomes = outcomeRepository.findAll();
         return new OutcomeDTO().prepareData(outcomes);
@@ -46,11 +50,13 @@ public class OutcomeService {
         //lazy proxy initialization
         Type type = typeService.getProxyInstanceById(outcomeDTO);
         Category category = categoryService.getProxyInstanceById(outcomeDTO);
+        Account account = accountService.getProxyInstanceById(outcomeDTO);
 
         Outcome outcome = new Outcome(
                 null,
                 outcomeDTO.getAmount(),
                 LocalDate.parse(outcomeDTO.getDate()),
+                account,
                 type,
                 category,
                 outcomeDTO.getDescription()
@@ -64,11 +70,13 @@ public class OutcomeService {
         //usar método find para evitar LazyInitializationException
         Type type = typeService.getEntityInstanceById(outcomeDTO);
         Category category = categoryService.getEntityInstanceById(outcomeDTO);
+        Account account = accountService.getEntityInstanceById(outcomeDTO);
 
         return outcomeUpdate
                 .map(item -> {
                     item.setAmount(outcomeDTO.getAmount());
                     item.setDate(LocalDate.parse(outcomeDTO.getDate()));
+                    item.setAccount(account);
                     item.setType(type);
                     item.setCategory(category);
                     item.setDescription(outcomeDTO.getDescription());

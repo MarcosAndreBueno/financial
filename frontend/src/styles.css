@@ -16,3 +16,8 @@
     border: 0;
     background: transparent;
 }
+
+.row-centralizar {
+    display: flex; 
+    justify-content: center;
+}

@@ -5,9 +5,11 @@ public abstract class OccurrenceDTO {
     protected Long id;
     protected Double amount;
     protected String date;
+    protected String account;
     protected TypeDTO type;
     protected CategoryDTO category;
     protected String description;
+
 
     public Long getId() {
         return id;
@@ -31,6 +33,14 @@ public abstract class OccurrenceDTO {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public TypeDTO getType() {
