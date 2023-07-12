@@ -1,6 +1,7 @@
 package com.financial.financeapp.service;
 
 import com.financial.financeapp.entities.Account;
+import com.financial.financeapp.entities.dto.impl.IncomeDTO;
 import com.financial.financeapp.entities.dto.impl.OutcomeDTO;
 import com.financial.financeapp.entities.impl.Category;
 import com.financial.financeapp.entities.impl.Outcome;
@@ -44,6 +45,15 @@ public class OutcomeService {
     public Optional<OutcomeDTO> findById(Long id) {
         Optional<Outcome> outcome = outcomeRepository.findById(id);
         return new OutcomeDTO().prepareData(outcome);
+    }
+
+    public Double findOutcomeByAccount(String name) {
+        List<OutcomeDTO> outcomes = this.findAll();
+        double total = outcomes.stream()
+                .filter(outcome -> outcome.getAccount().equals(name))
+                .mapToDouble(OutcomeDTO::getAmount)
+                .sum();
+        return total;
     }
 
     public void insert(OutcomeDTO outcomeDTO) {

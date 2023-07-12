@@ -46,6 +46,15 @@ public class IncomeService {
         return new IncomeDTO().prepareData(income);
     }
 
+    public Double findIncomeByAccount(String name) {
+        List<IncomeDTO> incomes = this.findAll();
+        double total = incomes.stream()
+                .filter(income -> income.getAccount().equals(name))
+                .mapToDouble(IncomeDTO::getAmount)
+                .sum();
+        return total;
+    }
+
     public void insert(IncomeDTO incomeDTO) {
         //lazy proxy initialization
         Type type = typeService.getProxyInstanceById(incomeDTO);

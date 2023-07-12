@@ -36,6 +36,11 @@ public class OutcomeResource {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping(value = "/account/{name}")
+    public @ResponseBody Double findOutcomeByAccount(@PathVariable String name) {
+        return outcomeService.findOutcomeByAccount(name);
+    }
+
     @PostMapping
     public void insert(@RequestBody OutcomeDTO outcomeDTO) {
         outcomeService.insert(outcomeDTO);

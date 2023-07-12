@@ -36,6 +36,11 @@ public class IncomeResource {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping(value = "/account/{name}")
+    public @ResponseBody Double findIncomeByAccount(@PathVariable String name) {
+        return incomeService.findIncomeByAccount(name);
+    }
+
     @PostMapping
     public void insert(@RequestBody IncomeDTO incomeDTO) {
         incomeService.insert(incomeDTO);

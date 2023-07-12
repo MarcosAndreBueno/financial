@@ -1,16 +1,12 @@
 package com.financial.financeapp.resources;
 
 import com.financial.financeapp.entities.Account;
-import com.financial.financeapp.entities.dto.CategoryDTO;
-import com.financial.financeapp.entities.dto.impl.IncomeDTO;
-import com.financial.financeapp.entities.impl.Income;
 import com.financial.financeapp.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/account")

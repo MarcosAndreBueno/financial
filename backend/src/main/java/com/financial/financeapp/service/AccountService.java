@@ -2,10 +2,7 @@ package com.financial.financeapp.service;
 
 import com.financial.financeapp.entities.Account;
 import com.financial.financeapp.entities.dto.OccurrenceDTO;
-import com.financial.financeapp.entities.dto.impl.IncomeDTO;
-import com.financial.financeapp.entities.impl.Income;
 import com.financial.financeapp.repositories.AccountRepository;
-import com.financial.financeapp.service.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
