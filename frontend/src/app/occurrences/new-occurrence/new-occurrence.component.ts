@@ -9,6 +9,8 @@ import { Category } from '../model/category';
 import { Observable } from 'rxjs';
 import { Location } from '@angular/common';
 import { OccurrenceService } from '../services/occurrence.service';
+import { AccountService } from 'src/app/home/service/account.service';
+import { Account } from 'src/app/home/model/account';
 
 @Component({
   selector: 'app-new-occurrence',
@@ -20,6 +22,7 @@ export class NewOccurrenceComponent implements OnInit {
   occurrenceForm!: FormGroup;
   categories$: Observable<Category[]>;
   types$: Observable<Type[]>;
+  account$: Observable<Account[]>;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,10 +30,12 @@ export class NewOccurrenceComponent implements OnInit {
     private currentRoute: ActivatedRoute,
     private location: Location,
     private categoryService: CategoryService,
-    private typeService: TypeService
+    private typeService: TypeService,
+    private accountService: AccountService
   ) {
     this.categories$ = categoryService.list()
     this.types$ = typeService.list()
+    this.account$ = accountService.list()
   }
 
   ngOnInit(): void {
@@ -39,6 +44,7 @@ export class NewOccurrenceComponent implements OnInit {
       id: [null],
       amount: [null],
       date: [null],
+      account: [null],
       type: this.formBuilder.group({
         type: [null]
       }),
@@ -55,6 +61,7 @@ export class NewOccurrenceComponent implements OnInit {
       _id: occurrence.id,
       amount: occurrence.amount,
       date: occurrence.date,
+      account: occurrence.account,
       type: {
         type: occurrence.type.type
       },

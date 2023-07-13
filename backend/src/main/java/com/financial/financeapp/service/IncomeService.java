@@ -46,10 +46,10 @@ public class IncomeService {
         return new IncomeDTO().prepareData(income);
     }
 
-    public Double findIncomeByAccount(String name) {
+    public Double findIncomeByAccount(Long id) {
         List<IncomeDTO> incomes = this.findAll();
         double total = incomes.stream()
-                .filter(income -> income.getAccount().equals(name))
+                .filter(income -> income.getAccount().equals(id))
                 .mapToDouble(IncomeDTO::getAmount)
                 .sum();
         return total;

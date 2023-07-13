@@ -20,9 +20,9 @@ public class AccountResource {
         return accountService.findAll();
     }
 
-    @GetMapping(value = "/{name}")
-    public ResponseEntity<Account> findAllByName(@PathVariable String name) {
-        return accountService.findByName(name)
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Account> findAllByName(@PathVariable Long id) {
+        return accountService.findById(id)
                 .map(item -> ResponseEntity.ok().body(item))
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -32,16 +32,16 @@ public class AccountResource {
         accountService.insert(account);
     }
 
-    @PutMapping(value = "/{name}")
-    public ResponseEntity<Account> update(@PathVariable String name, @RequestBody Account account) {
-        return accountService.update(name, account);
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Account> update(@PathVariable Long id, @RequestBody Account account) {
+        return accountService.update(id, account);
     }
 
-    @DeleteMapping(value = "/{name}")
-    public ResponseEntity<Void> deleteById(@PathVariable String name) {
-        return accountService.findByName(name)
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        return accountService.findById(id)
                 .map( item -> {
-                    accountService.deleteById(name);
+                    accountService.deleteById(id);
                     return ResponseEntity.noContent().<Void>build();
                 })
                 .orElse(ResponseEntity.notFound().build());

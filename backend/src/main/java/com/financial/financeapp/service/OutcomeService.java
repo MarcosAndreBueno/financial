@@ -47,10 +47,10 @@ public class OutcomeService {
         return new OutcomeDTO().prepareData(outcome);
     }
 
-    public Double findOutcomeByAccount(String name) {
+    public Double findOutcomeByAccount(Long id) {
         List<OutcomeDTO> outcomes = this.findAll();
         double total = outcomes.stream()
-                .filter(outcome -> outcome.getAccount().equals(name))
+                .filter(outcome -> outcome.getAccount().equals(id))
                 .mapToDouble(OutcomeDTO::getAmount)
                 .sum();
         return total;

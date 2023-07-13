@@ -3,7 +3,6 @@ import { AccountService } from './../service/account.service';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Account } from '../model/account';
-import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -13,8 +12,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class HomeComponent {
 
   readonly accounts$: Observable<Account[]>
-  private accountIncomes!: Promise<string[]>
-  private accountOutcomes!: Promise<string[]>
+  public promisse!: Promise<string | void>
+  public accountIncomes!: string[]
+  public accountOutcomes!: string[]
 
   constructor(
     private router: Router,
@@ -22,7 +22,8 @@ export class HomeComponent {
     private accountService: AccountService,
   ) {
     this.accounts$ = accountService.list();
-    this.accounts$.subscribe(print => { console.log(print)})
+    this.getAccountsTotalIncomes();
+    this.getAccountsTotalOutcomes();
   }
 
   goToIncomes() {
@@ -32,23 +33,31 @@ export class HomeComponent {
   goToOutcomes() {
     this.router.navigate(['occurrences/outcomes'])
   }
-  
+
   onAdd() {
     this.router.navigate(['new-account', { relativeTo: this.currentRoute }])
   }
-  
-  onEdit(account: Account) { 
-    this.router.navigate(['update-account', account.name, { relativeTo: this.currentRoute }])
-    }
+
+  onEdit(account: Account) {
+    this.router.navigate(['update-account', account.id])
+  }
 
   getAccountsTotalIncomes() {
-    this.accountIncomes = this.accountService.findAccountsIncomes(this.accounts$)
-    console.log(this.accountIncomes)
+    this.promisse = this.accountService.findAccountsIncomes(this.accounts$)
+      .then(
+        result => {
+          this.accountIncomes = result;
+        }
+      )
   }
- 
+
   getAccountsTotalOutcomes() {
-    this.accountOutcomes = this.accountService.findAccountsOutcomes(this.accounts$)
-    console.log(this.accountOutcomes)
+    this.promisse = this.accountService.findAccountsOutcomes(this.accounts$)
+      .then(
+        result => {
+          this.accountOutcomes = result;
+        }
+      )
   }
 
 }

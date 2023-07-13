@@ -28,7 +28,6 @@ export class NewAccountComponent {
     })
 
     const account: Account = this.currentRoute.snapshot.data['account']
-    console.log('valor em account vindo do snapshot: ', this.currentRoute.snapshot)
     this.accountForm.patchValue({
       id: account.id,
       name: account.name,
@@ -54,7 +53,7 @@ export class NewAccountComponent {
 
   onEdit() {
     this.router.navigate(['new-account', { relativeTo: this.currentRoute }])
-    this.accountService.onEdit(this.accountForm.value, 'Account One')
+    this.accountService.onEdit(this.accountForm.value, this.currentRoute.snapshot.data['account'].id)
       .subscribe(
         () => {
           this.accountForm.patchValue(this.accountForm.value);
@@ -62,9 +61,9 @@ export class NewAccountComponent {
         }
       );
   }
-
-  onDelete(accountName: string) {
-    this.accountService.deleteByName(accountName)
+  
+  onDelete(id: number) {
+    this.accountService.deleteById(id)
     .subscribe(
       () => { 
         this.return();

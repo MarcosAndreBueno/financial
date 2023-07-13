@@ -1,5 +1,5 @@
-<div class="container mt-3 text-bg-dark">
-  <h2 class="text-bg-primary text-center">NEW INCOME</h2>
+<div class="container">
+  <h2 class="text-bg-primary text-center">NEW OCCURRENCE</h2>
 
   <form [formGroup]="occurrenceForm" (ngSubmit)="onSubmit()">
     <div>
@@ -10,6 +10,16 @@
     <div>
       <label for="date" class="form-label">Date:</label>
       <input type="date" class="form-control" name="date" formControlName="date">
+    </div>
+
+    <div [formGroup]="occurrenceForm">
+        <label for="account" class="form-label">Account:</label>
+        <select formControlName="account" class="form-select">
+          <option *ngFor="let account of account$ | async as list" [ngValue]="account.id"
+            [selected]="account.id === occurrenceForm.controls['account'].value">
+            {{ account.name }}
+          </option>
+        </select>
     </div>
 
     <div [formGroup]="occurrenceForm">

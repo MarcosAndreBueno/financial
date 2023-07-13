@@ -36,9 +36,9 @@ public class IncomeResource {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping(value = "/account/{name}")
-    public @ResponseBody Double findIncomeByAccount(@PathVariable String name) {
-        return incomeService.findIncomeByAccount(name);
+    @GetMapping(value = "/account/{id}")
+    public @ResponseBody Double findIncomeByAccount(@PathVariable Long id) {
+        return incomeService.findIncomeByAccount(id);
     }
 
     @PostMapping

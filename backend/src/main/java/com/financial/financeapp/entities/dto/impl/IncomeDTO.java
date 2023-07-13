@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class IncomeDTO extends OccurrenceDTO {
 
-    public IncomeDTO(Long id, Double amount, String date, String account, TypeDTO type, CategoryDTO category, String description) {
+    public IncomeDTO(Long id, Double amount, String date, Long account, TypeDTO type, CategoryDTO category, String description) {
         this.id = id;
         this.amount = amount;
         this.date = date;
@@ -34,7 +34,7 @@ public class IncomeDTO extends OccurrenceDTO {
                         income.getId(),
                         income.getAmount(),
                         income.getDate().toString(),
-                        income.getAccount().getName(),
+                        income.getAccount().getId(),
                         new TypeDTO(
                                 income.getType().getId(),
                                 TypeStatus.valueOf(income.getType().getType()).toString()
@@ -54,7 +54,7 @@ public class IncomeDTO extends OccurrenceDTO {
                 income.get().getId(),
                 income.get().getAmount(),
                 income.get().getDate().toString(),
-                income.get().getAccount().getName(),
+                income.get().getAccount().getId(),
                 new TypeDTO(
                         income.get().getType().getId(),
                         TypeStatus.valueOf(income.get().getType().getType()).toString()

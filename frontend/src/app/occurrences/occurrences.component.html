@@ -25,18 +25,20 @@
     <table class="table table-striped table-dark">
         <thead>
             <tr>
-                <th class="col-2">Amount</th>
-                <th class="col-2">Date</th>
-                <th class="col-2">Type</th>
-                <th class="col-2">Category</th>
-                <th class="col-2">Description</th>
-                <th class="col-2">Actions</th>
+                <th class="col">Amount</th>
+                <th class="col">Date</th>
+                <th class="col">Account</th>
+                <th class="col">Type</th>
+                <th class="col">Category</th>
+                <th class="col">Description</th>
+                <th class="col">Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let occurrence of occurrences$ | async as list">
                 <td>{{ occurrence.amount }}</td>
                 <td>{{ occurrence.date }}</td>
+                <td>{{ occurrence.account }}</td>
                 <td>{{ occurrence.type.type }}</td>
                 <td>{{ occurrence.category.category }}</td>
                 <td>{{ occurrence.description }} </td>

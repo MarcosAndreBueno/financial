@@ -5,6 +5,7 @@
 
 .container {
     max-width: 800px !important;
+    background: black;
 }
 
 .date-picker {
@@ -20,4 +21,9 @@
 .row-centralizar {
     display: flex; 
     justify-content: center;
+}
+
+.form-label {
+    color: white;
+    margin-top: 2%;
 }

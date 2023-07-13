@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home/home.component';
 import { OccurrencesModule } from '../occurrences/occurrences.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NewAccountComponent } from './new-account/new-account.component';
 
 
@@ -17,7 +17,8 @@ import { NewAccountComponent } from './new-account/new-account.component';
     CommonModule,
     HomeRoutingModule,
     OccurrencesModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class HomeModule { }

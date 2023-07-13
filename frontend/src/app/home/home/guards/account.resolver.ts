@@ -12,11 +12,9 @@ export class AccountResolver implements Resolve<Account> {
   constructor(private accountService: AccountService) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Account> {    
-    console.log('entrou nessa parte do resolver')
     //update income
-    if (route.params && route.params['name']) {
-      console.log('entrou nessa parte deep do resolver')
-      return this.accountService.loadByName(route.params['name']);
+    if (route.params && route.params['id']) {
+      return this.accountService.loadById(route.params['id']);
     }
     //new income
     return of({

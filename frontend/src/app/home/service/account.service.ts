@@ -16,37 +16,37 @@ export class AccountService {
     return this.httpClient.get<Account[]>(`${this.API}/account`)
   }
 
-  onEdit(editedAccount: Partial<Account>, name: string) {
-    return this.httpClient.put<Account>(`${this.API}/account/${name}`, editedAccount);
+  onEdit(editedAccount: Partial<Account>, id: number) {
+    return this.httpClient.put<Account>(`${this.API}/account/${id}`, editedAccount);
   }
-
-  deleteByName(name: string) {
-    return this.httpClient.delete<Account>(`${this.API}/account/${name}`);
+  
+  deleteById(id: number) {
+    return this.httpClient.delete<Account>(`${this.API}/account/${id}`);
   }
 
   onSave(newAccount: Account) {
     return this.httpClient.post<Account>(`${this.API}/account`, newAccount);
   }
 
-  loadByName(name: string) {
-    return this.httpClient.get<Account>(`${this.API}/account/${name}`)
+  loadById(id: number) {
+    return this.httpClient.get<Account>(`${this.API}/account/${id}`)
   }
 
-  async findAccountsIncomes(accounts$: Observable<Account[]>): Promise<string[]> {
+  async findAccountsIncomes(accounts$: Observable<Account[]>) {
     //concatmap para lidar com assincronia
     const arrayFinal: string[] = await lastValueFrom(accounts$.pipe(
-      concatMap(accounts => accounts.map(account => account.name)),
-      concatMap(name => this.httpClient.get<string>(`${this.API}/income/account/${name}`)),
+      concatMap(accounts => accounts.map(account => account.id)),
+      concatMap(id => this.httpClient.get<string>(`${this.API}/income/account/${id}`)),
       toArray())
     )
     return arrayFinal;
   }
-
+  
   async findAccountsOutcomes(accounts$: Observable<Account[]>) {
     //concatmap para lidar com assincronia
     const arrayFinal: string[] = await lastValueFrom(accounts$.pipe(
-      concatMap(accounts => accounts.map(account => account.name)),
-      concatMap(name => this.httpClient.get<string>(`${this.API}/outcome/account/${name}`)),
+      concatMap(accounts => accounts.map(account => account.id)),
+      concatMap(id => this.httpClient.get<string>(`${this.API}/outcome/account/${id}`)),
       toArray())
     )
     return arrayFinal;

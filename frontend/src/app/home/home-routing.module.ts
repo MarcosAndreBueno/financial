@@ -15,7 +15,7 @@ const routes: Routes = [
     resolve: { account: AccountResolver }
   },
   {
-    path: 'update-account/:name', component: NewAccountComponent,
+    path: 'update-account/:id', component: NewAccountComponent,
     resolve: { account: AccountResolver }
   },
   {

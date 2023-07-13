@@ -21,8 +21,8 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
-    public Optional<Account> findByName(String name) {
-        Optional<Account> account = accountRepository.findByName(name);
+    public Optional<Account> findById(Long id) {
+        Optional<Account> account = accountRepository.findById(id);
         return account;
     }
 
@@ -31,8 +31,8 @@ public class AccountService {
             accountRepository.save(account);
     }
 
-    public ResponseEntity<Account> update(String name, Account account) {
-        Optional<Account> accountUpdate = accountRepository.findByName(name);
+    public ResponseEntity<Account> update(Long id, Account account) {
+        Optional<Account> accountUpdate = accountRepository.findById(id);
         return accountUpdate
                 .map(item -> {
                     item.setName(account.getName());
@@ -43,20 +43,19 @@ public class AccountService {
     }
 
     //soft delete
-    public void deleteById(String name) {
-        Long id = findByName(name).get().getId();
+    public void deleteById(Long id) {
         accountRepository.deleteById(id);
     }
 
     //lazyloading
     public Account getProxyInstanceById(OccurrenceDTO occurrenceDTO) {
-        Long id = findByName(occurrenceDTO.getAccount()).get().getId();
+        Long id = findById(occurrenceDTO.getAccount()).get().getId();
         return accountRepository.getReferenceById(id);
     }
 
     //entitidade totalmente carregada
     public Account getEntityInstanceById(OccurrenceDTO occurrenceDTO) {
-        Long id = findByName(occurrenceDTO.getAccount()).get().getId();
+        Long id = findById(occurrenceDTO.getAccount()).get().getId();
         return accountRepository.findById(id).get();
     }
 }
