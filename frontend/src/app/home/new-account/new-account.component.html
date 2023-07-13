@@ -1,0 +1,12 @@
+<p>new-account works!</p>
+
+<form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+    <label for="name" class="form-label">Name: </label>
+    <input formControlName="name" name="name" class="form-control">
+    <button type="button" class="btn btn-primary" (click)="onDelete(accountForm.controls['name'].value)">Delete</button>
+    <div class="text-end mt-3">
+        <button type="submit" class="btn btn-outline-success" name="submit">
+            Save
+        </button>
+    </div>
+</form>

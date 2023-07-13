@@ -1,4 +1,5 @@
 export interface Account {
     id: string,
-    name: string
+    name: string,
+    status_active: boolean
 }

@@ -14,9 +14,23 @@
 </div>
 
 <br><br><br><br><br><br>
-<button type="button" class="btn btn-primary" (click)="refresh()">Refresh</button>
-<button type="button" class="btn btn-primary" (click)="getAccountsTotalIncomes()">Incomes</button>
-<button type="button" class="btn btn-primary" (click)="getAccountsTotalOutcomes()">Outcomes</button>
 
+<table>
+    <thead>
+        <th>Name: </th>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let account of accounts$ | async as list">
+            <tr *ngIf="account.status_active">
+                <td>{{ account.name }}</td>
+                <td>
+                    <button type="button" class="btn btn-primary" (click)="getAccountsTotalIncomes()">Incomes</button>
+                    <button type="button" class="btn btn-primary" (click)="getAccountsTotalOutcomes()">Outcomes</button>
+                    <button type="button" class="btn btn-primary" (click)="onEdit(account)">Edit</button>
+                </td>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>
 
-
+<button type="button" class="btn btn-primary" (click)="onAdd()">Add</button>
