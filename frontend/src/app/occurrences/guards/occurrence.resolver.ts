@@ -12,7 +12,7 @@ export class OccurrenceResolver implements Resolve<Occurrence> {
 
   constructor(private factory: OccurrenceFactory) { }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Occurrence> {    
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Occurrence> {
     //update income
     if (route.params && route.params['id']) {
       const occurrenceService = this.factory.getInstanceOf(route.pathFromRoot[1].routeConfig?.path);
@@ -20,7 +20,7 @@ export class OccurrenceResolver implements Resolve<Occurrence> {
     }
     //new income
     return of({
-      id: '', amount: '', date: '', account: '', type: { id: '', type: '' },
+      id: '', amount: '', date: '', account: { id: '', name: '' }, type: { id: '', type: '' },
       category: { id: '', category: '' }, description: ''
     });
   }

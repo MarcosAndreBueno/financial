@@ -22,7 +22,7 @@ export class NewOccurrenceComponent implements OnInit {
   occurrenceForm!: FormGroup;
   categories$: Observable<Category[]>;
   types$: Observable<Type[]>;
-  account$: Observable<Account[]>;
+  accounts$: Observable<Account[]>;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,7 +35,7 @@ export class NewOccurrenceComponent implements OnInit {
   ) {
     this.categories$ = categoryService.list()
     this.types$ = typeService.list()
-    this.account$ = accountService.list()
+    this.accounts$ = accountService.list()
   }
 
   ngOnInit(): void {
@@ -44,7 +44,9 @@ export class NewOccurrenceComponent implements OnInit {
       id: [null],
       amount: [null],
       date: [null],
-      account: [null],
+      account: this.formBuilder.group({
+        name: [null]
+      }),
       type: this.formBuilder.group({
         type: [null]
       }),
@@ -61,7 +63,9 @@ export class NewOccurrenceComponent implements OnInit {
       _id: occurrence.id,
       amount: occurrence.amount,
       date: occurrence.date,
-      account: occurrence.account,
+      account: {
+        name: occurrence.account.name
+      },
       type: {
         type: occurrence.type.type
       },

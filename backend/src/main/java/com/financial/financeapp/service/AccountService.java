@@ -26,6 +26,11 @@ public class AccountService {
         return account;
     }
 
+    public Optional<Account> findByName(String name) {
+        Optional<Account> account = accountRepository.findByName(name);
+        return account;
+    }
+
     public void insert(Account account) {
         if (accountRepository.findByName(account.getName()).isEmpty())
             accountRepository.save(account);
@@ -49,13 +54,13 @@ public class AccountService {
 
     //lazyloading
     public Account getProxyInstanceById(OccurrenceDTO occurrenceDTO) {
-        Long id = findById(occurrenceDTO.getAccount()).get().getId();
+        Long id = findByName(occurrenceDTO.getAccount().getName()).get().getId();
         return accountRepository.getReferenceById(id);
     }
 
     //entitidade totalmente carregada
     public Account getEntityInstanceById(OccurrenceDTO occurrenceDTO) {
-        Long id = findById(occurrenceDTO.getAccount()).get().getId();
+        Long id = findByName(occurrenceDTO.getAccount().getName()).get().getId();
         return accountRepository.findById(id).get();
     }
 }

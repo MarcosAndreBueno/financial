@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { OccurrenceService } from './services/occurrence.service';
 import { CategoryService } from './services/category.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,9 +11,9 @@ import { Occurrence } from './model/occurrence';
   templateUrl: './occurrences.component.html',
   styleUrls: ['./occurrences.component.css']
 })
-export class OccurrencesComponent {
-  occurrences$: Observable<Occurrence[]>;
-
+export class OccurrencesComponent implements OnInit {
+  
+  occurrences$!: Observable<Occurrence[]>;
   bsConfig?: Partial<BsDatepickerConfig>;
   selectedDate = new Date();
 
@@ -23,14 +23,18 @@ export class OccurrencesComponent {
     private router: Router,
     private currentRoute: ActivatedRoute,
   ) {
-    this.occurrences$ = this.occurrenceService.list(
-      this.selectedDate.getMonth() + 1, this.selectedDate.getFullYear()
-    );
-
+    //datepicker config
     this.bsConfig = Object.assign({}, {
       containerClass: 'theme-dark-blue',
       dateInputFormat: 'MM/YYYY'
     });
+  }
+
+  ngOnInit(): void {
+    //get occurrences
+    this.occurrences$ = this.occurrenceService.list(
+      this.selectedDate.getMonth() + 1, this.selectedDate.getFullYear()
+    );
   }
 
   onAdd() {

@@ -1,11 +1,13 @@
 package com.financial.financeapp.entities.dto;
 
+import com.financial.financeapp.entities.Account;
+
 public abstract class OccurrenceDTO {
     
     protected Long id;
     protected Double amount;
     protected String date;
-    protected Long account;
+    protected Account account;
     protected TypeDTO type;
     protected CategoryDTO category;
     protected String description;
@@ -35,11 +37,11 @@ public abstract class OccurrenceDTO {
         this.date = date;
     }
 
-    public Long getAccount() {
+    public Account getAccount() {
         return account;
     }
 
-    public void setAccount(Long account) {
+    public void setAccount(Account account) {
         this.account = account;
     }
 
@@ -73,8 +75,9 @@ public abstract class OccurrenceDTO {
                 "id=" + id +
                 ", amount=" + amount +
                 ", date='" + date + '\'' +
-                ", type='" + type + '\'' +
-                ", category='" + category + '\'' +
+                ", account=" + account +
+                ", type=" + type +
+                ", category=" + category +
                 ", description='" + description + '\'' +
                 '}';
     }

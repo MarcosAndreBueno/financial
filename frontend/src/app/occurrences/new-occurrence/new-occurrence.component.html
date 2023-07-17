@@ -13,13 +13,15 @@
     </div>
 
     <div [formGroup]="occurrenceForm">
+      <div formGroupName="account">
         <label for="account" class="form-label">Account:</label>
-        <select formControlName="account" class="form-select">
-          <option *ngFor="let account of account$ | async as list" [ngValue]="account.id"
-            [selected]="account.id === occurrenceForm.controls['account'].value">
+        <select formControlName="name" class="form-select">
+          <option *ngFor="let account of accounts$ | async as list" [ngValue]="account.name"
+            [selected]="account.name === occurrenceForm.controls['account'].value.name">
             {{ account.name }}
           </option>
         </select>
+      </div>
     </div>
 
     <div [formGroup]="occurrenceForm">

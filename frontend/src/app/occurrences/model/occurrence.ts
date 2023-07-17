@@ -2,7 +2,10 @@ export interface Occurrence {
     id: string,
     amount: string,
     date: string,
-    account: string,
+    account: {
+        id: string,
+        name: string
+    },
     type: {
         id: string,
         type: string
