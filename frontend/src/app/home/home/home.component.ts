@@ -1,6 +1,6 @@
-import { Observable } from 'rxjs';
+import { Observable, toArray } from 'rxjs';
 import { AccountService } from './../service/account.service';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Account } from '../model/account';
 
@@ -9,21 +9,29 @@ import { Account } from '../model/account';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
-  readonly accounts$: Observable<Account[]>
+  public accounts$!: Observable<Account[]>
+  public totalBalance$!: Observable<number[]>
+  public totalBalance!: number[]
+
   public promisse!: Promise<string | void>
-  public accountIncomes!: string[]
-  public accountOutcomes!: string[]
+
 
   constructor(
     private router: Router,
     private currentRoute: ActivatedRoute,
     private accountService: AccountService,
   ) {
-    this.accounts$ = accountService.list();
-    this.getAccountsTotalIncomes();
-    this.getAccountsTotalOutcomes();
+  }
+
+  ngOnInit(): void {
+    //get accounts list
+    this.accounts$ = this.accountService.list();
+    
+    //getTotalBalance
+    this.totalBalance$ = this.accountService.getTotalBalance(this.accounts$)
+    this.totalBalance$.subscribe(result => { this.totalBalance = result as number[] })
   }
 
   goToIncomes() {
@@ -41,23 +49,4 @@ export class HomeComponent {
   onEdit(account: Account) {
     this.router.navigate(['update-account', account.id])
   }
-
-  getAccountsTotalIncomes() {
-    this.promisse = this.accountService.findAccountsIncomes(this.accounts$)
-      .then(
-        result => {
-          this.accountIncomes = result;
-        }
-      )
-  }
-
-  getAccountsTotalOutcomes() {
-    this.promisse = this.accountService.findAccountsOutcomes(this.accounts$)
-      .then(
-        result => {
-          this.accountOutcomes = result;
-        }
-      )
-  }
-
 }

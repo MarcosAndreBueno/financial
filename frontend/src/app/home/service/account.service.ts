@@ -10,7 +10,7 @@ export class AccountService {
 
   private readonly API = '/api';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   list() {
     return this.httpClient.get<Account[]>(`${this.API}/account`)
@@ -19,7 +19,7 @@ export class AccountService {
   onEdit(editedAccount: Partial<Account>, id: number) {
     return this.httpClient.put<Account>(`${this.API}/account/${id}`, editedAccount);
   }
-  
+
   deleteById(id: number) {
     return this.httpClient.delete<Account>(`${this.API}/account/${id}`);
   }
@@ -32,23 +32,34 @@ export class AccountService {
     return this.httpClient.get<Account>(`${this.API}/account/${id}`)
   }
 
-  async findAccountsIncomes(accounts$: Observable<Account[]>) {
-    //concatmap para lidar com assincronia
-    const arrayFinal: string[] = await lastValueFrom(accounts$.pipe(
+  getIncomeTotalBalance(accounts$: Observable<Account[]>) {
+    return accounts$.pipe(
       concatMap(accounts => accounts.map(account => account.id)),
       concatMap(id => this.httpClient.get<string>(`${this.API}/income/account/${id}`)),
-      toArray())
+      toArray(),
     )
-    return arrayFinal;
   }
-  
-  async findAccountsOutcomes(accounts$: Observable<Account[]>) {
-    //concatmap para lidar com assincronia
-    const arrayFinal: string[] = await lastValueFrom(accounts$.pipe(
+
+  getOutcomeTotalBalance(accounts$: Observable<Account[]>) {
+    return accounts$.pipe(
       concatMap(accounts => accounts.map(account => account.id)),
       concatMap(id => this.httpClient.get<string>(`${this.API}/outcome/account/${id}`)),
-      toArray())
+      toArray(),
     )
-    return arrayFinal;
+  }
+
+  getTotalBalance(accounts$: Observable<Account[]>) {
+    //todos valores em income
+    const arrayIncome$: Observable<string[]> = this.getIncomeTotalBalance(accounts$)
+    //todos valores em outcome
+    const arrayOutcome$: Observable<string[]> = this.getOutcomeTotalBalance(accounts$)
+
+    //deduzir income de outcome
+    const combined$: Observable<[string[], string[]]> = forkJoin([arrayIncome$, arrayOutcome$]);
+    return combined$.pipe(
+      map(([income, outcome]) => {
+        return income.map((value, index) => +value - +outcome[index]);
+      })
+    );
   }
 }

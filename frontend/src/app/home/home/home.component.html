@@ -15,29 +15,25 @@
     <br /><br /><br /><br /><br /><br />
     <!--Accounts-->
     <div class="row justify-content-center">
-        <div [ngClass]="{'overflow-scroll': (accounts$ | async)?.length !== 0 }"
+        <div class="overflow-scroll"
             style="max-width: 350px; max-height: 250px;">
             <div class="col-auto">
                 <table class="table table-responsive table-hover border ">
                     <thead class="table-dark">
                         <tr>
                             <th class="text-light" value="account" name="account">Name</th>
-                            <th class="text-light">Total Incomes</th>
-                            <th class="text-light">Total Outcomes</th>
+                            <th class="text-light">Total Balance</th>
                             <th class="text-light"></th>
                         </tr>
                     </thead>
                     <tbody class="table-dark">
                         <ng-container *ngFor="let account of accounts$ | async as list; let i=index">
-                            <tr *ngIf="account.status_active">
+                            <tr *ngIf="account.status_active && totalBalance">
                                 <td>
                                     {{ account.name }}
                                 </td>
-                                <td *ngIf="accountIncomes?.length">
-                                    {{ accountIncomes[i] }}
-                                </td>
-                                <td *ngIf="accountOutcomes?.length">
-                                    {{ accountOutcomes[i] }}
+                                <td >
+                                    {{ totalBalance[i] }}
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-primary" (click)="onEdit(account)">
