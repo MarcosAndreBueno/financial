@@ -3,7 +3,7 @@ import { OccurrenceService } from './services/occurrence.service';
 import { CategoryService } from './services/category.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
-import { Observable } from 'rxjs';
+import { Observable, map, reduce } from 'rxjs';
 import { Occurrence } from './model/occurrence';
 
 @Component({
@@ -12,8 +12,9 @@ import { Occurrence } from './model/occurrence';
   styleUrls: ['./occurrences.component.css']
 })
 export class OccurrencesComponent implements OnInit {
-  
+
   occurrences$!: Observable<Occurrence[]>;
+  totalAmount$!: Observable<number>;
   bsConfig?: Partial<BsDatepickerConfig>;
   selectedDate = new Date();
 
@@ -32,9 +33,7 @@ export class OccurrencesComponent implements OnInit {
 
   ngOnInit(): void {
     //get occurrences
-    this.occurrences$ = this.occurrenceService.list(
-      this.selectedDate.getMonth() + 1, this.selectedDate.getFullYear()
-    );
+    this.refresh()
   }
 
   onAdd() {
@@ -61,6 +60,15 @@ export class OccurrencesComponent implements OnInit {
     this.occurrences$ = this.occurrenceService.list(
       this.selectedDate.getMonth() + 1, this.selectedDate.getFullYear()
     );
+    this.totalAmount$ = this.occurrences$.pipe(
+      map(occurrences =>
+        occurrences.map((occurrence =>
+          parseFloat(occurrence.amount))
+        )),
+        map(amounts =>
+          amounts.reduce((total: number, current: number) => total + current, 0)
+        )
+    )
   }
 
   return() {
