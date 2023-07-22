@@ -55,24 +55,25 @@ export class NewCategoryComponent implements OnInit {
   }
 
   onEdit() {
-    this.categoryService.onEdit(this.categoryForm.value, this.categoryForm.value.id)
-      .subscribe(
-        () => {
-          this.categoryForm.patchValue(this.categoryForm.value);
-          this.return()
-        }
-      );
+    if (confirm('Are you sure you want to update? \n' +
+      'This action will affect all previous occurrences using this Category'))
+      this.categoryService.onEdit(this.categoryForm.value, this.categoryForm.value.id)
+        .subscribe(
+          () => {
+            alert("Category updated")
+            this.categoryForm.patchValue(this.categoryForm.value);
+            this.return()
+          }
+        );
   }
 
   onDelete() {
-    this.categoryService.deleteById(this.categoryForm.value.id).subscribe(
-      () => {
-        console.log("Exclusão bem sucedida!");
-        this.return()
-      },
-      (error) => {
-        console.log("Erro ao excluir: ", error);
-      })
+    if (confirm('Are you sure you want to delete?'))
+      this.categoryService.deleteById(this.categoryForm.value.id).subscribe(
+        () => {
+          alert("Category deleted")
+          this.return()
+        })
   }
 
   return() {

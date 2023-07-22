@@ -44,13 +44,11 @@ export class OccurrencesComponent implements OnInit {
   }
 
   onDelete(occurrence: Occurrence) {
+    if(confirm('Are you sure you want to delete?'))
     this.occurrenceService.deleteById(occurrence.id).subscribe(
       () => {
-        console.log("Exclusão bem sucedida!");
+        alert("Occurrence deleted")
         this.refresh()
-      },
-      (error) => {
-        console.log("Erro ao excluir: ", error);
       })
   }
 

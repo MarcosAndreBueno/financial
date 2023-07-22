@@ -102,13 +102,15 @@ export class NewOccurrenceComponent implements OnInit {
   }
 
   onEdit() {
-    this.occurrenceService.onEdit(this.occurrenceForm.value, this.currentRoute.snapshot.data['occurrence'].id)
-      .subscribe(
-        () => {
-          this.occurrenceForm.patchValue(this.occurrenceForm.value);
-          this.return()
-        }
-      );
+    if (confirm('Are you sure you want to update?'))
+      this.occurrenceService.onEdit(this.occurrenceForm.value, this.currentRoute.snapshot.data['occurrence'].id)
+        .subscribe(
+          () => {
+            alert("Occurrence updated")
+            this.occurrenceForm.patchValue(this.occurrenceForm.value);
+            this.return()
+          }
+        );
   }
 
   return() {

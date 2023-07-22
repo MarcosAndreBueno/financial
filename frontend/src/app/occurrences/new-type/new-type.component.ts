@@ -55,24 +55,25 @@ export class NewTypeComponent implements OnInit {
   }
 
   onEdit() {
-    this.typeService.onEdit(this.typeForm.value, this.typeForm.value.id)
-      .subscribe(
-        () => {
-          this.typeForm.patchValue(this.typeForm.value);
-          this.return()
-        }
-      );
+    if (confirm('Are you sure you want to update? \n' +
+      'This action will affect all previous occurrences using this Type'))
+      this.typeService.onEdit(this.typeForm.value, this.typeForm.value.id)
+        .subscribe(
+          () => {
+            alert("Type updated")
+            this.typeForm.patchValue(this.typeForm.value);
+            this.return()
+          }
+        );
   }
 
   onDelete() {
-    this.typeService.deleteById(this.typeForm.value.id).subscribe(
-      () => {
-        console.log("Exclusão bem sucedida!");
-        this.return()
-      },
-      (error) => {
-        console.log("Erro ao excluir: ", error);
-      })
+    if (confirm('Are you sure you want to delete?'))
+      this.typeService.deleteById(this.typeForm.value.id).subscribe(
+        () => {
+          alert("Type deleted")
+          this.return()
+        })
   }
 
   return() {

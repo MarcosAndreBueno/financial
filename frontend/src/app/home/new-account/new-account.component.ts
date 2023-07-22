@@ -52,23 +52,27 @@ export class NewAccountComponent {
   }
 
   onEdit() {
-    this.router.navigate(['new-account', { relativeTo: this.currentRoute }])
-    this.accountService.onEdit(this.accountForm.value, this.currentRoute.snapshot.data['account'].id)
-      .subscribe(
-        () => {
-          this.accountForm.patchValue(this.accountForm.value);
-          this.return();
-        }
-      );
+    if (confirm('Are you sure you want to update? \n' +
+      'This action will affect all previous occurrences using this Account'))
+      this.accountService.onEdit(this.accountForm.value, this.currentRoute.snapshot.data['account'].id)
+        .subscribe(
+          () => {
+            alert("Account updated")
+            this.accountForm.patchValue(this.accountForm.value);
+            this.return();
+          }
+        );
   }
-  
+
   onDelete(id: number) {
-    this.accountService.deleteById(id)
-    .subscribe(
-      () => { 
-        this.return();
-      }
-    )
+    if (confirm('Are you sure you want to delete?'))
+      this.accountService.deleteById(id)
+        .subscribe(
+          () => {
+            alert("Account deleted")
+            this.return();
+          }
+        )
   }
 
   return() {
