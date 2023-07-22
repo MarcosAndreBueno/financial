@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { OccurrenceService } from './services/occurrence.service';
-import { CategoryService } from './services/category.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
-import { Observable, map, reduce } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Occurrence } from './model/occurrence';
 
 @Component({
@@ -19,7 +18,6 @@ export class OccurrencesComponent implements OnInit {
   selectedDate = new Date();
 
   constructor(
-    private categoryService: CategoryService,
     private occurrenceService: OccurrenceService,
     private router: Router,
     private currentRoute: ActivatedRoute,

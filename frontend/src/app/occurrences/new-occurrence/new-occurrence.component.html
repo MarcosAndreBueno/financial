@@ -2,16 +2,22 @@
   <h2 class="text-bg-primary text-center">NEW OCCURRENCE</h2>
 
   <form [formGroup]="occurrenceForm" (ngSubmit)="onSubmit()">
+
+    <!--Amount-->
     <div>
       <label for="amount" class="form-label">Amount:</label>
       <input type="number" class="form-control" name="amount" formControlName="amount" placeholder="0.0">
     </div>
+    <!--/Amount-->
 
+    <!--Date-->
     <div>
       <label for="date" class="form-label">Date:</label>
       <input type="date" class="form-control" name="date" formControlName="date">
     </div>
+    <!--/Date-->
 
+    <!--Account-->
     <div [formGroup]="occurrenceForm">
       <div formGroupName="account">
         <label for="account" class="form-label">Account:</label>
@@ -23,45 +29,78 @@
         </select>
       </div>
     </div>
+    <!--/Account-->
 
-    <div [formGroup]="occurrenceForm">
-      <div formGroupName="type">
-        <label for="Type" class="form-label">Type:</label>
-        <select formControlName="type" class="form-select">
-          <option *ngFor="let type of types$ | async as list" [ngValue]="type.type"
-            [selected]="type.type === occurrenceForm.controls['type'].value.type">
-            {{ type.type }}
-          </option>
+    <!--Type-->
+    <div [formGroup]="occurrenceForm" class="row">
+      <label for="Type" class="form-label">Type:</label>
+      <div formGroupName="type" class="col-10">
+        <div>
+          <select formControlName="id" class="form-select">
+            <ng-container *ngFor="let type of types$ | async as list">
+              <option *ngIf="type.status_active" [ngValue]="type.id"
+                [selected]="type.name === occurrenceForm.controls['type'].value.name">
+                {{ type.name }}
+              </option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+      <!--New type -->
+      <div class="col">
+        <button class="btn btn-primary" (click)="typeSettings()">
+          <i class="bi bi-gear"></i>
+        </button>
+      </div>
+      <!--/New type -->
+    </div>
+    <!--/Type-->
+
+    <!--Category-->
+    <div [formGroup]="occurrenceForm" class="row">
+      <label for="Category" class="form-label">Category:</label>
+      <div formGroupName="category" class="col-10">
+        <select formControlName="id" class="form-select">
+          <ng-container *ngFor="let category of categories$ | async as list">
+            <option *ngIf="category.status_active" [ngValue]="category.id">
+              {{ category.name }}
+            </option>
+          </ng-container>
         </select>
       </div>
-    </div>
-
-    <div [formGroup]="occurrenceForm">
-      <div formGroupName="category">
-        <label for="Category" class="form-label">Category:</label>
-        <select formControlName="category" class="form-select">
-          <option *ngFor="let category of categories$ | async as list" [ngValue]="category.category"
-            [selected]="category.category === occurrenceForm.controls['category'].value.category">
-            {{ category.category }}
-          </option>
-        </select>
+      <!--New category -->
+      <div class="col">
+        <button class="btn btn-primary" (click)="categorySettings()">
+          <i class="bi bi-gear"></i>
+        </button>
       </div>
+      <!--/New category -->
     </div>
+    <!--/Category-->
 
+    <!--Description-->
     <div>
       <label for="description" class="form-label">Description: </label>
       <textarea name="description" class="form-control" maxlength="200" formControlName="description" rows="5">
         </textarea>
     </div>
+    <!--/Description-->
 
+    <!--Submit-->
     <div class="text-end mt-3">
       <button type="submit" class="btn btn-outline-success" name="submit">
         Save
       </button>
     </div>
+    <!--/Submit-->
 
+    <!--Delete-->
     <div class="text-end mt-3">
-      <button type="button" class="btn btn-danger" (click)="return()">Cancel</button>
+      <button type="button" class="btn btn-danger" (click)="return()">
+        Cancel
+      </button>
     </div>
+    <!--/Delete-->
+
   </form>
 </div>

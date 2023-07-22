@@ -1,14 +1,11 @@
 package com.financial.financeapp.database;
 
 import com.financial.financeapp.entities.Account;
-import com.financial.financeapp.entities.enums.CategoryStatus;
-import com.financial.financeapp.entities.enums.TypeStatus;
 import com.financial.financeapp.entities.impl.Category;
 import com.financial.financeapp.entities.impl.Income;
 import com.financial.financeapp.entities.impl.Outcome;
 import com.financial.financeapp.entities.impl.Type;
 import com.financial.financeapp.repositories.*;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -38,12 +35,12 @@ public class Test implements CommandLineRunner {
     
     @Override
     public void run(String... args) throws Exception {
-        Type t1 = new Type(null, TypeStatus.INCOME_L);
+        Type t1 = new Type(null, "INCOME_L");
         typeRepository.save(t1);
 
-        Category c1 = new Category(null, CategoryStatus.SALARY);
+        Category c1 = new Category(null, "SALARY");
         categoryRepository.save(c1);
-        Category c2 = new Category(null, CategoryStatus.SIDE_GIGS);
+        Category c2 = new Category(null, "SIDE_GIGS");
         categoryRepository.save(c2);
 
         Account a1 = new Account(null, "Account One");

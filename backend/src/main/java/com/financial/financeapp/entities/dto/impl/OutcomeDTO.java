@@ -4,8 +4,6 @@ import com.financial.financeapp.entities.Account;
 import com.financial.financeapp.entities.dto.CategoryDTO;
 import com.financial.financeapp.entities.dto.OccurrenceDTO;
 import com.financial.financeapp.entities.dto.TypeDTO;
-import com.financial.financeapp.entities.enums.CategoryStatus;
-import com.financial.financeapp.entities.enums.TypeStatus;
 import com.financial.financeapp.entities.impl.Outcome;
 
 import java.util.List;
@@ -38,11 +36,13 @@ public class OutcomeDTO extends OccurrenceDTO {
                         outcome.getAccount(),
                         new TypeDTO(
                                 outcome.getType().getId(),
-                                TypeStatus.valueOf(outcome.getType().getType()).toString()
+                                outcome.getType().getName(),
+                                outcome.getType().getStatus_active()
                         ),
                         new CategoryDTO(
                                 outcome.getCategory().getId(),
-                                CategoryStatus.valueOf(outcome.getCategory().getCategory()).toString()
+                                outcome.getCategory().getName(),
+                                outcome.getCategory().getStatus_active()
                         ),
                         outcome.getDescription()
                 ))
@@ -58,11 +58,13 @@ public class OutcomeDTO extends OccurrenceDTO {
                 outcome.get().getAccount(),
                 new TypeDTO(
                         outcome.get().getType().getId(),
-                        TypeStatus.valueOf(outcome.get().getType().getType()).toString()
+                        outcome.get().getType().getName(),
+                        outcome.get().getType().getStatus_active()
                 ),
                 new CategoryDTO(
                         outcome.get().getCategory().getId(),
-                        CategoryStatus.valueOf(outcome.get().getCategory().getCategory()).toString()
+                        outcome.get().getCategory().getName(),
+                        outcome.get().getCategory().getStatus_active()
                 ),
                 outcome.get().getDescription()
         ));

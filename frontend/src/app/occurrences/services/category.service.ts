@@ -4,22 +4,30 @@ import { Category } from '../model/category';
 import { first, tap } from 'rxjs/operators';
 
 @Injectable({
-  //instância disponível globalmente
   providedIn: 'root'
 })
 export class CategoryService {
 
-  //debug: devtools -> network -> headers -> request url
   private readonly API = '/api/category';
 
-  //injeção http para requisição ajax
   constructor(private httpClient: HttpClient) { }
 
-  //type observable parametrizado
   list() {
     return this.httpClient.get<Category[]>(this.API)
       .pipe(
         first()
       );
+  }
+
+  onSave(newCatForm: Category) {
+    return this.httpClient.post<Category>(this.API, newCatForm); //return observable
+  }
+
+  onEdit(editCatForm: Partial<Category>, id: number) {
+    return this.httpClient.put<Category>(`${this.API}/${id}`, editCatForm);
+  }
+
+  deleteById(id: number) {
+    return this.httpClient.delete<Category>(`${this.API}/${id}`);
   }
 }

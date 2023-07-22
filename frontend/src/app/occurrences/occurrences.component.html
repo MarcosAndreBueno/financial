@@ -40,8 +40,27 @@
                 <td>{{ occurrence.amount }}</td>
                 <td>{{ occurrence.date }}</td>
                 <td>{{ occurrence.account.name }}</td>
-                <td>{{ occurrence.type.type }}</td>
-                <td>{{ occurrence.category.category }}</td>
+
+                <!--type cel-->
+                <td>
+                    <ng-container class="disabled" *ngIf="occurrence.type.status_active; else deletedType">
+                        {{ occurrence.type.name }}
+                    </ng-container>
+                    <ng-template #deletedType>
+                        <del>{{ occurrence.type.name }}</del>
+                    </ng-template>
+                </td>
+
+                <!--category cel-->
+                <td>
+                    <ng-container class="disabled" *ngIf="occurrence.category.status_active; else deletedCategory">
+                        {{ occurrence.category.name }}
+                    </ng-container>
+                    <ng-template #deletedCategory>
+                        <del>{{ occurrence.category.name }}</del>
+                    </ng-template>
+                </td>
+
                 <td>{{ occurrence.description }} </td>
                 <td>
                     <button class="btn btn-primary" (click)="onUpdate(occurrence)">

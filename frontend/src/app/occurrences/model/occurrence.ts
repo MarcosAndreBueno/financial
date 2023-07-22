@@ -8,11 +8,13 @@ export interface Occurrence {
     },
     type: {
         id: string,
-        type: string
+        name: string,
+        status_active: boolean
     },
     category: {
         id: string,
-        category: string
+        name: string
+        status_active: boolean
     },
     description: string,
 }

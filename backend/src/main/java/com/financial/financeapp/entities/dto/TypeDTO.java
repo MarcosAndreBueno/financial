@@ -1,6 +1,5 @@
 package com.financial.financeapp.entities.dto;
 
-import com.financial.financeapp.entities.enums.TypeStatus;
 import com.financial.financeapp.entities.impl.Type;
 
 import java.util.List;
@@ -11,14 +10,16 @@ import java.util.stream.Collectors;
 public class TypeDTO {
 
     private Long id;
-    private String type;
+    private String name;
+    private Boolean status_active = true;
 
     public TypeDTO() {
     }
 
-    public TypeDTO(Long id, String type) {
+    public TypeDTO(Long id, String name, Boolean status_active) {
         this.id = id;
-        this.type = type;
+        this.name = name;
+        this.status_active = status_active;
     }
 
     public List<TypeDTO> prepareTypesData(List<Type> types) {
@@ -26,14 +27,16 @@ public class TypeDTO {
         return types.stream()
         .map(type -> new TypeDTO(
                 type.getId(),
-                TypeStatus.valueOf(type.getType()).toString()))
+                type.getName(),
+                type.getStatus_active()))
                 .collect(Collectors.toList());
     }
 
     public Optional<TypeDTO> prepareTypesData(Optional<Type> types) {
         return types.map(type -> new TypeDTO(
                 type.getId(),
-                TypeStatus.valueOf(type.getType()).toString()));
+                type.getName(),
+                type.getStatus_active()));
     }
 
     public Long getId() {
@@ -44,12 +47,20 @@ public class TypeDTO {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Boolean getStatus_active() {
+        return status_active;
+    }
+
+    public void setStatus_active(Boolean status_active) {
+        this.status_active = status_active;
     }
 
     @Override
@@ -57,11 +68,11 @@ public class TypeDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TypeDTO that = (TypeDTO) o;
-        return Objects.equals(id, that.id) && Objects.equals(type, that.type);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type);
+        return Objects.hash(id, name);
     }
 }

@@ -1,0 +1,46 @@
+<div class="container">
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+    <!-- Select Option -->
+    <label for="name" class="form-label">Select Option:</label>
+    <div class="row">
+      <div class="col-4">
+        <select formControlName="id" class="form-select">
+          <!--Add new option-->
+          <option class="text-bg-success">
+            Add new
+          </option>
+          <!--Categories option-->
+          <ng-container *ngFor="let category of categories$ | async as list">
+            <option *ngIf="category.status_active" [ngValue]="category.id">
+              {{ category.name }}
+            </option>
+          </ng-container>
+        </select>
+      </div>
+      <!--Input new-->
+      <div class="col" *ngIf="showNewName">
+        <input type="text" class="form-control" formControlName="name" placeholder="Enter name">
+      </div>
+      <!--Input edit-->
+      <div class="col" *ngIf="showNameEditor">
+        <input type="text" class="form-control" formControlName="name" placeholder="Edit name">
+      </div>
+      <!-- Save -->
+      <div class="col">
+        <button type="submit" class="btn btn-outline-success" name="submit">
+          Save
+        </button>
+        <!-- Delete -->
+        <button type="button" class="btn btn-danger" (click)="onDelete()">
+          <i class="bi bi-trash"></i>
+        </button>
+        <!-- Cancel -->
+        <div class="text-end mt-2">
+          <button type="button" class="btn btn-danger" (click)="return()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,4 +1,5 @@
 export interface Type {
     id: string,
-    type: string,
+    name: string,
+    status_active: boolean;
 }

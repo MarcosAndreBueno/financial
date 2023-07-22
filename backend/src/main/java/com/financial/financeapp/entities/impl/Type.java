@@ -1,8 +1,8 @@
 package com.financial.financeapp.entities.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.financial.financeapp.entities.enums.TypeStatus;
 import jakarta.persistence.*;
+import org.hibernate.annotations.SQLDelete;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -11,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "tb_type")
+@SQLDelete(sql = "UPDATE tb_type SET status_active = false WHERE id = ?")
 public class Type implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -18,7 +19,9 @@ public class Type implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer type;
+    private String name;
+
+    private Boolean status_active = true;
 
     @JsonIgnore
     @OneToMany(mappedBy = "type")
@@ -28,26 +31,20 @@ public class Type implements Serializable {
     @OneToMany(mappedBy = "type")
     private Set<Outcome> outcomes = new HashSet<>();
 
-    public Type(Long id, TypeStatus typeStatus) {
+    public Type(Long id, String name) {
         this.id = id;
-        setTypeStatus(typeStatus);
-    }
-
-    private void setTypeStatus(TypeStatus typeStatus) {
-        if (typeStatus != null) {
-            this.type = typeStatus.getCode();
-        }
+        this.name = name;
     }
 
     public Type() {
     }
 
-    public Integer getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -60,6 +57,14 @@ public class Type implements Serializable {
 
     public Set<Income> getIncomes() {
         return incomes;
+    }
+
+    public Boolean getStatus_active() {
+        return status_active;
+    }
+
+    public void setStatus_active(Boolean status_active) {
+        this.status_active = status_active;
     }
 
     public void setIncomes(Set<Income> incomes) {
@@ -79,11 +84,11 @@ public class Type implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Type type1 = (Type) o;
-        return id.equals(type1.id) && type.equals(type1.type) && incomes.equals(type1.incomes);
+        return id.equals(type1.id) && name.equals(type1.name) && incomes.equals(type1.incomes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type, incomes);
+        return Objects.hash(id, name, incomes);
     }
 }

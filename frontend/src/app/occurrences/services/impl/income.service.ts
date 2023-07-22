@@ -28,7 +28,6 @@ export class IncomeService implements OccurrenceService {
   loadById(id: string) {
     //concatenação echma script
     return this.httpClient.get<Occurrence>(`${this.API}/${id}`);  
-
   }
 
   onEdit(editOccForm: Partial<Occurrence>, id: number) {

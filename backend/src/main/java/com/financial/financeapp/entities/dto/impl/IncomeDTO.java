@@ -4,8 +4,6 @@ import com.financial.financeapp.entities.Account;
 import com.financial.financeapp.entities.dto.CategoryDTO;
 import com.financial.financeapp.entities.dto.OccurrenceDTO;
 import com.financial.financeapp.entities.dto.TypeDTO;
-import com.financial.financeapp.entities.enums.CategoryStatus;
-import com.financial.financeapp.entities.enums.TypeStatus;
 import com.financial.financeapp.entities.impl.Income;
 
 import java.util.List;
@@ -38,11 +36,13 @@ public class IncomeDTO extends OccurrenceDTO {
                         income.getAccount(),
                         new TypeDTO(
                                 income.getType().getId(),
-                                TypeStatus.valueOf(income.getType().getType()).toString()
+                                income.getType().getName(),
+                                income.getType().getStatus_active()
                         ),
                         new CategoryDTO(
                                 income.getCategory().getId(),
-                                CategoryStatus.valueOf(income.getCategory().getCategory()).toString()
+                                income.getCategory().getName(),
+                                income.getCategory().getStatus_active()
                         ),
                         income.getDescription()
                 ))
@@ -58,11 +58,13 @@ public class IncomeDTO extends OccurrenceDTO {
                 income.get().getAccount(),
                 new TypeDTO(
                         income.get().getType().getId(),
-                        TypeStatus.valueOf(income.get().getType().getType()).toString()
+                        income.get().getType().getName(),
+                        income.get().getType().getStatus_active()
                 ),
                 new CategoryDTO(
                         income.get().getCategory().getId(),
-                        CategoryStatus.valueOf(income.get().getCategory().getCategory()).toString()
+                        income.get().getCategory().getName(),
+                        income.get().getCategory().getStatus_active()
                 ),
                 income.get().getDescription()
         ));

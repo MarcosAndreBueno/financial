@@ -1,25 +1,33 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Type } from '../model/type';
-import { first, tap } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 
 @Injectable({
-  //instância disponível globalmente
   providedIn: 'root'
 })
 export class TypeService {
 
-  //debug: devtools -> network -> headers -> request url
   private readonly API = '/api/type';
 
-  //injeção http para requisição ajax
   constructor(private httpClient: HttpClient) { }
 
-  //type observable parametrizado
   list() {
     return this.httpClient.get<Type[]>(this.API)
       .pipe(
         first()
       );
+  }
+
+  onSave(newCatForm: Type) {
+    return this.httpClient.post<Type>(this.API, newCatForm);
+  }
+
+  onEdit(editCatForm: Partial<Type>, id: number) {
+    return this.httpClient.put<Type>(`${this.API}/${id}`, editCatForm);
+  }
+
+  deleteById(id: number) {
+    return this.httpClient.delete<Type>(`${this.API}/${id}`);
   }
 }

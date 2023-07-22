@@ -1,8 +1,8 @@
 package com.financial.financeapp.entities.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.financial.financeapp.entities.enums.CategoryStatus;
 import jakarta.persistence.*;
+import org.hibernate.annotations.SQLDelete;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -11,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "tb_category")
+@SQLDelete(sql = "UPDATE tb_category SET status_active = false WHERE id = ?")
 public class Category implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -18,7 +19,9 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer category;
+    private String name;
+
+    private Boolean status_active = true;
 
     @JsonIgnore
     @OneToMany(mappedBy = "category")
@@ -28,15 +31,9 @@ public class Category implements Serializable {
     @OneToMany(mappedBy = "category")
     private Set<Outcome> outcomes = new HashSet<>();
 
-    public Category(Long id, CategoryStatus categoryStatus) {
+    public Category(Long id, String name) {
         this.id = id;
-        setCategoryStatus(categoryStatus);
-    }
-
-    private void setCategoryStatus(CategoryStatus categoryStatus) {
-        if (categoryStatus != null) {
-            this.category = categoryStatus.getCode();
-        }
+        this.name = name;
     }
 
     public Category() {
@@ -50,12 +47,20 @@ public class Category implements Serializable {
         this.id = id;
     }
 
-    public Integer getCategory() {
-        return category;
+    public String getName() {
+        return name;
     }
 
-    public void setCategory(Integer category) {
-        this.category = category;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Boolean getStatus_active() {
+        return status_active;
+    }
+
+    public void setStatus_active(Boolean status_active) {
+        this.status_active = status_active;
     }
 
     public Set<Income> getIncomes() {
@@ -79,11 +84,11 @@ public class Category implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category1 = (Category) o;
-        return id.equals(category1.id) && category.equals(category1.category);
+        return id.equals(category1.id) && name.equals(category1.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, category);
+        return Objects.hash(id, name);
     }
 }

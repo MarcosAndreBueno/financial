@@ -3,7 +3,7 @@ import { TypeService } from '../services/type.service';
 import { CategoryService } from '../services/category.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Occurrence } from '../model/occurrence';
 import { Category } from '../model/category';
 import { Observable } from 'rxjs';
@@ -23,6 +23,7 @@ export class NewOccurrenceComponent implements OnInit {
   categories$: Observable<Category[]>;
   types$: Observable<Type[]>;
   accounts$: Observable<Account[]>;
+  categoryID!: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,7 +32,8 @@ export class NewOccurrenceComponent implements OnInit {
     private location: Location,
     private categoryService: CategoryService,
     private typeService: TypeService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private router: Router
   ) {
     this.categories$ = categoryService.list()
     this.types$ = typeService.list()
@@ -48,17 +50,20 @@ export class NewOccurrenceComponent implements OnInit {
         name: [null]
       }),
       type: this.formBuilder.group({
-        type: [null]
+        id: [null],
+        name: [null],
+        status_active: [null]
       }),
       category: this.formBuilder.group({
-        category: [null]
+        id: [null],
+        name: [null],
+        status_active: [null]
       }),
       description: [null],
     });
-
     //get informações carregadas pelo occurrenceResolver (/update/1)
     const occurrence: Occurrence = this.currentRoute.snapshot.data['occurrence']
-    //popular form
+
     this.occurrenceForm.patchValue({
       _id: occurrence.id,
       amount: occurrence.amount,
@@ -67,10 +72,14 @@ export class NewOccurrenceComponent implements OnInit {
         name: occurrence.account.name
       },
       type: {
-        type: occurrence.type.type
+        id: occurrence.type.id,
+        name: occurrence.type.name,
+        status_active: occurrence.type.status_active
       },
       category: {
-        category: occurrence.category.category,
+        id: occurrence.category.id,
+        name: occurrence.category.name,
+        status_active: occurrence.category.status_active
       },
       description: occurrence.description
     })
@@ -104,5 +113,13 @@ export class NewOccurrenceComponent implements OnInit {
 
   return() {
     this.location.back();
+  }
+
+  categorySettings() {
+    this.router.navigate(['new-category'], { relativeTo: this.currentRoute })
+  }
+
+  typeSettings() {
+    this.router.navigate(['new-type'], { relativeTo: this.currentRoute })
   }
 }

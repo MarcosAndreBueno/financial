@@ -2,10 +2,10 @@ package com.financial.financeapp.service;
 
 import com.financial.financeapp.entities.dto.CategoryDTO;
 import com.financial.financeapp.entities.dto.OccurrenceDTO;
-import com.financial.financeapp.entities.enums.CategoryStatus;
 import com.financial.financeapp.entities.impl.Category;
 import com.financial.financeapp.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,17 +28,41 @@ public class CategoryService {
         return category.get();
     }
 
+    public void insert(Category category) {
+        if (categoryRepository.findByName(category.getName()).isEmpty())
+            categoryRepository.save(category);
+    }
+
+    public ResponseEntity<Category> update(Long id, Category category) {
+        Optional<Category> categoryUpdate = categoryRepository.findById(id);
+        return categoryUpdate
+                .map(item -> {
+                    item.setName(category.getName());
+                    Category update = categoryRepository.save(item);
+                    return ResponseEntity.ok().body(update);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    //soft delete
+    public ResponseEntity<Void> deleteById(Long id) {
+        return categoryRepository.findById(id)
+                .map( item -> {
+                    categoryRepository.deleteById(id);
+                    return ResponseEntity.noContent().<Void>build();
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     //lazyloading
     public Category getProxyInstanceById(OccurrenceDTO occurrenceDTO) {
-        CategoryStatus categoryStatus = CategoryStatus.valueOf(occurrenceDTO.getCategory().getCategory());
-        Long cID = Long.valueOf(categoryStatus.getCode());
+        Long cID = occurrenceDTO.getCategory().getId();
         return categoryRepository.getReferenceById(cID);
     }
 
     //entitidade totalmente carregada
     public Category getEntityInstanceById(OccurrenceDTO occurrenceDTO) {
-        CategoryStatus categoryStatus = CategoryStatus.valueOf(occurrenceDTO.getCategory().getCategory());
-        Long cID = Long.valueOf(categoryStatus.getCode());
+        Long cID = occurrenceDTO.getCategory().getId();
         return categoryRepository.findById(cID).get();
     }
 }
