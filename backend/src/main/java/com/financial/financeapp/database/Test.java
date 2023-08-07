@@ -1,6 +1,8 @@
 package com.financial.financeapp.database;
 
 import com.financial.financeapp.entities.Account;
+import com.financial.financeapp.entities.enums.CategoryStatus;
+import com.financial.financeapp.entities.enums.TypeStatus;
 import com.financial.financeapp.entities.impl.Category;
 import com.financial.financeapp.entities.impl.Income;
 import com.financial.financeapp.entities.impl.Outcome;
@@ -35,37 +37,59 @@ public class Test implements CommandLineRunner {
     
     @Override
     public void run(String... args) throws Exception {
-        Type t1 = new Type(null, "INCOME_L");
-        typeRepository.save(t1);
+        for (int i = 1; i <= 15; i++) {
+            Type t1 = new Type(null, TypeStatus.valueOf(i).toString());
+            typeRepository.save(t1);
+        }
 
-        Category c1 = new Category(null, "SALARY");
-        categoryRepository.save(c1);
-        Category c2 = new Category(null, "SIDE_GIGS");
-        categoryRepository.save(c2);
+        for (int i = 1; i <= 43; i++) {
+            Category c1 = new Category(null, CategoryStatus.valueOf(i).toString());
+            categoryRepository.save(c1);
+        }
 
         Account a1 = new Account(null, "Account One");
         Account a2 = new Account(null, "Account Two");
-        accountRepository.save(a1);
-        accountRepository.save(a2);
+        Account a3 = new Account(null, "Account Three");
+        accountRepository.saveAll(Arrays.asList(a1,a2,a3));
 
-        Income i1 = new Income(null, 50.0, LocalDate.parse("2023-06-20"), a1, t1, c1, "Income 1");
-        Income i2 = new Income(null, 70.0, LocalDate.parse("2023-06-20"), a1, t1, c1, "Income 2");
-        Income i3 = new Income(null, 90.0, LocalDate.parse("2023-02-21"), a2, t1, c1, "Income 3");
-        Income i4 = new Income(null, 20.0, LocalDate.parse("2023-02-24"), a2, t1, c2, "Income 4");
-        Income i5 = new Income(null, 10.0, LocalDate.parse("2023-03-17"), a1, t1, c2, "Income 5");
-        incomeRepository.saveAll(Arrays.asList(i1,i2,i3,i4,i5));
+        //Incomes
+        Income i1 = new Income(
+                null, 10000.0, LocalDate.parse("2023-07-07"), a1,
+                typeRepository.getReferenceById(1L), categoryRepository.getReferenceById(1L),
+                "Example One" );
+        Income i2 = new Income(
+                null, 1000.0, LocalDate.parse("2023-07-07"), a2,
+                typeRepository.getReferenceById(1L), categoryRepository.getReferenceById(2L),
+                "Example Two" );
+        Income i3 = new Income(
+                null, 250.0, LocalDate.parse("2023-08-07"), a2,
+                typeRepository.getReferenceById(2L), categoryRepository.getReferenceById(3L),
+                "Example Three" );
+        Income i4 = new Income(
+                null, 5000.0, LocalDate.parse("2023-08-07"), a3,
+                typeRepository.getReferenceById(3L), categoryRepository.getReferenceById(4L),
+                "Example Four" );
 
-        t1.getIncomes().addAll(Arrays.asList(i1,i2));
-        c1.getIncomes().addAll(Arrays.asList(i1,i2));
+        incomeRepository.saveAll(Arrays.asList(i1,i2,i3,i4));
 
-        Outcome o1 = new Outcome(null, 750.0, LocalDate.parse("2023-06-21"), a1, t1, c1, "Outcome 1");
-        Outcome o2 = new Outcome(null, 600.0, LocalDate.parse("2023-03-24"), a1, t1, c1, "Outcome 2");
-        Outcome o3 = new Outcome(null, 500.0, LocalDate.parse("2023-04-24"), a2, t1, c1, "Outcome 3");
-        Outcome o4 = new Outcome(null, 800.0, LocalDate.parse("2023-06-24"), a2, t1, c1, "Outcome 4");
-        Outcome o5 = new Outcome(null, 900.0, LocalDate.parse("2023-02-24"), a1, t1, c1, "Outcome 5");
-        outcomeRepository.saveAll(Arrays.asList(o1,o2, o3, o4, o5));
+        //Outcomes
+        Outcome o1 = new Outcome(
+                null, 4000.0, LocalDate.parse("2023-07-07"), a1,
+                typeRepository.getReferenceById(4L), categoryRepository.getReferenceById(6L),
+                "Example One" );
+        Outcome o2 = new Outcome(
+                null, 100.0, LocalDate.parse("2023-07-07"), a2,
+                typeRepository.getReferenceById(5L), categoryRepository.getReferenceById(9L),
+                "Example Two" );
+        Outcome o3 = new Outcome(
+                null, 500.0, LocalDate.parse("2023-08-07"), a2,
+                typeRepository.getReferenceById(6L), categoryRepository.getReferenceById(14L),
+                "Example Three" );
+        Outcome o4 = new Outcome(
+                null, 1200.0, LocalDate.parse("2023-08-07"), a3,
+                typeRepository.getReferenceById(7L), categoryRepository.getReferenceById(19L),
+                "Example Four" );
 
-        t1.getOutcomes().addAll(Arrays.asList(o1,o2));
-        c1.getOutcomes().addAll(Arrays.asList(o1,o2));
+        outcomeRepository.saveAll(Arrays.asList(o1,o2,o3,o4));
     }
 }

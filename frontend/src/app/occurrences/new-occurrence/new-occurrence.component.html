@@ -22,10 +22,12 @@
       <div formGroupName="account">
         <label for="account" class="form-label">Account:</label>
         <select formControlName="name" class="form-select">
-          <option *ngFor="let account of accounts$ | async as list" [ngValue]="account.name"
+          <ng-container *ngFor="let account of accounts$ | async as list">
+            <option *ngIf="account.status_active" [ngValue]="account.name" 
             [selected]="account.name === occurrenceForm.controls['account'].value.name">
             {{ account.name }}
           </option>
+        </ng-container>
         </select>
       </div>
     </div>

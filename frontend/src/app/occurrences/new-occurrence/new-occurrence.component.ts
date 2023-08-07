@@ -47,7 +47,8 @@ export class NewOccurrenceComponent implements OnInit {
       amount: [null],
       date: [null],
       account: this.formBuilder.group({
-        name: [null]
+        name: [null],
+        status_active: [null]
       }),
       type: this.formBuilder.group({
         id: [null],
@@ -69,7 +70,8 @@ export class NewOccurrenceComponent implements OnInit {
       amount: occurrence.amount,
       date: occurrence.date,
       account: {
-        name: occurrence.account.name
+        name: occurrence.account.name,
+        status_active: occurrence.account.status_active
       },
       type: {
         id: occurrence.type.id,

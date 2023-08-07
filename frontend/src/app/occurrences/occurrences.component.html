@@ -39,7 +39,16 @@
             <tr *ngFor="let occurrence of occurrences$ | async as list">
                 <td>{{ occurrence.amount }}</td>
                 <td>{{ occurrence.date }}</td>
-                <td>{{ occurrence.account.name }}</td>
+
+                <!--account cel-->
+                <td>
+                    <ng-container class="disabled" *ngIf="occurrence.account.status_active; else deletedAccount">
+                        {{ occurrence.account.name }}
+                    </ng-container>
+                    <ng-template #deletedAccount>
+                        <del>{{ occurrence.account.name }}</del>
+                    </ng-template>
+                </td>
 
                 <!--type cel-->
                 <td>

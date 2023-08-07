@@ -30,7 +30,7 @@ export class NewAccountComponent {
     const account: Account = this.currentRoute.snapshot.data['account']
     this.accountForm.patchValue({
       id: account.id,
-      name: account.name,
+      name: account.name
     })
   }
 

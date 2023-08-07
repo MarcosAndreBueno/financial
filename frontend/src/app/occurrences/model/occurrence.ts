@@ -4,7 +4,8 @@ export interface Occurrence {
     date: string,
     account: {
         id: string,
-        name: string
+        name: string,
+        status_active: boolean
     },
     type: {
         id: string,

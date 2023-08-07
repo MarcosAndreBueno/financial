@@ -20,10 +20,10 @@ export class OccurrenceResolver implements Resolve<Occurrence> {
     }
     //new income
     return of({
-      id: '', amount: '', date: '', 
-      account: { id: '', name: '' }, 
-      type: { id: '', name: '',  status_active: true },
-      category: { id: '', name: '', status_active: true }, 
+      id: '', amount: '', date: '',
+      account: { id: '', name: '', status_active: true },
+      type: { id: '', name: '', status_active: true },
+      category: { id: '', name: '', status_active: true },
       description: ''
     });
   }
