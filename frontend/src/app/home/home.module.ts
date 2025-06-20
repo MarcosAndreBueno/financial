@@ -6,12 +6,14 @@ import { HomeComponent } from './home/home.component';
 import { OccurrencesModule } from '../occurrences/occurrences.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NewAccountComponent } from './new-account/new-account.component';
+import { AnalysisComponent } from './analysis/analysis.component';
 
 
 @NgModule({
   declarations: [
     HomeComponent,
-    NewAccountComponent
+    NewAccountComponent,
+    AnalysisComponent
   ],
   imports: [
     CommonModule,

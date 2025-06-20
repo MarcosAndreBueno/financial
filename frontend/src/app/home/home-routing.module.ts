@@ -7,6 +7,7 @@ import { IncomeService } from '../occurrences/services/impl/income.service';
 import { OutcomeService } from '../occurrences/services/impl/outcome.service';
 import { AccountResolver } from './home/guards/account.resolver';
 import { NewAccountComponent } from './new-account/new-account.component';
+import { AnalysisComponent } from './analysis/analysis.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -16,6 +17,10 @@ const routes: Routes = [
   },
   {
     path: 'update-account/:id', component: NewAccountComponent,
+    resolve: { account: AccountResolver }
+  },
+  {
+    path: 'analysis', component: AnalysisComponent,
     resolve: { account: AccountResolver }
   },
   {

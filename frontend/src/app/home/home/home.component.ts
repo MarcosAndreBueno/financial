@@ -46,6 +46,10 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['new-account', { relativeTo: this.currentRoute }])
   }
 
+  onAnalysis() {
+    this.router.navigate(['analysis', { relativeTo: this.currentRoute }])
+  }
+
   onEdit(account: Account) {
     this.router.navigate(['update-account', account.id])
   }
