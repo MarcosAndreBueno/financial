@@ -134,7 +134,7 @@ public class Test implements CommandLineRunner {
             //random value
             double value = 5 + random.nextDouble() * 100;
             double rounded = new BigDecimal(value)
-                    .setScale(2, RoundingMode.HALF_UP)
+                    .setScale(0, RoundingMode.HALF_UP)
                     .doubleValue();
 
             Outcome outcome = new Outcome(
