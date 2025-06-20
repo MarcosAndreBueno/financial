@@ -13,8 +13,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.Arrays;
+import java.util.Random;
 
 @Configuration
 @Profile("test")
@@ -47,49 +51,103 @@ public class Test implements CommandLineRunner {
             categoryRepository.save(c1);
         }
 
+        // acount
         Account a1 = new Account(null, "Account One");
         Account a2 = new Account(null, "Account Two");
         Account a3 = new Account(null, "Account Three");
         accountRepository.saveAll(Arrays.asList(a1,a2,a3));
 
-        //Incomes
-        Income i1 = new Income(
-                null, 10000.0, LocalDate.parse("2023-07-07"), a1,
-                typeRepository.getReferenceById(1L), categoryRepository.getReferenceById(1L),
-                "Example One" );
-        Income i2 = new Income(
-                null, 1000.0, LocalDate.parse("2023-07-07"), a2,
-                typeRepository.getReferenceById(1L), categoryRepository.getReferenceById(2L),
-                "Example Two" );
-        Income i3 = new Income(
-                null, 250.0, LocalDate.parse("2023-08-07"), a2,
-                typeRepository.getReferenceById(2L), categoryRepository.getReferenceById(3L),
-                "Example Three" );
-        Income i4 = new Income(
-                null, 5000.0, LocalDate.parse("2023-08-07"), a3,
-                typeRepository.getReferenceById(3L), categoryRepository.getReferenceById(4L),
-                "Example Four" );
+        Random random = new Random();
 
-        incomeRepository.saveAll(Arrays.asList(i1,i2,i3,i4));
+        //Incomes
+        for (int i = 0; i < 500; i++) {
+            // random date
+            int year = 2024 + random.nextInt(2); // 2024 ou 2025
+            int month = 1 + random.nextInt(12);
+            int maxDay = YearMonth.of(year, month).lengthOfMonth();
+            int day = 1 + random.nextInt(maxDay);
+            LocalDate date = LocalDate.of(year, month, day);
+
+            // Tipo entre 1 e 3
+            int typeId = 1 + random.nextInt(3);
+
+            // Categoria depende do tipo
+            int categoryId = 1 + random.nextInt(5);
+
+            // Entre a1, a2 ou a3
+            Account account;
+            int accNum = 1 + random.nextInt(3);
+            if (accNum == 1) account = a1;
+            else if (accNum == 2) account = a2;
+            else account = a3;
+
+            // random value
+            double value = 100 + random.nextDouble() * 300;
+            double rounded = new BigDecimal(value)
+                    .setScale(0, RoundingMode.HALF_UP)
+                    .doubleValue();
+
+            Income income = new Income(
+                    null,
+                    rounded,
+                    date,
+                    account,
+                    typeRepository.getReferenceById((long) typeId),
+                    categoryRepository.getReferenceById((long) categoryId),
+                    "Random income " + (i + 1)
+            );
+
+            incomeRepository.save(income);
+        }
 
         //Outcomes
-        Outcome o1 = new Outcome(
-                null, 4000.0, LocalDate.parse("2023-07-07"), a1,
-                typeRepository.getReferenceById(4L), categoryRepository.getReferenceById(6L),
-                "Example One" );
-        Outcome o2 = new Outcome(
-                null, 100.0, LocalDate.parse("2023-07-07"), a2,
-                typeRepository.getReferenceById(5L), categoryRepository.getReferenceById(9L),
-                "Example Two" );
-        Outcome o3 = new Outcome(
-                null, 500.0, LocalDate.parse("2023-08-07"), a2,
-                typeRepository.getReferenceById(6L), categoryRepository.getReferenceById(14L),
-                "Example Three" );
-        Outcome o4 = new Outcome(
-                null, 1200.0, LocalDate.parse("2023-08-07"), a3,
-                typeRepository.getReferenceById(7L), categoryRepository.getReferenceById(19L),
-                "Example Four" );
+        for (int i = 0; i < 500; i++) {
+            //random date
+            int year = 2024 + random.nextInt(2); // 2024 ou 2025
+            int month = 1 + random.nextInt(12);
+            int maxDay = YearMonth.of(year, month).lengthOfMonth();
+            int day = 1 + random.nextInt(maxDay);
+            LocalDate date = LocalDate.of(year, month, day);
 
-        outcomeRepository.saveAll(Arrays.asList(o1,o2,o3,o4));
+            // Tipo entre 4 e 15
+            int typeId = 4 + random.nextInt(12);
+
+            // Categoria depende do tipo
+            int categoryId = 0;
+            switch (typeId) {
+                case 4 -> categoryId = 6 + random.nextInt(3);      // 6 a 8
+                case 5 -> categoryId = 9 + random.nextInt(5);      // 9 a 13
+                case 6 -> categoryId = 14 + random.nextInt(5);     // 14 a 18
+                case 7 -> categoryId = 19 + random.nextInt(4);     // 19 a 22
+                case 8 -> categoryId = 23 + random.nextInt(4);     // 23 a 26
+                case 9 -> categoryId = 27 + random.nextInt(2);     // 27 a 28
+                case 10 -> categoryId = 29 + random.nextInt(5);    // 29 a 33
+                case 11 -> categoryId = 34;                              // 34
+                case 12 -> categoryId = 35 + random.nextInt(2);    // 35 a 36
+                case 13 -> categoryId = 37 + random.nextInt(4);    // 37 a 40
+                case 14 -> categoryId = 41 + random.nextInt(2);    // 41 a 42
+                case 15 -> categoryId = 43;                              // 43
+            }
+
+            Account account = a1;
+
+            //random value
+            double value = 5 + random.nextDouble() * 100;
+            double rounded = new BigDecimal(value)
+                    .setScale(2, RoundingMode.HALF_UP)
+                    .doubleValue();
+
+            Outcome outcome = new Outcome(
+                    null,
+                    rounded,
+                    date,
+                    account,
+                    typeRepository.getReferenceById((long) typeId),
+                    categoryRepository.getReferenceById((long) categoryId),
+                    "Random outcome " + (i + 1)
+            );
+
+            outcomeRepository.save(outcome);
+        }
     }
 }

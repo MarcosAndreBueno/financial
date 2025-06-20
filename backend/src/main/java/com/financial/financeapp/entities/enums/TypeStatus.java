@@ -21,6 +21,9 @@ public enum TypeStatus {
     SAVINGS(14),
     OTHER(15);
 
+
+
+
     private Integer code;
 
     TypeStatus(Integer code) {
