@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OccurrenceService } from './services/occurrence.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
-import { Observable, map } from 'rxjs';
+import { Observable, map, toArray } from 'rxjs';
 import { Occurrence } from './model/occurrence';
 
 @Component({
@@ -16,6 +16,10 @@ export class OccurrencesComponent implements OnInit {
   totalAmount$!: Observable<number>;
   bsConfig?: Partial<BsDatepickerConfig>;
   selectedDate = new Date();
+
+  //organize ocurrences date on template
+  renderDate: boolean[] = [];
+  dateName: string[] = [];
 
   constructor(
     private occurrenceService: OccurrenceService,
@@ -55,7 +59,45 @@ export class OccurrencesComponent implements OnInit {
   refresh() {
     this.occurrences$ = this.occurrenceService.list(
       this.selectedDate.getMonth() + 1, this.selectedDate.getFullYear()
+    ).pipe( //sort date desc
+      map(occurrences => occurrences.map(occurrence => ({
+        ...occurrence,
+        sortDate: new Date(occurrence.date).getTime()
+      })).sort((a, b) => b.sortDate - a.sortDate))
     );
+
+    //today date
+    var todayDate = 
+    this.selectedDate.getFullYear().toString() + '-' +
+    (this.selectedDate.getMonth() + 1).toString().padStart(2, '0') + '-' +
+    this.selectedDate.getDate().toString().padStart(2, '0');
+
+    //render occurrence day
+    const appearedDates: Set<string> = new Set();
+
+    //reset
+    this.renderDate = [];
+    this.dateName = [];
+
+    this.occurrences$.forEach(occurrences => 
+      occurrences.forEach(occurrence => {
+      const currDate = occurrence.date;
+    
+      if (appearedDates.has(currDate)) {
+        this.renderDate.push(false); // don't render
+        this.dateName.push("");
+      } else {
+        appearedDates.add(currDate);
+        this.renderDate.push(true); // render
+        if (currDate === todayDate) {
+          this.dateName.push("Hoje");
+        } else {
+          this.dateName.push(currDate.slice(8, currDate.length));
+        }
+      }
+    }));
+
+    //sum occurrence amount
     this.totalAmount$ = this.occurrences$.pipe(
       map(occurrences =>
         occurrences.map((occurrence =>

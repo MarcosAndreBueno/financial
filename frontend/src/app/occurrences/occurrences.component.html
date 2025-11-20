@@ -36,50 +36,67 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let occurrence of occurrences$ | async as list">
-                <td>{{ occurrence.amount }}</td>
-                <td>{{ occurrence.date }}</td>
+            <ng-container *ngFor="let occurrence of occurrences$ | async as list; let i = index">
+                <ng-container class="disabled;" *ngIf="renderDate[i]">
 
-                <!--account cel-->
-                <td>
-                    <ng-container class="disabled" *ngIf="occurrence.account.status_active; else deletedAccount">
-                        {{ occurrence.account.name }}
-                    </ng-container>
-                    <ng-template #deletedAccount>
-                        <del>{{ occurrence.account.name }}</del>
-                    </ng-template>
-                </td>
+                    <!-- day separator line -->
+                    <tr style="border-color: darkcyan; font-style: italic; font-size: 1.3rem; font-weight: 900; border-block-width: initial;">
+                        <td style="color: darkcyan;">
+                            DIA
+                        </td>
+                        <td style="color: darkcyan">{{dateName[i]}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </ng-container>
+                    <tr>
+                        <td>{{ occurrence.amount }}</td>
+                        <td>{{ occurrence.date }}</td>
 
-                <!--type cel-->
-                <td>
-                    <ng-container class="disabled" *ngIf="occurrence.type.status_active; else deletedType">
-                        {{ occurrence.type.name }}
-                    </ng-container>
-                    <ng-template #deletedType>
-                        <del>{{ occurrence.type.name }}</del>
-                    </ng-template>
-                </td>
+                        <!--account cel-->
+                        <td>
+                            <ng-container class="disabled" *ngIf="occurrence.account.status_active; else deletedAccount">
+                                {{ occurrence.account.name }}
+                            </ng-container>
+                            <ng-template #deletedAccount>
+                                <del>{{ occurrence.account.name }}</del>
+                            </ng-template>
+                        </td>
 
-                <!--category cel-->
-                <td>
-                    <ng-container class="disabled" *ngIf="occurrence.category.status_active; else deletedCategory">
-                        {{ occurrence.category.name }}
-                    </ng-container>
-                    <ng-template #deletedCategory>
-                        <del>{{ occurrence.category.name }}</del>
-                    </ng-template>
-                </td>
+                        <!--type cel-->
+                        <td>
+                            <ng-container class="disabled" *ngIf="occurrence.type.status_active; else deletedType">
+                                {{ occurrence.type.name }}
+                            </ng-container>
+                            <ng-template #deletedType>
+                                <del>{{ occurrence.type.name }}</del>
+                            </ng-template>
+                        </td>
 
-                <td>{{ occurrence.description }} </td>
-                <td>
-                    <button class="btn btn-primary" (click)="onUpdate(occurrence)">
-                        <i class="bi bi-arrow-repeat"></i>
-                    </button>
-                    <button class="btn btn-danger " (click)="onDelete(occurrence)">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </td>
-            </tr>
+                        <!--category cel-->
+                        <td>
+                            <ng-container class="disabled" *ngIf="occurrence.category.status_active; else deletedCategory">
+                                {{ occurrence.category.name }}
+                            </ng-container>
+                            <ng-template #deletedCategory>
+                                <del>{{ occurrence.category.name }}</del>
+                            </ng-template>
+                        </td>
+
+                        <td>{{ occurrence.description }} </td>
+                        <td>
+                            <button class="btn btn-primary" (click)="onUpdate(occurrence)">
+                                <i class="bi bi-arrow-repeat"></i>
+                            </button>
+                            <button class="btn btn-danger " (click)="onDelete(occurrence)">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+            </ng-container>
         </tbody>
     </table>
 
