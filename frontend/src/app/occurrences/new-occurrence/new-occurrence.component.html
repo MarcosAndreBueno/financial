@@ -23,11 +23,11 @@
         <label for="account" class="form-label">Account:</label>
         <select formControlName="name" class="form-select">
           <ng-container *ngFor="let account of accounts$ | async as list">
-            <option *ngIf="account.status_active" [ngValue]="account.name" 
-            [selected]="account.name === occurrenceForm.controls['account'].value.name">
-            {{ account.name }}
-          </option>
-        </ng-container>
+            <option *ngIf="account.status_active" [ngValue]="account.name"
+              [selected]="account.name === occurrenceForm.controls['account'].value.name">
+              {{ account.name }}
+            </option>
+          </ng-container>
         </select>
       </div>
     </div>
@@ -40,9 +40,13 @@
         <div>
           <select formControlName="id" class="form-select">
             <ng-container *ngFor="let type of types$ | async as list">
-              <option *ngIf="type.status_active" [ngValue]="type.id"
+              <option *ngIf="type.status_active &&
+                      (isIncomePage && type.income ||
+                      !isIncomePage && !type.income)" [ngValue]="type.id"
                 [selected]="type.name === occurrenceForm.controls['type'].value.name">
+
                 {{ type.name }}
+
               </option>
             </ng-container>
           </select>
@@ -64,8 +68,13 @@
       <div formGroupName="category" class="col-10">
         <select formControlName="id" class="form-select">
           <ng-container *ngFor="let category of categories$ | async as list">
-            <option *ngIf="category.status_active" [ngValue]="category.id">
+            <option *ngIf="category.status_active &&
+              (isIncomePage && category.income ||
+              !isIncomePage && !category.income)" [ngValue]="category.id"
+              [selected]="category.name === occurrenceForm.controls['category'].value.name">
+
               {{ category.name }}
+
             </option>
           </ng-container>
         </select>

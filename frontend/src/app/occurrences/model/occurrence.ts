@@ -10,11 +10,13 @@ export interface Occurrence {
     type: {
         id: string,
         name: string,
+        income: boolean,
         status_active: boolean
     },
     category: {
         id: string,
-        name: string
+        name: string,
+        income: boolean,
         status_active: boolean
     },
     description: string,

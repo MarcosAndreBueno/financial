@@ -3,10 +3,10 @@ import { TypeService } from '../services/type.service';
 import { CategoryService } from '../services/category.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
 import { Occurrence } from '../model/occurrence';
 import { Category } from '../model/category';
-import { Observable } from 'rxjs';
+import { Observable, filter, map } from 'rxjs';
 import { Location } from '@angular/common';
 import { OccurrenceService } from '../services/occurrence.service';
 import { AccountService } from 'src/app/home/service/account.service';
@@ -24,6 +24,7 @@ export class NewOccurrenceComponent implements OnInit {
   types$: Observable<Type[]>;
   accounts$: Observable<Account[]>;
   categoryID!: number;
+  isIncomePage!: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,6 +42,10 @@ export class NewOccurrenceComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isIncomePage = this.location.path().includes("incomes");
+    this.types$.subscribe()    
+    this.categories$.subscribe()
+
     //listen form input
     this.occurrenceForm = this.formBuilder.group({
       id: [null],
@@ -53,15 +58,18 @@ export class NewOccurrenceComponent implements OnInit {
       type: this.formBuilder.group({
         id: [null],
         name: [null],
+        income: [null],
         status_active: [null]
       }),
       category: this.formBuilder.group({
         id: [null],
         name: [null],
+        income: [null],
         status_active: [null]
       }),
       description: [null],
     });
+    
     //get informações carregadas pelo occurrenceResolver (/update/1)
     const occurrence: Occurrence = this.currentRoute.snapshot.data['occurrence']
 
@@ -76,11 +84,13 @@ export class NewOccurrenceComponent implements OnInit {
       type: {
         id: occurrence.type.id,
         name: occurrence.type.name,
+        isIncome: occurrence.type.income,
         status_active: occurrence.type.status_active
       },
       category: {
         id: occurrence.category.id,
         name: occurrence.category.name,
+        isIncome: occurrence.category.income,
         status_active: occurrence.category.status_active
       },
       description: occurrence.description

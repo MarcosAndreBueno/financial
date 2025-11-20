@@ -18,12 +18,19 @@ export class OccurrenceResolver implements Resolve<Occurrence> {
       const occurrenceService = this.factory.getInstanceOf(route.pathFromRoot[1].routeConfig?.path);
       return occurrenceService.loadById(route.params['id']);
     }
-    //new income
+
+    var isIncome = state.url.includes("incomes");
+    
+    //new income,
+    const todayDate = 
+      new Date().getFullYear().toString() + '-' +
+      (new Date().getMonth() + 1).toString().padStart(2, '0') + '-' +
+      new Date().getDate().toString().padStart(2, '0');
     return of({
-      id: '', amount: '', date: '',
+      id: '', amount: '', date: todayDate,
       account: { id: '', name: '', status_active: true },
-      type: { id: '', name: '', status_active: true },
-      category: { id: '', name: '', status_active: true },
+      type: { id: '', name: '', income: isIncome, status_active: true },
+      category: { id: '', name: '', income: isIncome, status_active: true },
       description: ''
     });
   }
