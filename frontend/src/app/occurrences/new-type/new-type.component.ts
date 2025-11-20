@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Type } from '../model/type';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 
 @Component({
@@ -26,7 +26,10 @@ export class NewTypeComponent implements OnInit {
     private typeService: TypeService,
     private location: Location
   ) {
-    this.types$ = this.typeService.list()
+    this.types$ = this.typeService.list().pipe(
+      map(types =>
+        types.sort((a, b) => a.name.localeCompare(b.name))
+      ));
   }
 
   ngOnInit(): void {

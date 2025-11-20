@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Category } from '../model/category';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 
 @Component({
@@ -26,7 +26,10 @@ export class NewCategoryComponent implements OnInit {
     private categoryService: CategoryService,
     private location: Location
   ) {
-    this.categories$ = this.categoryService.list()
+    this.categories$ = this.categoryService.list().pipe(
+      map(categories =>
+        categories.sort((a, b) => a.name.localeCompare(b.name))
+      ))
   }
 
   ngOnInit(): void {

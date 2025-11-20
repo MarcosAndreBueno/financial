@@ -36,14 +36,20 @@ export class NewOccurrenceComponent implements OnInit {
     private accountService: AccountService,
     private router: Router
   ) {
-    this.categories$ = categoryService.list()
-    this.types$ = typeService.list()
+    this.categories$ = categoryService.list().pipe(
+      map(categories =>
+        categories.sort((a, b) => a.name.localeCompare(b.name))
+      ));
+    this.types$ = typeService.list().pipe(
+      map(types =>
+        types.sort((a, b) => a.name.localeCompare(b.name))
+      ))
     this.accounts$ = accountService.list()
   }
 
   ngOnInit(): void {
     this.isIncomePage = this.location.path().includes("incomes");
-    this.types$.subscribe()    
+    this.types$.subscribe()
     this.categories$.subscribe()
 
     //listen form input
@@ -69,7 +75,7 @@ export class NewOccurrenceComponent implements OnInit {
       }),
       description: [null],
     });
-    
+
     //get informações carregadas pelo occurrenceResolver (/update/1)
     const occurrence: Occurrence = this.currentRoute.snapshot.data['occurrence']
 
