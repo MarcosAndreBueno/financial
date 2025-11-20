@@ -1,6 +1,8 @@
 package com.financial.financeapp.entities.dto;
 
 import com.financial.financeapp.entities.Account;
+import com.financial.financeapp.entities.impl.Category;
+import com.financial.financeapp.entities.impl.Type;
 
 public abstract class OccurrenceDTO {
     
@@ -8,8 +10,8 @@ public abstract class OccurrenceDTO {
     protected Double amount;
     protected String date;
     protected Account account;
-    protected TypeDTO type;
-    protected CategoryDTO category;
+    protected Type type;
+    protected Category category;
     protected String description;
 
 
@@ -45,19 +47,19 @@ public abstract class OccurrenceDTO {
         this.account = account;
     }
 
-    public TypeDTO getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(TypeDTO type) {
+    public void setType(Type type) {
         this.type = type;
     }
 
-    public CategoryDTO getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(CategoryDTO category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

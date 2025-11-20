@@ -1,24 +1,26 @@
 package com.financial.financeapp.entities.dto;
 
-import com.financial.financeapp.entities.impl.Category;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.financial.financeapp.entities.impl.Category;
+
 public class CategoryDTO {
 
     private Long id;
     private String name;
+    private Boolean isIncome;
     private Boolean status_active = true;
 
     public CategoryDTO() {
     }
 
-    public CategoryDTO(Long id, String name, Boolean status_active) {
+    public CategoryDTO(Long id, String name, Boolean isIncome, Boolean status_active) {
         this.id = id;
         this.name = name;
+        this.isIncome = isIncome;
         this.status_active = status_active;
     }
 
@@ -28,6 +30,7 @@ public class CategoryDTO {
         .map(category -> new CategoryDTO(
                 category.getId(),
                 category.getName(),
+                category.isIncome(),
                 category.getStatus_active()))
                 .collect(Collectors.toList());
     }
@@ -36,6 +39,7 @@ public class CategoryDTO {
         return categories.map(category -> new CategoryDTO(
                 category.getId(),
                 category.getName(),
+                category.isIncome(),
                 category.getStatus_active()));
     }
 
@@ -54,6 +58,14 @@ public class CategoryDTO {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Boolean isIncome() {
+        return isIncome;
+    }
+
+    public void setIsIncome(Boolean isIncome) {
+        this.isIncome = isIncome;
+    }    
 
     public Boolean getStatus_active() {
         return status_active;
@@ -74,5 +86,11 @@ public class CategoryDTO {
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
+    }
+
+    @Override
+    public String toString() {
+        return "CategoryDTO [id=" + id + ", name=" + name + ", isIncome=" + isIncome + ", status_active="
+                + status_active + "]";
     }
 }
