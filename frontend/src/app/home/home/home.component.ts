@@ -13,7 +13,8 @@ export class HomeComponent implements OnInit {
 
   public accounts$!: Observable<Account[]>
   public totalBalance$!: Observable<number[]>
-  public totalBalance!: number[]
+  public totalBalanceArray!: number[]
+  public totalBalance!: number
 
   public promisse!: Promise<string | void>
 
@@ -28,10 +29,13 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     //get accounts list
     this.accounts$ = this.accountService.list();
-    
+
     //getTotalBalance
     this.totalBalance$ = this.accountService.getTotalBalance(this.accounts$)
-    this.totalBalance$.subscribe(result => { this.totalBalance = result as number[] })
+    this.totalBalance$.subscribe(result => {
+      this.totalBalanceArray = result as number[], 
+      this.totalBalance = result.reduce((prev, curr) => prev + curr, 0)
+    });
   }
 
   goToIncomes() {

@@ -30,12 +30,13 @@
                     <!--body-->
                     <tbody class="table-dark">
                         <ng-container *ngFor="let account of accounts$ | async as list; let i=index">
-                            <tr *ngIf="account.status_active && totalBalance">
+
+                            <tr *ngIf="account.status_active && totalBalanceArray">
                                 <td>
                                     {{ account.name }}
                                 </td>
                                 <td>
-                                    {{ totalBalance[i] }}
+                                    {{ totalBalanceArray[i] }}
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-primary" (click)="onEdit(account)">
@@ -44,6 +45,17 @@
                                 </td>
                             </tr>
                         </ng-container>
+                        <tr>
+                            <td>
+                                Total
+                            </td>
+                            <td>
+                                {{ totalBalance }}
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -59,4 +71,5 @@
             <button type="button" class="btn btn-primary" (click)="onAnalysis()">Analysis</button>
         </div>
     </div>
+
 </div>
