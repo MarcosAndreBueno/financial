@@ -1,4 +1,4 @@
-import { Observable, toArray } from 'rxjs';
+import { map, Observable, toArray } from 'rxjs';
 import { AccountService } from './../service/account.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -26,7 +26,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     //get accounts list
-    this.accounts$ = this.accountService.list();
+    this.accounts$ = this.accountService.list().pipe(
+      map(accounts => accounts.sort((a, b) => a.name.localeCompare(b.name)))
+    );
     
     this.accounts$.subscribe(accounts => {
       this.totalBalance = accounts.reduce((sum, account) => sum + account.amount, 0);
