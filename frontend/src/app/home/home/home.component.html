@@ -31,12 +31,12 @@
                     <tbody class="table-dark">
                         <ng-container *ngFor="let account of accounts$ | async as list; let i=index">
 
-                            <tr *ngIf="account.status_active && totalBalanceArray">
+                            <tr *ngIf="account.status_active">
                                 <td>
                                     {{ account.name }}
                                 </td>
                                 <td>
-                                    {{ totalBalanceArray[i] }}
+                                    {{ account.amount }}
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-primary" (click)="onEdit(account)">

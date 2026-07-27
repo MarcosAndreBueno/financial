@@ -21,6 +21,8 @@ public class Account {
 
     private String name;
 
+    private Double amount;
+
     private Boolean status_active = true;
 
     @JsonIgnore
@@ -34,6 +36,7 @@ public class Account {
     public Account(Long id, String name) {
         this.id = id;
         this.name = name;
+        this.amount = 0.0;
     }
 
     public Account() {
@@ -53,6 +56,14 @@ public class Account {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
     public Boolean getStatus_active() {

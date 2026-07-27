@@ -52,6 +52,14 @@ public class AccountService {
         accountRepository.deleteById(id);
     }
 
+    public void updateAmount(Long id, Double amount) {
+        Account account = accountRepository.findById(id)
+                .orElse(null);
+
+        account.setAmount(account.getAmount() + amount);
+        accountRepository.save(account);
+    }
+
     //lazyloading
     public Account getProxyInstanceById(OccurrenceDTO occurrenceDTO) {
         Long id = findByName(occurrenceDTO.getAccount().getName()).get().getId();

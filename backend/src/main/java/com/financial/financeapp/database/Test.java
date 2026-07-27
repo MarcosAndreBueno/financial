@@ -7,6 +7,10 @@ import java.time.YearMonth;
 import java.util.Arrays;
 import java.util.Random;
 
+import com.financial.financeapp.entities.dto.impl.IncomeDTO;
+import com.financial.financeapp.entities.dto.impl.OutcomeDTO;
+import com.financial.financeapp.service.IncomeService;
+import com.financial.financeapp.service.OutcomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -31,9 +35,13 @@ public class Test implements CommandLineRunner {
 
     @Autowired
     IncomeRepository incomeRepository;
+    @Autowired
+    IncomeService incomeService;
 
     @Autowired
     OutcomeRepository outcomeRepository;
+    @Autowired
+    OutcomeService outcomeService;
 
     @Autowired
     TypeRepository typeRepository;
@@ -71,10 +79,11 @@ public class Test implements CommandLineRunner {
         Random random = new Random();
 
         //Incomes
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 100; i++) {
             // random date
-            int year = 2024 + random.nextInt(2); // 2024 ou 2025
-            int month = 1 + random.nextInt(12);
+            LocalDate localDate = LocalDate.now();
+            int year = localDate.getYear();
+            int month = localDate.getMonthValue();
             int maxDay = YearMonth.of(year, month).lengthOfMonth();
             int day = 1 + random.nextInt(maxDay);
             LocalDate date = LocalDate.of(year, month, day);
@@ -98,24 +107,25 @@ public class Test implements CommandLineRunner {
                     .setScale(0, RoundingMode.HALF_UP)
                     .doubleValue();
 
-            Income income = new Income(
+            IncomeDTO income = new IncomeDTO(
                     null,
                     rounded,
-                    date,
+                    date.toString(),
                     account,
                     typeRepository.getReferenceById((long) typeId),
                     categoryRepository.getReferenceById((long) categoryId),
                     "Random income " + (i + 1)
             );
 
-            incomeRepository.save(income);
+            incomeService.insert(income);
         }
 
         //Outcomes
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 100; i++) {
             //random date
-            int year = 2024 + random.nextInt(2); // 2024 ou 2025
-            int month = 1 + random.nextInt(12);
+            LocalDate localDate = LocalDate.now();
+            int year = localDate.getYear();
+            int month = localDate.getMonthValue();
             int maxDay = YearMonth.of(year, month).lengthOfMonth();
             int day = 1 + random.nextInt(maxDay);
             LocalDate date = LocalDate.of(year, month, day);
@@ -148,17 +158,17 @@ public class Test implements CommandLineRunner {
                     .setScale(0, RoundingMode.HALF_UP)
                     .doubleValue();
 
-            Outcome outcome = new Outcome(
+            OutcomeDTO outcomeDTO = new OutcomeDTO(
                     null,
                     rounded,
-                    date,
+                    date.toString(),
                     account,
                     typeRepository.getReferenceById((long) typeId),
                     categoryRepository.getReferenceById((long) categoryId),
                     "Random outcome " + (i + 1)
             );
 
-            outcomeRepository.save(outcome);
+            outcomeService.insert(outcomeDTO);
         }
     }
 }

@@ -11,6 +11,7 @@ import com.financial.financeapp.repositories.IncomeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -55,6 +56,7 @@ public class IncomeService {
         return total;
     }
 
+    @Transactional
     public void insert(IncomeDTO incomeDTO) {
         //lazy proxy initialization
         Type type = typeService.getProxyInstanceById(incomeDTO);
@@ -71,21 +73,32 @@ public class IncomeService {
                 incomeDTO.getDescription()
         );
         incomeRepository.save(income);
+
+        Double addValue = income.getAmount();
+        accountService.updateAmount(account.getId(), addValue);
     }
 
+    @Transactional
     public ResponseEntity<Income> update(Long id, IncomeDTO incomeDTO) {
         Optional<Income> incomeUpdate = incomeRepository.findById(id);
 
         //usar método find para evitar LazyInitializationException
         Type type = typeService.getEntityInstanceById(incomeDTO);
         Category category = categoryService.getEntityInstanceById(incomeDTO);
-        Account account = accountService.getEntityInstanceById(incomeDTO);
+        Account prevAccount = accountService.findById(incomeUpdate.get().getAccount().getId()).orElse(null);
+        Account actAccount = accountService.getEntityInstanceById(incomeDTO);
+
+        //atualizar valor em contas (reseta valor antigo e adiciona novo)
+        Double resetValue = incomeUpdate.get().getAmount() * -1;
+        Double newValue = incomeDTO.getAmount();
+        accountService.updateAmount(prevAccount.getId(), resetValue);
+        accountService.updateAmount(actAccount.getId(), newValue);
 
         return incomeUpdate
                 .map(item -> {
                     item.setAmount(incomeDTO.getAmount());
                     item.setDate(LocalDate.parse(incomeDTO.getDate()));
-                    item.setAccount(account);
+                    item.setAccount(actAccount);
                     item.setType(type);
                     item.setCategory(category);
                     item.setDescription(incomeDTO.getDescription());
@@ -95,7 +108,14 @@ public class IncomeService {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @Transactional
     public void deleteById(Long id) {
+        Optional<Income> income = incomeRepository.findById(id);
+        Account account = income.get().getAccount();
+
+        Double subtractValue = income.get().getAmount() * -1;
+        accountService.updateAmount(account.getId(), subtractValue);
+
         incomeRepository.deleteById(id);
     }
 }

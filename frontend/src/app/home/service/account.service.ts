@@ -49,17 +49,6 @@ export class AccountService {
   }
 
   getTotalBalance(accounts$: Observable<Account[]>) {
-    //todos valores em income
-    const arrayIncome$: Observable<string[]> = this.getIncomeTotalBalance(accounts$)
-    //todos valores em outcome
-    const arrayOutcome$: Observable<string[]> = this.getOutcomeTotalBalance(accounts$)
-
-    //deduzir income de outcome
-    const combined$: Observable<[string[], string[]]> = forkJoin([arrayIncome$, arrayOutcome$]);
-    return combined$.pipe(
-      map(([income, outcome]) => {
-        return income.map((value, index) => +value - +outcome[index]);
-      })
-    );
+    
   }
 }

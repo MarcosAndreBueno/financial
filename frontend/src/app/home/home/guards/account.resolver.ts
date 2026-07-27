@@ -18,7 +18,7 @@ export class AccountResolver implements Resolve<Account> {
     }
     //new income
     return of({
-      id: '', name: '', status_active: true
+      id: '', name: '', amount: 0, status_active: true
     });
   }
 }
